@@ -1,0 +1,22 @@
+package com.example.ifitness.controller;
+
+import com.example.ifitness.model.User;
+import com.example.ifitness.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(path = "/api/v1/")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+
+    @PostMapping(path = "/register")
+    public ResponseEntity<Object>register(@RequestBody User user) {
+        userService.register(user);
+        return new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
+    }
+}
