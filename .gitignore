@@ -45,3 +45,5 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+
+/src/main/resources/certs/private.pem
