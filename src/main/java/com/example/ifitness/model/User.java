@@ -1,16 +1,15 @@
 package com.example.ifitness.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 
-@Data
+@Entity
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "user")
+@ToString
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -18,9 +17,10 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String roles;
     @Column(unique = true)
     private String email;
     private String password;
-    private String confirmPassword;
+
 
 }

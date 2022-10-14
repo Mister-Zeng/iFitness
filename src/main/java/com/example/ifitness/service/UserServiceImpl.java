@@ -1,43 +1,57 @@
 package com.example.ifitness.service;
 
-import com.example.ifitness.model.User;
+import com.example.ifitness.model.AuthUser;
 import com.example.ifitness.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
-    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User getUser(String email) {
-
-        User user = userRepository.getUserByEmail(email);
-        if(user == null){
-            log.error("User not found in the database");
-            throw new UsernameNotFoundException("User not found in the database");
-        } else {
-            log.info("User found in the database: {}", email);
-        }
-        return user;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .map(AuthUser::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-    @Override
-    public void register(User user) {
+//    @Override
+//    public void register(User user) {
+//
+//        User userFromDatabase = userRepository.findByEmail(user.getEmail());
+//        if(userFromDatabase != null){
+//            log.error("User has been already registered!");
+//            throw new Error("User has been already registered!");
+//        }
+//
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String encodedPassword = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
+//        log.info("User {} is registered successfully!", user);
+//        userRepository.save(user);
+//    }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
-        log.info("User {} is saved to the database", user);
-        userRepository.save(user);
-    }
+//    @Override
+//    public String login(User user) throws Exception {
+//
+//        try {
+//            System.out.println("Action in controller authenticated....");
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new Exception("Invalid username/password");
+//        }
+//
+//        return jwtUtilService.generateToken(user.getEmail());
+//    }
 }

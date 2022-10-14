@@ -14,9 +14,21 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(path = "/register")
-    public ResponseEntity<Object>register(@RequestBody User user) {
-        userService.register(user);
-        return new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
+
+    @GetMapping(path = "/")
+    public String welcomePage() {
+        return "Success to load welcome page...!";
     }
+
+//    @PostMapping(path = "/register")
+//    public ResponseEntity<Object>register(@RequestBody User user) {
+//        userService.register(user);
+//        return new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
+//    }
+//
+//    @PostMapping(path = "/login")
+//    public ResponseEntity generateToken(@RequestBody User user) throws Exception {
+//        userService.login(user);
+//        return new ResponseEntity<>("User is logged in successfully", HttpStatus.OK);
+//    }
 }
