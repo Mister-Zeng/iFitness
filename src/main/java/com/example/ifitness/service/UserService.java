@@ -7,8 +7,7 @@ public interface UserService {
 
     UserDetails loadUserByUsername(String username);
 
-//    void register(User user);
+    User register(User user);
 
-//    String login(User user) throws Exception;
 }
 

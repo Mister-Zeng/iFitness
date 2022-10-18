@@ -4,22 +4,24 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
-@NoArgsConstructor
+@Table(name = "Users")
 @AllArgsConstructor
-@ToString
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String first_name;
+    private String last_name;
     private String roles;
+    private String height;
+    private Integer weight;
+    private String username;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String password;
 
 

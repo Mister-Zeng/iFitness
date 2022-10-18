@@ -1,57 +1,50 @@
 package com.example.ifitness.service;
 
 import com.example.ifitness.model.AuthUser;
+import com.example.ifitness.model.User;
 import com.example.ifitness.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
+        return userRepository.findByUsername(username)
                 .map(AuthUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-//    @Override
-//    public void register(User user) {
-//
-//        User userFromDatabase = userRepository.findByEmail(user.getEmail());
-//        if(userFromDatabase != null){
-//            log.error("User has been already registered!");
-//            throw new Error("User has been already registered!");
-//        }
-//
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
-//        log.info("User {} is registered successfully!", user);
-//        userRepository.save(user);
-//    }
+    @Override
+    public User register(User user) {
 
-//    @Override
-//    public String login(User user) throws Exception {
+        Optional<User> userFromDatabase = userRepository.findByUsername(user.getUsername());
+        if(userFromDatabase == null){
+            log.error("User has been already registered!");
+            throw new Error("User has been already registered!");
+        }
 //
-//        try {
-//            System.out.println("Action in controller authenticated....");
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new Exception("Invalid username/password");
-//        }
-//
-//        return jwtUtilService.generateToken(user.getEmail());
-//    }
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        log.info("User {} is registered successfully!", user);
+        userRepository.save(user);
+        return user;
+    }
+
 }

@@ -5,6 +5,8 @@ import com.example.ifitness.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,11 +22,11 @@ public class UserController {
         return "Success to load welcome page...!";
     }
 
-//    @PostMapping(path = "/register")
-//    public ResponseEntity<Object>register(@RequestBody User user) {
-//        userService.register(user);
-//        return new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
-//    }
+    @PostMapping(path = "/register")
+    public ResponseEntity<Object> register(@RequestBody User user) {
+        userService.register(user);
+        return new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
+    }
 //
 //    @PostMapping(path = "/login")
 //    public ResponseEntity generateToken(@RequestBody User user) throws Exception {
