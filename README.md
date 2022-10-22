@@ -29,7 +29,8 @@ Users should be able to:
     - Adding a list of exercise that contains name, sets, reps, weight
     - Add macros for the day
     - Add body weight for the day
-- Display a chart showing the progress of weight in their exercises
+- Display a chart showing the progress of their body weight
+- Display a chart showing monthly progress of weight in their exercises 
 
 ### Screenshot
 
