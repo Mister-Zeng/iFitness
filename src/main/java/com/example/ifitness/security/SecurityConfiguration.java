@@ -32,28 +32,12 @@ public class SecurityConfiguration {
 
     private RSAKey rsaKey;
 
-//    @Bean
-//    public DataSource dataSource()
-//    {
-//        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-//        dataSourceBuilder.url("jdbc:mysql://localhost:3306/iFitness");
-//        dataSourceBuilder.username("root");
-//        dataSourceBuilder.password("rootpass");
-//        return dataSourceBuilder.build();
-//    }
-//    @Bean
-//    JdbcUserDetailsManager users(DataSource dataSource) {
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-//        return jdbcUserDetailsManager;
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
-//                        .antMatchers("/token","api/v1/register").permitAll()
-                        .mvcMatchers("/token","/api/v1/register").permitAll()
+                        .antMatchers("/api/v1/login","/api/v1/register", "/api/v1/", "/api/v1/editUserInfo").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
@@ -68,16 +52,6 @@ public class SecurityConfiguration {
         return new ProviderManager(authProvider);
     }
 
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new InMemoryUserDetailsManager(
-//                User.withUsername("test")
-//                        .password("{noop}test")
-//                        .authorities("read")
-//                        .build()
-//        );
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
