@@ -4,31 +4,27 @@ import { Colors } from "../../constants/colors";
 
 const createStyles = () =>
     StyleSheet.create({       
+        inputIconContainer: {
+            flexDirection: 'row',
+            alignContent: "space-around",
+            paddingHorizontal: RFValue(30),
+            justifyContent: 'space-between',
+            height: RFValue(30),
+        },
         infoType: {
             fontSize: RFValue(12),
             color: Colors.ORANGE,
         },
-        input:{
-            height: RFValue(20),
-            margin: RFValue(5),
-            borderBottomWidth: 1,
-            borderBottomColor: Colors.GREY,
-            width: RFValue(200),
+        valueType: {
             fontSize: RFValue(12),
             color: Colors.WHITE,
-            textAlign: "center"
-        },
-        inputIconContainer: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: RFValue(30),
-            justifyContent: 'space-between',
+            right: RFValue(130),
         },
         measurement: {
             fontSize: RFValue(12),
             color: Colors.ORANGE,
             position: 'absolute',
-            right: 45,
+            right: RFValue(30),
         }
        
 

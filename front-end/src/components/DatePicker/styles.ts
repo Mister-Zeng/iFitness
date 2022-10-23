@@ -4,11 +4,7 @@ import { Colors } from "../../constants/colors";
 
 const createStyles = () =>
     StyleSheet.create({
-        body: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
+  
     });
 
 export default createStyles;

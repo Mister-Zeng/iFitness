@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { BottomNavigation, Text } from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
 
 import { HOME_ICON, PROGRESS_ICON, ENTRY_ICON, PROFILE_ICON } from "../assets";
 
@@ -13,11 +13,17 @@ import {
   DailyEntryScreen,
   ProgressScreen,
   ProfileScreen,
+  MacroScreen,
 } from "../screens";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
-import { UserInfoContext } from "../providers/userInfo";
+import AuthSelect, { AuthProvider } from "../providers/auth";
+
+import Entypo from "@expo/vector-icons/Entypo";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TabNavigation = () => {
   const [index, setIndex] = React.useState(0);
@@ -63,6 +69,7 @@ const TabNavigation = () => {
 export type MainStackParamList = {
   InitialScreen: undefined;
   RegisterScreen: undefined;
+  MacroScreen: undefined;
   LoginScreen: undefined;
   HomeScreen: undefined;
   DailyEntryScreen: undefined;
@@ -82,22 +89,38 @@ function Screens() {
       >
         <MainStack.Screen name="InitialScreen" component={InitialScreen} />
         <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <MainStack.Screen name="MacroScreen" component={MacroScreen} />
         <MainStack.Screen name="LoginScreen" component={LoginScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
 }
 
-function Navigation() {
-  function NavigationContainer() {
-    return (
-      <UserInfoContext.Consumer>
-        {({ userInfo }) => (userInfo ? <TabNavigation /> : <Screens />)}
-      </UserInfoContext.Consumer>
-    );
-  }
+function Navigations() {
+  const { userInfo } = AuthSelect();
 
-  return <NavigationContainer />;
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("userInfo");
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getData();
+  }, [userInfo]);
+
+  return userInfo.token ? <TabNavigation /> : <Screens />;
 }
+
+const Navigation = () => {
+  return (
+    <AuthProvider>
+      <Navigations />
+    </AuthProvider>
+  );
+};
 
 export default Navigation;

@@ -15,10 +15,10 @@ public class DailyMacros {
     @GeneratedValue
     @Column(name = "daily_macros_id")
     private Long id;
-    private int calories;
-    private int protein;
-    private int fat;
-    private int carbs;
+    private int calories = 0;
+    private int protein = 0;
+    private int fat = 0;
+    private int carbs = 0;
 
 
     @OneToOne(cascade = CascadeType.ALL)

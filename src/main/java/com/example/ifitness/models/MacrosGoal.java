@@ -14,10 +14,10 @@ public class MacrosGoal {
     @Id
     @Column(name = "macros_goal_id")
     private Long id;
-    private int calories = 0;
-    private int protein = 0;
-    private int fat = 0;
-    private int carbs = 0;
+    private int calories;
+    private int protein;
+    private int fat;
+    private int carbs;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

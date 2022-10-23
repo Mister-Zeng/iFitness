@@ -2,108 +2,100 @@ import React, { FC, useMemo } from "react";
 import { ImageBackground, Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles from "./styles";
-import {
-  REGISTER_BACKGROUND,
-  USER_ICON,
-  VIEW_ICON,
-  USER_CIRCLE_ICON,
-  MESSAGE_ICON,
-} from "../../assets";
+import { MACRO_BACKGROUND, MACROS_ICON } from "../../assets";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
-import { RegisterType } from "../../models";
-
+import { MacrosType, RegisterType } from "../../models";
+import { Appbar } from "react-native-paper";
 import AuthSelect from "../../providers/auth";
+
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const RegisterScreen: FC<IProps> = ({ navigation }) => {
+const MacroScreen: FC<IProps> = ({ navigation }) => {
   const styles = useMemo(() => createStyles(), []);
 
-  const { register } = AuthSelect();
+  // const { addMacros } = AuthSelect();
 
-  const [registerInfo, setRegisterInfo] = React.useState<RegisterType>({
-    first_name: "",
-    last_name: "",
-    username: "",
-    email_address: "",
-    password: "",
+  const [carbInfo, setCarbInfo] = React.useState<MacrosType>({
+    calories: 0,
+    fat: 0,
+    protein: 0,
+    carbs: 0,
   });
 
   const handleRegister = async () => {
-    // register(registerInfo);
-    // Alert.alert("Success", "You have successfully registered. Please login.");
-    navigation.navigate("MacroScreen");
+    // addMacros(carbInfo);
+    Alert.alert("Success", "You have successfully registered. Please login.");
+    navigation.navigate("LoginScreen");
   };
 
   return (
     <View style={styles.body}>
-      <ImageBackground source={REGISTER_BACKGROUND} style={styles.background}>
+      <ImageBackground source={MACRO_BACKGROUND} style={styles.background}>
+        <View style={{ width: "100%" }}>
+          <Appbar.Header
+            style={{ backgroundColor: "transparent" }}
+            mode="small"
+          >
+            <Appbar.BackAction
+              onPress={() => navigation.navigate("RegisterScreen")}
+            />
+          </Appbar.Header>
+        </View>
         <View style={styles.footer}>
-          <Text style={styles.title}>Add Your Details Below To Sign Up</Text>
+          <Text style={styles.title}>What Is Your Macro Goal?</Text>
 
           <View style={styles.inputContainer}>
             <RegisterTextInput
-              title={"Enter First Name"}
-              icon={USER_CIRCLE_ICON}
-              value={registerInfo.first_name}
+              title={"Enter Calories"}
+              icon={MACROS_ICON}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, first_name: text })
+                setCarbInfo({ ...carbInfo, calories: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
+              keyboardType="numeric"
               autoFocus={true}
             />
             <RegisterTextInput
-              title={"Enter Last Name"}
-              icon={USER_CIRCLE_ICON}
-              value={registerInfo.last_name}
+              title={"Enter Fat"}
+              icon={MACROS_ICON}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, last_name: text })
+                setCarbInfo({ ...carbInfo, fat: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
+              keyboardType="numeric"
               autoFocus={true}
             />
             <RegisterTextInput
-              title={"Enter Username"}
-              icon={USER_ICON}
-              value={registerInfo.username}
+              title={"Enter Protein"}
+              icon={MACROS_ICON}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, username: text })
+                setCarbInfo({ ...carbInfo, carbs: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
+              keyboardType="numeric"
               autoFocus={true}
             />
             <RegisterTextInput
-              title={"Enter Email Address"}
-              icon={MESSAGE_ICON}
-              value={registerInfo.email_address}
+              title={"Enter Carbs"}
+              icon={MACROS_ICON}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, email_address: text })
+                setCarbInfo({ ...carbInfo, carbs: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
+              keyboardType="numeric"
               autoFocus={true}
-            />
-            <RegisterTextInput
-              title={"Enter Password"}
-              icon={VIEW_ICON}
-              value={registerInfo.password}
-              onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, password: text })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoFocus={true}
-              secureTextEntry={true}
             />
           </View>
           <InitialScreenButton
-            title="Continue"
+            title="Register"
             disabled={false}
             onPress={handleRegister}
           />
@@ -127,4 +119,4 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
   );
 };
 
-export default RegisterScreen;
+export default MacroScreen;

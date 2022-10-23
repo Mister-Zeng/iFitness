@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles from "./styles";
@@ -7,8 +7,8 @@ import InitialScreenButton from "../../components/InitialScreenButton";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import { LoginType } from "../../models";
-import { Auth } from "../../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,22 +17,12 @@ interface IProps {
 const LoginScreen: FC<IProps> = ({ navigation }) => {
   const styles = useMemo(() => createStyles(), []);
 
-  const [loginInfo, setLoginInfo] = React.useState<LoginType>({
+  const { login } = AuthSelect();
+
+  const [loginInfo, setLoginInfo] = useState<LoginType>({
     username: "",
     password: "",
   });
-
-  const handleSubmit = () => {
-    Auth.login(loginInfo)
-      .then((data) => {
-        console.log(data);
-        AsyncStorage.setItem("userInfo", JSON.stringify(data));
-        navigation.navigate("HomeScreen");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <View style={styles.body}>
@@ -58,13 +48,16 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
+              secureTextEntry={true}
             />
           </View>
 
           <InitialScreenButton
             title="Login"
             disabled={false}
-            onPress={handleSubmit}
+            onPress={() => {
+              login(loginInfo);
+            }}
           />
           <TouchableOpacity style={styles.forgotPasswordBtn}>
             <Text style={styles.forgotPasswordBtnText}>Forgot Password?</Text>

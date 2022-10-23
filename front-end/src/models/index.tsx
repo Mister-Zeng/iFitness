@@ -1,11 +1,12 @@
-import { RegisterType, LoginType, UserType } from "./auth";
-import { MacrosType, DailyEntryType, ExceriseType } from "./dailyEntry";
+import { RegisterType, LoginType, UserType, EditUserInfoType } from "./auth";
+import { MacrosType, DailyEntryType, ExerciseType } from "./dailyEntry";
 
 export {
   RegisterType,
   LoginType,
   UserType,
+  EditUserInfoType,
   MacrosType,
   DailyEntryType,
-  ExceriseType,
+  ExerciseType,
 };

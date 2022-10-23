@@ -5,10 +5,13 @@ import createStyles from "./styles";
 interface IProps {
   title: string;
   icon: ImageSourcePropType;
-  value: string;
+  value?: string;
   autoCapitalize: any;
   onChangeText: (text: string) => void;
   autoCorrect: boolean;
+  keyboardType?: any;
+  autoFocus?: boolean;
+  secureTextEntry?: boolean;
 }
 const RegisterTextInput: FC<IProps> = ({ title, icon, ...props }) => {
   const styles = useMemo(() => createStyles(), []);

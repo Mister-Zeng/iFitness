@@ -14,7 +14,7 @@ const DailyMacroText: FC<IProps> = ({ infoType, value, measurement }) => {
   return (
     <View style={styles.inputIconContainer}>
       <Text style={styles.infoType}>{infoType}</Text>
-      <Text style={styles.infoType}>{value}</Text>
+      <Text style={styles.valueType}>{value}</Text>
       <Text style={styles.measurement}>{measurement}</Text>
     </View>
   );

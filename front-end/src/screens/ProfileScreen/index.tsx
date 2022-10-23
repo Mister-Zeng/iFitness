@@ -1,16 +1,16 @@
 import React, { ComponentType, useState, useMemo } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles from "./styles";
 import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
 import { MacrosType } from "../../models";
 import ProfileInfoInput from "../../ui/ProfileInfoTextInput";
-import UserInfoSelect from "../../providers/userInfo";
 import { EditUserInfoType } from "../../models/auth";
 import { macrosConstant } from "../../constants/dailyEntry";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
-import { Auth } from "../../api";
+import AuthSelect from "../../providers/auth";
+
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -21,7 +21,7 @@ const ProfileScreen: ComponentType<{
 }> = ({ route, jumpTo }) => {
   const styles = useMemo(() => createStyles(), []);
 
-  const { userInfo } = UserInfoSelect();
+  const { userInfo, editProfile } = AuthSelect();
 
   const [editUserInfo, setEditUserInfo] = useState<EditUserInfoType>({
     username: userInfo.username,
@@ -29,21 +29,16 @@ const ProfileScreen: ComponentType<{
     last_name: userInfo.last_name,
     email_address: userInfo.email_address,
   });
-
+  console.log(editUserInfo);
   const [editMacrosGoal, setEditMacrosGoal] =
     useState<MacrosType>(macrosConstant);
 
-  const handleUserInfoSubmit = () => {
-    Auth.editUserInfo(editUserInfo).then((data) => {
-      console.log(data);
-    });
+  const handleEditProfile = () => {
+    editProfile(editUserInfo);
+    Alert.alert("Success", "Profile has been updated");
   };
 
   const handleDailyMacrosGoalSubmit = () => {};
-
-  const [visible, setVisible] = React.useState(false);
-
-  const hideDialog = () => setVisible(false);
 
   return (
     <View>
@@ -52,7 +47,7 @@ const ProfileScreen: ComponentType<{
         <Appbar.Content title="Profile" />
       </Appbar.Header>
 
-      <View style={styles.infoContainer}>
+      <View>
         <Text style={styles.infoTitle}>Personal Details</Text>
         <View style={styles.profilePicture}>
           <Text></Text>
@@ -98,7 +93,7 @@ const ProfileScreen: ComponentType<{
           />
 
           <View style={styles.saveButtonContainer}>
-            <SaveButton title={"Save"} onPress={handleUserInfoSubmit} />
+            <SaveButton title={"Save"} onPress={handleEditProfile} />
           </View>
         </View>
 

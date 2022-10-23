@@ -3,11 +3,11 @@ import { ScrollView, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles from "./styles";
 import { Appbar } from "react-native-paper";
-import UserInfoSelect from "../../providers/userInfo";
 import { LineChart } from "react-native-chart-kit";
 import * as Progress from "react-native-progress";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
+import AuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -19,7 +19,7 @@ const HomeScreen: ComponentType<{
 }> = ({ route, jumpTo }) => {
   const styles = useMemo(() => createStyles(), []);
 
-  const { userInfo } = UserInfoSelect();
+  const { userInfo } = AuthSelect();
 
   const data = {
     labels: [
@@ -64,9 +64,10 @@ const HomeScreen: ComponentType<{
         <View style={styles.greetingContainer}>
           <Text style={styles.greeting}>Hello </Text>
           <Text style={styles.userName}>
-            {userInfo.first_name[0].toUpperCase() +
-              userInfo.first_name.slice(1) +
-              "!"}
+            {userInfo &&
+              userInfo.first_name[0].toUpperCase() +
+                userInfo.first_name.slice(1) +
+                "!"}
           </Text>
         </View>
 

@@ -26,6 +26,7 @@ const ProfileInfoTextInput: FC<IProps> = ({
         placeholder={value}
         placeholderTextColor="#6A6A6A"
         editable={editable}
+        {...props}
       />
     </View>
   );
