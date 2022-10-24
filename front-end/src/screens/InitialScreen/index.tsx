@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { INITIAL_BACKGROUND } from "../../assets";
 import InitialScreenButton from "../../components/InitialScreenButton";
 
@@ -10,7 +10,8 @@ interface IProps {
 }
 
 const InitialScreen: FC<IProps> = ({ navigation }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
+
   return (
     <View style={styles.body}>
       <ImageBackground source={INITIAL_BACKGROUND} style={styles.background}>

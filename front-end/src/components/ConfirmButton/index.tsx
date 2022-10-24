@@ -1,23 +1,20 @@
-import React from "react";
+import React, { FC, useMemo } from "react";
 import { TouchableOpacity, Image, GestureResponderEvent } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { CustomCancelButtonPropTypes } from "react-native-modal-datetime-picker";
+import createStyles, { StyleSheetProps } from "./styles";
 import { CONFIRM_ICON } from "../../assets";
 
 type IProps = {
   onPress: (event: GestureResponderEvent) => void;
 };
 
-const ConfirmButton = ({ onPress }: IProps) => {
+const ConfirmButton: FC<CustomCancelButtonPropTypes> = ({
+  onPress,
+}: IProps) => {
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
+
   return (
-    <TouchableOpacity
-      style={{
-        bottom: RFValue(197),
-        left: RFValue(315),
-        width: RFValue(25),
-        height: RFValue(25),
-      }}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Image source={CONFIRM_ICON} />
     </TouchableOpacity>
   );

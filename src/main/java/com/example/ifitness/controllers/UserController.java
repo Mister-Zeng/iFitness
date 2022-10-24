@@ -33,6 +33,7 @@ public class UserController {
     @PostMapping(path = "/register")
     public ResponseEntity<User> register(@RequestBody  User user) throws ResponseStatusException {
         User userInfo = userService.register(user);
+        System.out.println(user);
         return new ResponseEntity<>( userInfo, HttpStatus.OK);
     }
 
@@ -48,6 +49,7 @@ public class UserController {
     @PutMapping("/editUserInfo")
     public ResponseEntity<User> editUserInfo(@RequestBody EditUserInfo editUserInfo) throws ResponseStatusException {
         User userInfo = userService.editUserInfo(editUserInfo);
+
         return new ResponseEntity<>( userInfo, HttpStatus.OK);
     }
 }

@@ -1,13 +1,18 @@
 import React, { FC, useMemo, useState } from "react";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { LOGIN_BACKGROUND, USER_ICON, VIEW_ICON } from "../../assets";
 import InitialScreenButton from "../../components/InitialScreenButton";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import { LoginType } from "../../models";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthSelect from "../../providers/auth";
 
 interface IProps {
@@ -15,7 +20,7 @@ interface IProps {
 }
 
 const LoginScreen: FC<IProps> = ({ navigation }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { login } = AuthSelect();
 
@@ -24,6 +29,19 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
     password: "",
   });
 
+  const handleLogin: (loginInfo: LoginType) => void = async (
+    loginInfo: LoginType
+  ) => {
+    if (
+      loginInfo.username.trim().length < 1 ||
+      loginInfo.password.trim().length < 1
+    ) {
+      Alert.alert("Alert", "Please enter all required value");
+      return;
+    }
+
+    login(loginInfo);
+  };
   return (
     <View style={styles.body}>
       <ImageBackground source={LOGIN_BACKGROUND} style={styles.background}>
@@ -56,7 +74,7 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
             title="Login"
             disabled={false}
             onPress={() => {
-              login(loginInfo);
+              handleLogin(loginInfo);
             }}
           />
           <TouchableOpacity style={styles.forgotPasswordBtn}>

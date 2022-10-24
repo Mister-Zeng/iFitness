@@ -5,13 +5,14 @@ import {
   TextStyle,
   ViewStyle,
   Text,
+  GestureResponderEvent,
 } from "react-native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { Colors } from "../../constants/colors";
 
 interface IProps {
   title: string;
-  onPress?: () => void;
+  onPress?: (event: GestureResponderEvent) => void;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -23,7 +24,7 @@ const InitialScreenButton: FC<IProps> = ({
   buttonStyle,
   textStyle,
 }: IProps) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   return (
     <TouchableOpacity

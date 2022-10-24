@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react";
 import { ImageBackground, Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { MACRO_BACKGROUND, MACROS_ICON } from "../../assets";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
@@ -15,18 +15,32 @@ interface IProps {
 }
 
 const MacroScreen: FC<IProps> = ({ navigation }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   // const { addMacros } = AuthSelect();
 
-  const [carbInfo, setCarbInfo] = React.useState<MacrosType>({
+  const [macroInfo, setMacroInfo] = React.useState<MacrosType>({
     calories: 0,
     fat: 0,
     protein: 0,
     carbs: 0,
   });
 
-  const handleRegister = async () => {
+  const info = {
+    first_name: "test",
+    last_name: "test",
+    username: "test1",
+    email_address: "test@gmail.com",
+    password: "test",
+    macro_goal: {
+      calories: 0,
+      fat: 0,
+      protein: 0,
+      carbs: 0,
+    },
+  };
+
+  const handleRegister: () => Promise<void> = async () => {
     // addMacros(carbInfo);
     Alert.alert("Success", "You have successfully registered. Please login.");
     navigation.navigate("LoginScreen");
@@ -53,7 +67,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Calories"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setCarbInfo({ ...carbInfo, calories: parseInt(text) })
+                setMacroInfo({ ...macroInfo, calories: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -64,7 +78,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Fat"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setCarbInfo({ ...carbInfo, fat: parseInt(text) })
+                setMacroInfo({ ...macroInfo, fat: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -75,7 +89,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Protein"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setCarbInfo({ ...carbInfo, carbs: parseInt(text) })
+                setMacroInfo({ ...macroInfo, carbs: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -86,7 +100,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Carbs"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setCarbInfo({ ...carbInfo, carbs: parseInt(text) })
+                setMacroInfo({ ...macroInfo, carbs: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}

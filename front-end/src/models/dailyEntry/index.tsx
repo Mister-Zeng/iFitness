@@ -1,17 +1,17 @@
-type MacrosType = {
-  id?: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-};
-
 type DailyEntryType = {
   id: number;
   date: Date;
   weight: number;
   macros: MacrosType;
   exercise: ExerciseType[];
+};
+
+type MacrosType = {
+  id?: number;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
 };
 
 type ExerciseType = {
@@ -22,4 +22,10 @@ type ExerciseType = {
   weight: number;
 };
 
-export { MacrosType, DailyEntryType, ExerciseType };
+type EditProgressType = {
+  weight: number;
+  macros: MacrosType;
+  exercise: ExerciseType[];
+};
+
+export { MacrosType, DailyEntryType, ExerciseType, EditProgressType };

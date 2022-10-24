@@ -1,37 +1,38 @@
-import React, { ComponentType, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import DailyMacroText from "../../ui/DailyMacroText";
 import AuthSelect from "../../providers/auth";
 import DatePickers from "../../components/DatePicker";
+import ExerciseInfo from "../../components/ExerciseInfo";
+import AddExerciseButton from "../../components/AddExerciseButton";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const DailyEntryScreen: ComponentType<{
-  route: any;
-  jumpTo: (key: string) => void;
-}> = ({ route, jumpTo }) => {
-  const styles = useMemo(() => createStyles(), []);
+const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { userInfo } = AuthSelect();
 
   return (
-    <View>
+    <View style={styles.container}>
       <Appbar.Header mode="center-aligned">
-        <Appbar.Action icon="clipboard-edit-outline" onPress={() => {}} />
-        <Appbar.Content title="Daily Entry" />
-        <Appbar.Action icon="clipboard-edit-outline" onPress={() => {}} />
+        <Appbar.Action
+          icon="clipboard-edit-outline"
+          onPress={() => navigation.navigate("EditProgressScreen")}
+        />
+        <Appbar.Content title={<DatePickers />} />
       </Appbar.Header>
 
       <ScrollView style={styles.infoContainer}>
         <View>
           <Text style={styles.infoTitle}>Weight</Text>
 
-          <View style={styles.macrosContainer}>
+          <View>
             <DailyMacroText
               infoType="Weight"
               // value={userInfo.macros.calories}
@@ -44,7 +45,7 @@ const DailyEntryScreen: ComponentType<{
         <View>
           <Text style={styles.infoTitle}>Macros</Text>
 
-          <View style={styles.macrosContainer}>
+          <View>
             <DailyMacroText
               infoType="Calories"
               // value={userInfo.macros.calories}
@@ -72,7 +73,36 @@ const DailyEntryScreen: ComponentType<{
           </View>
         </View>
 
-        <DatePickers />
+        <View>
+          <Text style={styles.infoTitle}>Exercise</Text>
+
+          <ExerciseInfo
+            exercise_name="Bench Press"
+            sets={4}
+            reps={8}
+            weight={120}
+          />
+
+          <ExerciseInfo
+            exercise_name="Bench Press"
+            sets={4}
+            reps={8}
+            weight={120}
+          />
+
+          <ExerciseInfo
+            exercise_name="Bench Press"
+            sets={4}
+            reps={8}
+            weight={120}
+          />
+
+          <View style={styles.addExerciseBtn}>
+            <AddExerciseButton
+              onPress={() => navigation.navigate("AddExerciseScreen")}
+            />
+          </View>
+        </View>
       </ScrollView>
     </View>
   );

@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class MacrosGoal {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "macros_goal_id")
     private Long id;
     private int calories;

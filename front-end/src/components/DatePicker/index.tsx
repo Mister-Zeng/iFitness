@@ -1,67 +1,100 @@
 import React, { FC, useMemo, useState } from "react";
-import {
-  Button,
-  Dimensions,
-  SafeAreaView,
-  TouchableHighlight,
-  View,
-} from "react-native";
-import { Text } from "react-native";
-import createStyles from "./styles";
+import { View, TouchableOpacity } from "react-native";
+import { Text, Image } from "react-native";
+import createStyles, { StyleSheetProps } from "./styles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Buttons from "../Button";
-import { RFValue } from "react-native-responsive-fontsize";
 import CancelButton from "../CancelButton";
 import ConfirmButton from "../ConfirmButton";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import {
+  ARROW_DOWN_ICON,
+  ARROW_UP_ICON,
+  EXPAND_LEFT_ICON,
+  EXPAND_RIGHT_ICON,
+} from "../../assets";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const DatePickers: FC = () => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [dateSelected, setDateSelected] = useState(new Date().toDateString());
 
-  const showDatePicker = () => {
+  const [isDatePickerVisible, setDatePickerVisibility] =
+    useState<boolean>(false);
+
+  const showDatePicker: () => void = () => {
     setDatePickerVisibility(true);
   };
 
-  const hideDatePicker = () => {
+  const hideDatePicker: () => void = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleConfirm: (date: Date) => void = (date: Date) => {
+    setDateSelected(date.toDateString());
     console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
 
-  const Header = () => {
+  const Header: FC = () => {
     return (
-      <View style={{ alignSelf: "center" }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: RFValue(15),
-            paddingTop: RFValue(8),
-          }}
-        >
-          Select Date
-        </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>Select Date</Text>
       </View>
     );
   };
+
+  console.log(new Date().toLocaleString());
+
+  const ModalHeader: FC = () => {
+    const isToday: () => string = () => {
+      const todaysDate: string = new Date().toDateString();
+
+      if (dateSelected === todaysDate) {
+        return "Today";
+      } else {
+        return dateSelected;
+      }
+    };
+
+    return (
+      <TouchableOpacity
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: RFValue(5),
+        }}
+        onPress={showDatePicker}
+      >
+        <Image source={EXPAND_LEFT_ICON} />
+        <Text
+          style={{
+            color: "white",
+            fontSize: RFValue(14),
+            marginLeft: RFValue(5),
+          }}
+        >
+          {isToday()}
+        </Text>
+        {isDatePickerVisible ? (
+          <Image source={ARROW_UP_ICON} />
+        ) : (
+          <Image source={ARROW_DOWN_ICON} />
+        )}
+        <Image source={EXPAND_RIGHT_ICON} />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View>
-      <Button title="Show Date Picker" onPress={showDatePicker} />
+      <ModalHeader />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
-        pickerContainerStyleIOS={{
-          width: Dimensions.get("window").width,
-          alignSelf: "center",
-          backgroundColor: "#6A6A6A",
-          top: 90,
-        }}
+        pickerContainerStyleIOS={styles.pickerContainerStyleIOS}
         customConfirmButtonIOS={ConfirmButton}
         customCancelButtonIOS={CancelButton}
         customHeaderIOS={Header}

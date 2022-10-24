@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 
 interface IProps {
   title: string;
@@ -14,7 +14,7 @@ const RegisterLoginText: FC<IProps> = ({
   onPress,
   disabled,
 }: IProps) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   return (
     <View style={styles.registerContainer}>

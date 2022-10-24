@@ -1,7 +1,7 @@
 import React, { ComponentType, useState, useMemo } from "react";
 import { Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
 import { MacrosType } from "../../models";
@@ -11,15 +11,11 @@ import { macrosConstant } from "../../constants/dailyEntry";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import AuthSelect from "../../providers/auth";
 
-interface IProps {
-  navigation: NavigationProp<ParamListBase>;
-}
-
 const ProfileScreen: ComponentType<{
   route: any;
   jumpTo: (key: string) => void;
 }> = ({ route, jumpTo }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { userInfo, editProfile } = AuthSelect();
 
@@ -33,12 +29,12 @@ const ProfileScreen: ComponentType<{
   const [editMacrosGoal, setEditMacrosGoal] =
     useState<MacrosType>(macrosConstant);
 
-  const handleEditProfile = () => {
+  const handleEditProfile: () => void = () => {
     editProfile(editUserInfo);
     Alert.alert("Success", "Profile has been updated");
   };
 
-  const handleDailyMacrosGoalSubmit = () => {};
+  const handleDailyMacrosGoalSubmit: () => void = () => {};
 
   return (
     <View>

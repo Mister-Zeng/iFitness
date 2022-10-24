@@ -53,6 +53,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(encodedPassword);
         log.info("User {} is registered successfully!", user);
         userRepository.save(user);
+        MacrosGoal goal = user.getMacros_goal();
+        goal.setUser(user);
+        macrosGoalRepository.save(user.getMacros_goal());
+
         return user;
     }
 

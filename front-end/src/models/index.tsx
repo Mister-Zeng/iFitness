@@ -1,5 +1,16 @@
-import { RegisterType, LoginType, UserType, EditUserInfoType } from "./auth";
-import { MacrosType, DailyEntryType, ExerciseType } from "./dailyEntry";
+import {
+  RegisterType,
+  LoginType,
+  UserType,
+  EditUserInfoType,
+  AuthContextType,
+} from "./auth";
+import {
+  MacrosType,
+  DailyEntryType,
+  ExerciseType,
+  EditProgressType,
+} from "./dailyEntry";
 
 export {
   RegisterType,
@@ -9,4 +20,6 @@ export {
   MacrosType,
   DailyEntryType,
   ExerciseType,
+  AuthContextType,
+  EditProgressType,
 };

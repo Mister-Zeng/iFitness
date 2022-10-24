@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react";
 import { ImageBackground, Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import {
   REGISTER_BACKGROUND,
   USER_ICON,
@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const RegisterScreen: FC<IProps> = ({ navigation }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { register } = AuthSelect();
 
@@ -30,11 +30,39 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
     username: "",
     email_address: "",
     password: "",
+    macro_goal: {
+      protein: 0,
+      carbs: 0,
+      fat: 0,
+      calories: 0,
+    },
   });
+  const info = {
+    first_name: "tsdsest",
+    last_name: "tesdt",
+    username: "sdasdas",
+    email_address: "tesdsadsdst@gmail.com",
+    password: "tessddst",
+    macros_goal: {
+      calories: 0,
+      fat: 0,
+      protein: 0,
+      carbs: 0,
+    },
+  };
+  const handleRegister: () => void = () => {
+    if (
+      registerInfo.first_name.trim().length < 1 ||
+      registerInfo.last_name.trim().length < 1 ||
+      registerInfo.username.trim().length < 1 ||
+      registerInfo.email_address.trim().length < 1 ||
+      registerInfo.password.trim().length < 1
+    ) {
+      Alert.alert("Alert", "Please enter all required value");
+    }
 
-  const handleRegister = async () => {
-    // register(registerInfo);
-    // Alert.alert("Success", "You have successfully registered. Please login.");
+    register(info);
+    Alert.alert("Success", "You have successfully registered. Please login.");
     navigation.navigate("MacroScreen");
   };
 

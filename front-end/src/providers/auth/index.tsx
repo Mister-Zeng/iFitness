@@ -4,36 +4,33 @@ import React, {
   FC,
   useContext,
   useState,
-  useEffect,
+  Context,
+  PropsWithChildren,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
 import { UserType, EditUserInfoType } from "../../models";
-import axios, { AxiosResponse } from "axios";
-import { RegisterType, LoginType } from "../../models";
-import { Alert } from "react-native";
-import { NavigationContext, useNavigation } from "@react-navigation/native";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { RegisterType, LoginType, AuthContextType } from "../../models";
 
-export const AuthContext = createContext<{
-  userInfo: UserType;
-  login: (loginInfo: LoginType) => void;
-  register: (registerInfo: RegisterType) => void;
-  editProfile: (editUserInfo: EditUserInfoType) => void;
-}>({
-  userInfo: userInfoConstants,
-  login: () => Promise.resolve(),
-  register: () => Promise.resolve(),
-  editProfile: () => Promise.resolve(),
-});
+export const AuthContext: Context<AuthContextType> =
+  createContext<AuthContextType>({
+    userInfo: userInfoConstants,
+    login: () => Promise.resolve(),
+    register: () => Promise.resolve(),
+    editProfile: () => Promise.resolve(),
+  });
 
-export const AuthProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
-  const instance = axios.create({
+export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
+  const instance: AxiosInstance = axios.create({
     baseURL: "http://localhost:8080/api/v1/",
     timeout: 15000,
   });
 
   const [userInfo, setUserInfo] = useState<UserType>(userInfoConstants);
 
-  const responseBody = (response: AxiosResponse) => response.data;
+  const responseBody: (response: AxiosResponse) => any = (
+    response: AxiosResponse
+  ) => response.data;
 
   const requests = {
     get: (url: string) => instance.get(url).then(responseBody),
@@ -54,7 +51,7 @@ export const AuthProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
       requests.put("editUserInfo", editUserInfo),
   };
 
-  const login = (loginInfo: LoginType) => {
+  const login: (loginInfo: LoginType) => void = (loginInfo: LoginType) => {
     Auth.login(loginInfo)
       .then((data) => {
         setUserInfo(data);
@@ -66,7 +63,9 @@ export const AuthProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
       });
   };
 
-  const register = (registerInfo: RegisterType) => {
+  const register: (registerInfo: RegisterType) => void = (
+    registerInfo: RegisterType
+  ) => {
     Auth.register(registerInfo)
       .then((data) => {
         console.log(data);
@@ -77,7 +76,9 @@ export const AuthProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
       });
   };
 
-  const editProfile = (editUserInfo: EditUserInfoType) => {
+  const editProfile: (editUserInfo: EditUserInfoType) => void = (
+    editUserInfo: EditUserInfoType
+  ) => {
     Auth.editUserInfo(editUserInfo)
       .then((data) => {
         const updatedUserInfo = { ...userInfo, data };
@@ -102,8 +103,8 @@ export const AuthProvider: FC<React.PropsWithChildren<{}>> = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-const AuthSelect = () => {
-  const context = useContext(AuthContext);
+const AuthSelect: () => AuthContextType = () => {
+  const context: AuthContextType = useContext(AuthContext);
 
   if (context === undefined) {
     throw new Error("useAuth must be used within AuthContext");

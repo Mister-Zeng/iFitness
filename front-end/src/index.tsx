@@ -1,16 +1,9 @@
 import { registerRootComponent } from "expo";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { View, StatusBar } from "react-native";
 import Navigation from "./navigation";
 import { Provider as PaperProvider, MD2DarkTheme } from "react-native-paper";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import AuthProvider from "./providers/auth";
-import { userInfoConstants } from "./constants/userInfo";
-import Entypo from "@expo/vector-icons/Entypo";
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { UserType } from "./models";
+import { NavigationContainer } from "@react-navigation/native";
 
 const theme = {
   ...MD2DarkTheme,
@@ -29,14 +22,16 @@ const theme = {
 function App() {
   return (
     <PaperProvider theme={theme}>
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="light-content"
-        translucent={true}
-      />
-      <View style={{ flex: 1 }}>
-        <Navigation />
-      </View>
+      <NavigationContainer>
+        <StatusBar
+          backgroundColor="transparent"
+          barStyle="light-content"
+          translucent={true}
+        />
+        <View style={{ flex: 1 }}>
+          <Navigation />
+        </View>
+      </NavigationContainer>
     </PaperProvider>
   );
 }

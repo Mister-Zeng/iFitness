@@ -1,7 +1,6 @@
 import React, { FC, useMemo } from "react";
-import { Image, TextInput, View, Text } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import createStyles from "./styles";
+import { TextInput, View, Text } from "react-native";
+import createStyles, { StyleSheetProps } from "./styles";
 
 interface IProps {
   infoType: string;
@@ -19,7 +18,7 @@ const DailyMacrosTextInput: FC<IProps> = ({
   measurement,
   ...props
 }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   return (
     <View style={styles.inputIconContainer}>

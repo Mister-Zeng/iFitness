@@ -1,7 +1,6 @@
 import React, { ComponentType, useMemo } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import { LineChart } from "react-native-chart-kit";
 import * as Progress from "react-native-progress";
@@ -9,15 +8,11 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 import AuthSelect from "../../providers/auth";
 
-interface IProps {
-  navigation: NavigationProp<ParamListBase>;
-}
-
 const HomeScreen: ComponentType<{
   route: any;
   jumpTo: (key: string) => void;
 }> = ({ route, jumpTo }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { userInfo } = AuthSelect();
 
@@ -52,6 +47,7 @@ const HomeScreen: ComponentType<{
     propsForBackgroundLines: {
       strokeDasharray: "", // solid background lines with no dashes
     },
+    decimalPlaces: 0,
   };
 
   return (
@@ -82,6 +78,8 @@ const HomeScreen: ComponentType<{
             verticalLabelRotation={25}
             chartConfig={chartConfig}
             bezier
+            withShadow={false}
+            style={{ paddingRight: RFValue(35), marginLeft: RFValue(25) }}
           />
         </View>
         <View style={styles.macroContainer}>
@@ -89,7 +87,7 @@ const HomeScreen: ComponentType<{
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Calories</Text>
             <Progress.Bar
-              progress={0.5}
+              progress={0.77}
               width={320}
               height={25}
               borderRadius={20}
@@ -100,7 +98,7 @@ const HomeScreen: ComponentType<{
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Fat</Text>
             <Progress.Bar
-              progress={0.5}
+              progress={0.65}
               width={320}
               height={25}
               borderRadius={20}
@@ -122,7 +120,7 @@ const HomeScreen: ComponentType<{
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Carb</Text>
             <Progress.Bar
-              progress={0.5}
+              progress={0.7}
               width={320}
               height={25}
               borderRadius={20}

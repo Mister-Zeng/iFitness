@@ -3,23 +3,22 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
 export interface StyleSheetProps {
-  button: ViewStyle;
-  text: TextStyle;
+  addExerciseText: TextStyle;
+  btn: ViewStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
   StyleSheet.create<StyleSheetProps>({
-    button: {
-      width: "30%",
-      alignSelf: "center",
-      padding: RFValue(5),
+    addExerciseText: {
+      color: Colors.WHITE,
+    },
+    btn: {
+      backgroundColor: Colors.ORANGE,
+      width: RFValue(80),
+      justifyContent: "center",
       alignItems: "center",
       borderRadius: RFValue(50),
-    },
-    text: {
-      color: Colors.WHITE,
-      fontSize: RFValue(15),
-      fontWeight: "bold",
+      padding: RFValue(5),
     },
   });
 

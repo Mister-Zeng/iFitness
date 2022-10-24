@@ -1,36 +1,35 @@
 import { DailyEntryType, MacrosType } from "../dailyEntry";
 
-interface RegisterType {
+type LoginType = {
+  username: string;
+  password: string;
+};
+interface RegisterType extends LoginType {
   first_name: string;
   last_name: string;
-  username: string;
   email_address: string;
-  password: string;
 }
 
-interface LoginType {
-  username: string;
-  password: string;
-}
-
-interface UserType {
+interface UserType extends RegisterType {
   id: number;
-  first_name: string;
-  last_name: string;
-  username: string;
-  email_address: string;
-  password: string;
   role: string;
   token: string;
   daily_entry: DailyEntryType[];
   macros: MacrosType;
 }
 
-interface EditUserInfoType {
+type EditUserInfoType = {
   username: string;
   first_name: string;
   last_name: string;
   email_address: string;
+};
+
+interface AuthContextType {
+  userInfo: UserType;
+  login: (loginInfo: LoginType) => void;
+  register: (registerInfo: RegisterType) => void;
+  editProfile: (editUserInfo: EditUserInfoType) => void;
 }
 
-export { RegisterType, LoginType, UserType, EditUserInfoType };
+export { RegisterType, LoginType, UserType, EditUserInfoType, AuthContextType };

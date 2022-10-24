@@ -2,6 +2,8 @@ export { default  as InitialScreen } from './InitialScreen';
 export { default  as RegisterScreen } from './RegisterScreen';
 export { default  as LoginScreen } from './LoginScreen';
 export { default  as MacroScreen } from './MacroScreen';
+export { default  as AddExerciseScreen } from './AddExerciseScreen';
+export { default  as EditProgressScreen } from './EditProgressScreen';
 export { default  as HomeScreen } from './HomeScreen';
 export { default  as DailyEntryScreen } from './DailyEntryScreen';
 export { default  as ProgressScreen } from './ProgressScreen';

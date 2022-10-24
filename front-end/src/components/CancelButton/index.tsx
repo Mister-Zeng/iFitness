@@ -1,18 +1,18 @@
-import React from "react";
+import React, { FC, useMemo } from "react";
 import { TouchableOpacity, Image, GestureResponderEvent } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { CustomCancelButtonPropTypes } from "react-native-modal-datetime-picker";
 import { CANCEL_ICON } from "../../assets";
+import createStyles, { StyleSheetProps } from "./styles";
 
 type IProps = {
   onPress: (event: GestureResponderEvent) => void;
 };
 
-const CancelButton = ({ onPress }: IProps) => {
+const CancelButton: FC<CustomCancelButtonPropTypes> = ({ onPress }: IProps) => {
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
+
   return (
-    <TouchableOpacity
-      style={{ bottom: RFValue(155), width: RFValue(25), height: RFValue(25) }}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Image source={CANCEL_ICON} />
     </TouchableOpacity>
   );

@@ -3,39 +3,43 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
 export interface StyleSheetProps {
-  infoType: TextStyle;
-  input: ViewStyle;
-  inputIconContainer: ViewStyle;
-  measurement: TextStyle;
+  body: ViewStyle;
+  title: TextStyle;
+  formContainer: ViewStyle;
+  textInput: ViewStyle;
+  infoContainer: ViewStyle;
+  saveButton: ViewStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
   StyleSheet.create<StyleSheetProps>({
-    infoType: {
-      fontSize: RFValue(12),
-      color: Colors.ORANGE,
+    body: {
+      backgroundColor: Colors.BLACK,
+      height: "100%",
     },
-    input: {
-      height: RFValue(20),
-      margin: RFValue(5),
+    title: {
+      color: Colors.ORANGE,
+      fontSize: RFValue(12),
+    },
+    formContainer: {
+      flexDirection: "column",
+      paddingHorizontal: RFValue(30),
+      marginTop: RFValue(50),
+    },
+    textInput: {
       borderBottomWidth: 1,
       borderBottomColor: Colors.GREY,
       width: RFValue(200),
-      fontSize: RFValue(12),
       color: Colors.WHITE,
       textAlign: "center",
     },
-    inputIconContainer: {
+    infoContainer: {
       flexDirection: "row",
-      alignItems: "center",
-      paddingHorizontal: RFValue(30),
       justifyContent: "space-between",
+      margin: RFValue(5),
     },
-    measurement: {
-      fontSize: RFValue(12),
-      color: Colors.ORANGE,
-      position: "absolute",
-      right: 45,
+    saveButton: {
+      marginTop: RFValue(20),
     },
   });
 

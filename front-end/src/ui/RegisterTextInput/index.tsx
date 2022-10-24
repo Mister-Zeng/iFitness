@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import { Image, TextInput, View, ImageSourcePropType } from "react-native";
-import createStyles from "./styles";
+import createStyles, { StyleSheetProps } from "./styles";
 
 interface IProps {
   title: string;
@@ -14,7 +14,7 @@ interface IProps {
   secureTextEntry?: boolean;
 }
 const RegisterTextInput: FC<IProps> = ({ title, icon, ...props }) => {
-  const styles = useMemo(() => createStyles(), []);
+  const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   return (
     <View style={styles.inputIconContainer}>
