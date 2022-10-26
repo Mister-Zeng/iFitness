@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { ImageBackground, Alert, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
@@ -15,6 +15,8 @@ import InitialScreenButton from "../../components/InitialScreenButton";
 import { RegisterType } from "../../models";
 
 import AuthSelect from "../../providers/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -22,34 +24,16 @@ interface IProps {
 const RegisterScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { register } = AuthSelect();
+  const { isLoading } = AuthSelect();
 
-  const [registerInfo, setRegisterInfo] = React.useState<RegisterType>({
+  const [registerInfo, setRegisterInfo] = useState<RegisterType>({
     first_name: "",
     last_name: "",
     username: "",
     email_address: "",
     password: "",
-    macro_goal: {
-      protein: 0,
-      carbs: 0,
-      fat: 0,
-      calories: 0,
-    },
   });
-  const info = {
-    first_name: "tsdsest",
-    last_name: "tesdt",
-    username: "sdasdas",
-    email_address: "tesdsadsdst@gmail.com",
-    password: "tessddst",
-    macros_goal: {
-      calories: 0,
-      fat: 0,
-      protein: 0,
-      carbs: 0,
-    },
-  };
+
   const handleRegister: () => void = () => {
     if (
       registerInfo.first_name.trim().length < 1 ||
@@ -60,14 +44,15 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
     ) {
       Alert.alert("Alert", "Please enter all required value");
     }
+    AsyncStorage.setItem("userInfo", JSON.stringify(registerInfo));
 
-    register(info);
-    Alert.alert("Success", "You have successfully registered. Please login.");
     navigation.navigate("MacroScreen");
   };
 
   return (
     <View style={styles.body}>
+      <Spinner visible={isLoading} />
+
       <ImageBackground source={REGISTER_BACKGROUND} style={styles.background}>
         <View style={styles.footer}>
           <Text style={styles.title}>Add Your Details Below To Sign Up</Text>

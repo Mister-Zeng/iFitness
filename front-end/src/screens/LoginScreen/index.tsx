@@ -14,6 +14,7 @@ import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import { LoginType } from "../../models";
 import AuthSelect from "../../providers/auth";
+import Spinner from "react-native-loading-spinner-overlay";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -22,7 +23,7 @@ interface IProps {
 const LoginScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { login } = AuthSelect();
+  const { login, isLoading } = AuthSelect();
 
   const [loginInfo, setLoginInfo] = useState<LoginType>({
     username: "",
@@ -69,6 +70,8 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
               secureTextEntry={true}
             />
           </View>
+
+          <Spinner visible={isLoading} />
 
           <InitialScreenButton
             title="Login"

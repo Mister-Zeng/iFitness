@@ -1,4 +1,4 @@
-import React, { ComponentType, useMemo } from "react";
+import React, { ComponentType, FC, useMemo } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
@@ -11,10 +11,7 @@ interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const ProgressScreen: ComponentType<{
-  route: any;
-  jumpTo: (key: string) => void;
-}> = ({ route, jumpTo }) => {
+const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const data = {

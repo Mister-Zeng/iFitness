@@ -1,9 +1,10 @@
 import { registerRootComponent } from "expo";
 import React from "react";
-import { View, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import Navigation from "./navigation";
 import { Provider as PaperProvider, MD2DarkTheme } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider } from "./providers/auth";
 
 const theme = {
   ...MD2DarkTheme,
@@ -21,18 +22,18 @@ const theme = {
 
 function App() {
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
+    <AuthProvider>
+      <PaperProvider theme={theme}>
         <StatusBar
           backgroundColor="transparent"
           barStyle="light-content"
           translucent={true}
         />
-        <View style={{ flex: 1 }}>
+        <NavigationContainer>
           <Navigation />
-        </View>
-      </NavigationContainer>
-    </PaperProvider>
+        </NavigationContainer>
+      </PaperProvider>
+    </AuthProvider>
   );
 }
 

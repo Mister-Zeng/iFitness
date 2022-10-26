@@ -10,11 +10,8 @@ export interface StyleSheetProps {
   inputContainer: ViewStyle;
   infoType: TextStyle;
   input: TextStyle;
-  userInfoContainer: ViewStyle;
-  macroInfoContainer: ViewStyle;
+  inputIconContainer: ViewStyle;
   measurement: TextStyle;
-  macroinput: TextStyle;
-  macroInfoType: TextStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
@@ -37,7 +34,6 @@ const createStyles: () => StyleSheetProps = () =>
       color: Colors.ORANGE,
       alignSelf: "center",
       marginTop: RFValue(20),
-      marginBottom: RFValue(5),
     },
     saveButtonContainer: {
       marginTop: RFValue(20),
@@ -49,40 +45,25 @@ const createStyles: () => StyleSheetProps = () =>
       fontSize: RFValue(12),
       color: Colors.ORANGE,
     },
-    macroInfoType: {
-      fontSize: RFValue(12),
-      color: Colors.ORANGE,
-      width: RFValue(130),
-    },
     input: {
       height: RFValue(20),
       margin: RFValue(5),
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.GREY,
+      width: RFValue(200),
       fontSize: RFValue(12),
       color: Colors.WHITE,
+      textAlign: "right",
     },
-    macroinput: {
-      height: RFValue(20),
-      margin: RFValue(5),
-      fontSize: RFValue(12),
-      width: RFValue(110),
-      color: Colors.WHITE,
-    },
-    userInfoContainer: {
+    inputIconContainer: {
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: RFValue(30),
       justifyContent: "space-between",
-    },
-    macroInfoContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      paddingHorizontal: RFValue(30),
     },
     measurement: {
       fontSize: RFValue(12),
       color: Colors.ORANGE,
-      width: RFValue(60),
     },
   });
 

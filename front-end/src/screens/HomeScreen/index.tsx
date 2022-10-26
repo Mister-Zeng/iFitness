@@ -1,4 +1,4 @@
-import React, { ComponentType, useMemo } from "react";
+import React, { ComponentType, FC, useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
@@ -7,14 +7,22 @@ import * as Progress from "react-native-progress";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 import AuthSelect from "../../providers/auth";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-const HomeScreen: ComponentType<{
-  route: any;
-  jumpTo: (key: string) => void;
-}> = ({ route, jumpTo }) => {
+interface IProps {
+  navigation: NavigationProp<ParamListBase>;
+}
+const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { userInfo } = AuthSelect();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (userInfo.token !== null) {
+      setIsLoaded(true);
+    }
+  }, [userInfo]);
 
   const data = {
     labels: [
@@ -50,7 +58,7 @@ const HomeScreen: ComponentType<{
     decimalPlaces: 0,
   };
 
-  return (
+  return isLoaded ? (
     <View style={styles.screen}>
       <Appbar.Header mode="center-aligned">
         <Appbar.Content title="Home" />
@@ -60,10 +68,9 @@ const HomeScreen: ComponentType<{
         <View style={styles.greetingContainer}>
           <Text style={styles.greeting}>Hello </Text>
           <Text style={styles.userName}>
-            {userInfo &&
-              userInfo.first_name[0].toUpperCase() +
-                userInfo.first_name.slice(1) +
-                "!"}
+            {userInfo.first_name[0].toUpperCase() +
+              userInfo.first_name.slice(1) +
+              "!"}
           </Text>
         </View>
 
@@ -131,6 +138,8 @@ const HomeScreen: ComponentType<{
         </View>
       </ScrollView>
     </View>
+  ) : (
+    <Text>loading</Text>
   );
 };
 

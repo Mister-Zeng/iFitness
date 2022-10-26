@@ -6,8 +6,9 @@ import { Appbar } from "react-native-paper";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import AddExerciseButton from "../../components/AddExerciseButton";
 import ExerciseInfo from "../../components/ExerciseInfo";
-import DailyMacroText from "../../ui/DailyMacroText";
 import { EditProgressType } from "../../models";
+import Spinner from "react-native-loading-spinner-overlay/lib";
+import AuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -15,6 +16,8 @@ interface IProps {
 
 const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
+
+  const { isLoading } = AuthSelect();
 
   const [editProgressInfo, setEditProgressInfo] = useState<EditProgressType>({
     weight: 0,
@@ -46,6 +49,8 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
           onPress={() => navigation.goBack()}
         />
       </Appbar.Header>
+
+      <Spinner visible={isLoading} />
 
       <ScrollView style={styles.infoContainer}>
         <View>

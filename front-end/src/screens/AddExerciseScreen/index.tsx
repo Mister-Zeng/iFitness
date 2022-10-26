@@ -4,6 +4,8 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
+import Spinner from "react-native-loading-spinner-overlay/lib";
+import AuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -11,6 +13,8 @@ interface IProps {
 
 const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
+
+  const { isLoading } = AuthSelect();
 
   const [exerciseInfo, setExerciseInfo] = useState({
     exercise_name: "",
@@ -38,6 +42,8 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Add Exercise" />
       </Appbar.Header>
+
+      <Spinner visible={isLoading} />
 
       <View style={styles.formContainer}>
         <View style={styles.infoContainer}>

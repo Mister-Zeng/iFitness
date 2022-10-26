@@ -11,11 +11,11 @@ interface RegisterType extends LoginType {
 }
 
 interface UserType extends RegisterType {
-  id: number;
-  role: string;
+  macros_goal: any;
+  id?: number;
+  role?: string;
   token: string;
   daily_entry: DailyEntryType[];
-  macros: MacrosType;
 }
 
 type EditUserInfoType = {
@@ -27,9 +27,11 @@ type EditUserInfoType = {
 
 interface AuthContextType {
   userInfo: UserType;
+  isLoading: boolean;
   login: (loginInfo: LoginType) => void;
   register: (registerInfo: RegisterType) => void;
   editProfile: (editUserInfo: EditUserInfoType) => void;
+  editMacro: (macrosInfo: MacrosType) => void;
 }
 
 export { RegisterType, LoginType, UserType, EditUserInfoType, AuthContextType };
