@@ -53,8 +53,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(encodedPassword);
         log.info("User {} is registered successfully!", user);
         userRepository.save(user);
-        MacrosGoal goal = user.getMacros_goal();
-        goal.setUser(user);
+
+        MacrosGoal macrosGoal = user.getMacros_goal();
+        macrosGoal.setUser(user);
         macrosGoalRepository.save(user.getMacros_goal());
 
         return user;
@@ -72,10 +73,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User editDailyMacrosGoalInfo(EditMacrosGoal editMacrosGoal) {
-        Optional<User> userFromDatabase = userRepository.findByUsername(editMacrosGoal.username());
-        User userInfo = (userFromDatabase.get());
-        return userInfo;
+    public MacrosGoal editDailyMacrosGoalInfo(MacrosGoal macrosGoal) {
+//        Optional<User> userFromDatabase = userRepository.findByUsername(editMacrosGoal.username());
+//        User userInfo = (userFromDatabase.get());
+//        MacrosGoal mg = new MacrosGoal();
+//        mg.setFat(editMacrosGoal.fat());
+//        mg.setProtein(editMacrosGoal.protein());
+//        mg.setCarbs(editMacrosGoal.carbs());
+//        mg.setCalories(editMacrosGoal.calories());
+//        mg.setUser(userInfo);
+        macrosGoalRepository.save(macrosGoal);
+      return macrosGoal;
     }
 
 

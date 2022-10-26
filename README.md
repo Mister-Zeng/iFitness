@@ -18,6 +18,9 @@ This is the solution to the iFitness Mobile App
 
 ## Overview
 
+### [Click Here To View Prototype On Figma](https://www.figma.com/proto/DfM12QFmp1UaJXW7bAwraG/iFitness?node-id=1%3A2&scaling=scale-down&page-id=0%3A1)
+
+
 ### The challenge
 
 Users should be able to:

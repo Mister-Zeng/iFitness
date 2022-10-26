@@ -32,7 +32,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<DailyEntry> daily_entry;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "macros_goal_id")
     private MacrosGoal macros_goal;
 
 
