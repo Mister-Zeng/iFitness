@@ -41,7 +41,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header mode="center-aligned">
+      <Appbar.Header style={styles.header}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Progress" />
         <Appbar.Action

@@ -35,19 +35,47 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   });
 
   const handleEditProfile: () => void = () => {
-    editProfile(editUserInfo);
-    Alert.alert("Success", "Profile has been updated");
-    navigation.navigate("ProfileScreen");
+    let emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+    if (
+      editUserInfo.first_name.trim().length < 1 ||
+      editUserInfo.last_name.trim().length < 1 ||
+      editUserInfo.username.trim().length < 1 ||
+      editUserInfo.email_address.trim().length < 1
+    ) {
+      Alert.alert("Alert", "Please enter all required value");
+    } else if (emailReg.test(editUserInfo.email_address) === false) {
+      Alert.alert("Alert", "Please enter valid email address");
+    } else {
+      editProfile(editUserInfo);
+      Alert.alert("Success", "Profile has been updated");
+      navigation.navigate("ProfileScreen");
+    }
   };
 
   const handleDailyMacrosGoalSubmit: () => void = () => {
-    editMacro(editMacrosGoal);
-    navigation.navigate("ProfileScreen");
+    if (
+      editMacrosGoal.calories === null ||
+      isNaN(editMacrosGoal.calories) ||
+      editMacrosGoal.fat === null ||
+      isNaN(editMacrosGoal.fat) ||
+      editMacrosGoal.protein === null ||
+      isNaN(editMacrosGoal.protein) ||
+      editMacrosGoal.carbs === null ||
+      isNaN(editMacrosGoal.carbs) ||
+      editMacrosGoal === null
+    ) {
+      Alert.alert("Alert", "Please enter value in number format");
+    } else {
+      editMacro(editMacrosGoal);
+      Alert.alert("Success", "Macros goal has been updated");
+      navigation.navigate("ProfileScreen");
+    }
   };
 
   return (
     <View style={styles.body}>
-      <Appbar.Header mode="center-aligned">
+      <Appbar.Header style={styles.header}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Profile" />
       </Appbar.Header>
@@ -128,7 +156,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.inputContainer}>
             <DailyMacrosTextInput
               infoType="Calories"
-              value={userInfo.macros_goal.calories.toString()}
+              value={userInfo.macros_goal.calories}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,
@@ -141,7 +169,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Fat"
-              value={userInfo.macros_goal.fat.toString()}
+              value={userInfo.macros_goal.fat}
               onChangeText={(text) =>
                 setEditMacrosGoal({ ...editMacrosGoal, fat: parseInt(text) })
               }
@@ -151,7 +179,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Protein"
-              value={userInfo.macros_goal.protein.toString()}
+              value={userInfo.macros_goal.protein}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,
@@ -164,7 +192,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Carbs"
-              value={userInfo.macros_goal.carbs.toString()}
+              value={userInfo.macros_goal.carbs}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,

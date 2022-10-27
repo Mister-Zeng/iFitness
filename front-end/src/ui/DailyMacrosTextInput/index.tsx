@@ -5,7 +5,7 @@ import createStyles, { StyleSheetProps } from "./styles";
 interface IProps {
   infoType: string;
   editable?: boolean;
-  value: string;
+  value: number | null;
   autoCapitalize: any;
   onChangeText: (text: string) => void;
   autoCorrect: boolean;
@@ -25,7 +25,7 @@ const DailyMacrosTextInput: FC<IProps> = ({
       <Text style={styles.infoType}>{infoType}</Text>
       <TextInput
         style={styles.input}
-        placeholder={value}
+        placeholder={value?.toString()}
         placeholderTextColor="white"
         editable={editable}
         {...props}

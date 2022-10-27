@@ -12,15 +12,17 @@ import { userInfoConstants } from "../../constants/userInfo";
 import { UserType, EditUserInfoType, MacrosType } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { RegisterType, LoginType, AuthContextType } from "../../models";
+import { Alert } from "react-native";
 
 export const AuthContext: Context<AuthContextType> =
   createContext<AuthContextType>({
     isLoading: false,
     userInfo: userInfoConstants,
     login: () => Promise.resolve(),
-    register: () => Promise.resolve(),
+    register: () => ({} as Promise<string | undefined>),
     editProfile: () => Promise.resolve(),
     editMacro: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
   });
 
 export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
@@ -52,22 +54,31 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     }
   };
 
-  const register: (registerInfo: RegisterType) => Promise<void> = async (
+  const register: (
     registerInfo: RegisterType
-  ): Promise<void> => {
+  ) => Promise<string | undefined> = async (
+    registerInfo: RegisterType
+  ): Promise<string | undefined> => {
     try {
       setIsLoading(true);
 
-      const response: AxiosResponse = await instance.post(
+      const response: AxiosResponse<UserType> = await instance.post(
         "register",
         registerInfo
       );
       const userInfo: UserType = response.data;
+
       setUserInfo(userInfo);
+
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-      console.log(userInfo);
 
       setIsLoading(false);
+
+      if (response.status === 200) {
+        return Promise.resolve("success");
+      } else {
+        return Promise.resolve("unsucessful");
+      }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -113,9 +124,28 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       );
       const userInfos: UserType = response.data;
 
-      setUserInfo({ ...userInfo, macros_goal: userInfos.macros_goal });
+      console.log(userInfos);
+
+      setUserInfo({ ...userInfo, macros_goal: editMacroInfo });
+
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       console.log(userInfos);
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  const logout: () => Promise<void> = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+
+      await AsyncStorage.removeItem("userInfo");
+      setUserInfo(userInfoConstants);
+
+      Alert.alert("Logout", "You have been logged out successfully");
 
       setIsLoading(false);
     } catch (error) {
@@ -146,6 +176,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     isLoading,
     userInfo,
     login,
+    logout,
     register,
     editProfile,
     editMacro,

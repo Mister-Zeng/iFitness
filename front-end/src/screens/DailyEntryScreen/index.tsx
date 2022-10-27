@@ -20,7 +20,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header mode="center-aligned">
+      <Appbar.Header style={styles.header}>
         <Appbar.Action
           icon="clipboard-edit-outline"
           onPress={() => navigation.navigate("EditProgressScreen")}

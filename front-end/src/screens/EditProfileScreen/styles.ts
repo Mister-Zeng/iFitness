@@ -3,6 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
 export interface StyleSheetProps {
+  header: ViewStyle;
   body: ViewStyle;
   profilePicture: ViewStyle;
   infoTitle: TextStyle;
@@ -16,6 +17,9 @@ export interface StyleSheetProps {
 
 const createStyles: () => StyleSheetProps = () =>
   StyleSheet.create<StyleSheetProps>({
+    header: {
+      backgroundColor: Colors.GREY,
+    },
     body: {
       backgroundColor: Colors.BLACK,
       height: "100%",

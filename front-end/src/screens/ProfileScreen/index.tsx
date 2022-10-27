@@ -9,6 +9,7 @@ import { EditUserInfoType } from "../../models/auth";
 import { macrosConstant } from "../../constants/dailyEntry";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import AuthSelect from "../../providers/auth";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,7 +18,7 @@ interface IProps {
 const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { userInfo } = AuthSelect();
+  const { userInfo, logout, isLoading } = AuthSelect();
 
   const [profileInfo, setProfileInfo] = useState<EditUserInfoType>({
     username: userInfo.username,
@@ -32,15 +33,22 @@ const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   return (
     <View style={styles.body}>
-      <Appbar.Header mode="center-aligned">
+      <Appbar.Header style={styles.header}>
         <Appbar.Action
           icon="clipboard-edit-outline"
           onPress={() => navigation.navigate("EditProfileScreen")}
         />
 
         <Appbar.Content title="Profile" />
-        <Appbar.Action icon="logout" onPress={() => {}} />
+        <Appbar.Action
+          icon="logout"
+          onPress={() => {
+            logout();
+          }}
+        />
       </Appbar.Header>
+
+      <Spinner visible={isLoading} />
 
       <View>
         <Text style={styles.infoTitle}>Personal Details</Text>

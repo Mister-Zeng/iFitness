@@ -60,7 +60,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   return isLoaded ? (
     <View style={styles.screen}>
-      <Appbar.Header mode="center-aligned">
+      <Appbar.Header style={styles.header}>
         <Appbar.Content title="Home" />
       </Appbar.Header>
 

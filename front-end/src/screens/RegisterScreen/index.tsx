@@ -32,9 +32,12 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
     username: "",
     email_address: "",
     password: "",
+    macros_goal: { calories: 0, protein: 0, carbs: 0, fat: 0 },
   });
 
   const handleRegister: () => void = () => {
+    let emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
     if (
       registerInfo.first_name.trim().length < 1 ||
       registerInfo.last_name.trim().length < 1 ||
@@ -43,10 +46,13 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
       registerInfo.password.trim().length < 1
     ) {
       Alert.alert("Alert", "Please enter all required value");
-    }
-    AsyncStorage.setItem("userInfo", JSON.stringify(registerInfo));
+    } else if (emailReg.test(registerInfo.email_address) === false) {
+      Alert.alert("Alert", "Please enter valid email address");
+    } else {
+      AsyncStorage.setItem("userInfo", JSON.stringify(registerInfo));
 
-    navigation.navigate("MacroScreen");
+      navigation.navigate("MacroScreen");
+    }
   };
 
   return (

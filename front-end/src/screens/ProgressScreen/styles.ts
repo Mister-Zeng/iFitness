@@ -1,14 +1,9 @@
-import {
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
 export interface StyleSheetProps {
+  header: ViewStyle;
   container: ViewStyle;
   infoContainer: ViewStyle;
   weightContainer: ViewStyle;
@@ -17,6 +12,9 @@ export interface StyleSheetProps {
 
 const createStyles: () => StyleSheetProps = () =>
   StyleSheet.create<StyleSheetProps>({
+    header: {
+      backgroundColor: Colors.GREY,
+    },
     container: {
       backgroundColor: Colors.BLACK,
       height: "100%",

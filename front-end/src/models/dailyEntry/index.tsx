@@ -8,10 +8,10 @@ type DailyEntryType = {
 
 type MacrosType = {
   id?: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  calories: number | null;
+  protein: number | null;
+  carbs: number | null;
+  fat: number | null;
 };
 
 type ExerciseType = {

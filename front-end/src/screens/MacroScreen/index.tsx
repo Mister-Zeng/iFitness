@@ -10,6 +10,7 @@ import { MacrosType, RegisterType } from "../../models";
 import { Appbar } from "react-native-paper";
 import AuthSelect from "../../providers/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -18,33 +19,53 @@ interface IProps {
 const MacroScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { register } = AuthSelect();
+  const { register, isLoading } = AuthSelect();
 
   const [macrosInfo, setMacrosInfo] = React.useState<MacrosType>({
-    calories: 0,
-    fat: 0,
-    protein: 0,
-    carbs: 0,
+    calories: null,
+    protein: null,
+    carbs: null,
+    fat: null,
   });
 
   const handleRegister: () => void = async () => {
     const jsonValue: string | null = await AsyncStorage.getItem("userInfo");
     const value: RegisterType = JSON.parse(jsonValue as string);
 
-    register({ ...value, macros_goal: macrosInfo });
+    if (
+      macrosInfo.calories === null ||
+      isNaN(macrosInfo.calories) ||
+      macrosInfo.fat === null ||
+      isNaN(macrosInfo.fat) ||
+      macrosInfo.protein === null ||
+      isNaN(macrosInfo.protein) ||
+      macrosInfo.carbs === null ||
+      isNaN(macrosInfo.carbs) ||
+      macrosInfo == null
+    ) {
+      Alert.alert("Alert", "Please enter value in number format");
+    } else {
+      const status: string | undefined = await register({
+        ...value,
+        macros_goal: macrosInfo,
+      });
 
-    Alert.alert("Success", "You have successfully registered. Please login.");
-    navigation.navigate("LoginScreen");
+      if (status === "success") {
+        Alert.alert(
+          "Success",
+          "You have successfully registered. Please login."
+        );
+        navigation.navigate("LoginScreen");
+      }
+    }
   };
 
   return (
     <View style={styles.body}>
+      <Spinner visible={isLoading} />
       <ImageBackground source={MACRO_BACKGROUND} style={styles.background}>
         <View style={{ width: "100%" }}>
-          <Appbar.Header
-            style={{ backgroundColor: "transparent" }}
-            mode="small"
-          >
+          <Appbar.Header style={{ backgroundColor: "transparent" }}>
             <Appbar.BackAction
               onPress={() => navigation.navigate("RegisterScreen")}
             />
