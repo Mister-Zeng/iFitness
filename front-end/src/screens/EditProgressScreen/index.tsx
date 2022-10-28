@@ -60,7 +60,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacrosTextInput
               infoType="Weight"
               // value={userInfo.macros.calories}
-              value={editProgressInfo.weight.toString()}
+              value={editProgressInfo.weight}
               measurement="Lbs"
               onChangeText={(text) =>
                 setEditProgressInfo({
@@ -81,7 +81,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacrosTextInput
               infoType="Calories"
               // value={userInfo.macros.calories}
-              value={editProgressInfo.macros.calories.toString()}
+              value={editProgressInfo.macros.calories}
               measurement="Grams"
               onChangeText={(text) =>
                 setEditProgressInfo({
@@ -96,7 +96,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacrosTextInput
               infoType="Fat"
               // value={userInfo.macros.fat}
-              value={editProgressInfo.macros.fat.toString()}
+              value={editProgressInfo.macros.fat}
               measurement="Grams"
               onChangeText={(text) =>
                 setEditProgressInfo({
@@ -111,7 +111,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacrosTextInput
               infoType="Protein"
               // value={userInfo.macros.protein}
-              value={editProgressInfo.macros.protein.toString()}
+              value={editProgressInfo.macros.protein}
               measurement="Grams"
               onChangeText={(text) =>
                 setEditProgressInfo({
@@ -126,7 +126,7 @@ const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacrosTextInput
               infoType="Carbs"
               // value={userInfo.macros.carbs}
-              value={editProgressInfo.macros.carbs.toString()}
+              value={editProgressInfo.macros.carbs}
               measurement="Grams"
               onChangeText={(text) =>
                 setEditProgressInfo({

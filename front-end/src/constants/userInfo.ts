@@ -1,13 +1,13 @@
 const userInfoConstants = {
   id: 0,
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   username: "",
-  email_address: "",
+  emailAddress: "",
   password: "",
   role: "user",
   token: "",
-  daily_entry: [
+  dailyEntry: [
     {
       id: 0,
       date: new Date(),
@@ -30,7 +30,7 @@ const userInfoConstants = {
       ],
     },
   ],
-  macros_goal: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+  macrosGoal: { calories: 0, protein: 0, carbs: 0, fat: 0 },
 };
 
 export { userInfoConstants };

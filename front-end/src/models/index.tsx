@@ -4,6 +4,7 @@ import {
   UserType,
   EditUserInfoType,
   AuthContextType,
+  AuthConfigType,
 } from "./auth";
 import {
   MacrosType,
@@ -13,6 +14,7 @@ import {
 } from "./dailyEntry";
 
 export {
+  AuthConfigType,
   RegisterType,
   LoginType,
   UserType,

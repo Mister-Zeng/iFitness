@@ -21,30 +21,29 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const [editUserInfo, setEditUserInfo] = useState<EditUserInfoType>({
     username: userInfo.username,
-    first_name: userInfo.first_name,
-    last_name: userInfo.last_name,
-    email_address: userInfo.email_address,
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    emailAddress: userInfo.emailAddress,
   });
-
+  console.log(editUserInfo);
   const [editMacrosGoal, setEditMacrosGoal] = useState<MacrosType>({
-    id: userInfo.macros_goal.id,
-    calories: userInfo.macros_goal.calories,
-    carbs: userInfo.macros_goal.carbs,
-    fat: userInfo.macros_goal.fat,
-    protein: userInfo.macros_goal.protein,
+    id: userInfo.macrosGoal.id,
+    calories: userInfo.macrosGoal.calories,
+    carbs: userInfo.macrosGoal.carbs,
+    fat: userInfo.macrosGoal.fat,
+    protein: userInfo.macrosGoal.protein,
   });
 
   const handleEditProfile: () => void = () => {
     let emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (
-      editUserInfo.first_name.trim().length < 1 ||
-      editUserInfo.last_name.trim().length < 1 ||
-      editUserInfo.username.trim().length < 1 ||
-      editUserInfo.email_address.trim().length < 1
+      editUserInfo.firstName.trim().length < 1 ||
+      editUserInfo.lastName.trim().length < 1 ||
+      editUserInfo.emailAddress.trim().length < 1
     ) {
       Alert.alert("Alert", "Please enter all required value");
-    } else if (emailReg.test(editUserInfo.email_address) === false) {
+    } else if (emailReg.test(editUserInfo.emailAddress) === false) {
       Alert.alert("Alert", "Please enter valid email address");
     } else {
       editProfile(editUserInfo);
@@ -107,9 +106,9 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.infoType}>First Name</Text>
             <TextInput
               style={styles.input}
-              placeholder={userInfo.first_name}
+              placeholder={userInfo.firstName}
               onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, first_name: text })
+                setEditUserInfo({ ...editUserInfo, firstName: text })
               }
               placeholderTextColor="#6A6A6A"
               autoCapitalize="none"
@@ -121,9 +120,9 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.infoType}>Last name</Text>
             <TextInput
               style={styles.input}
-              placeholder={userInfo.last_name}
+              placeholder={userInfo.lastName}
               onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, last_name: text })
+                setEditUserInfo({ ...editUserInfo, lastName: text })
               }
               placeholderTextColor="#6A6A6A"
               autoCapitalize="none"
@@ -135,9 +134,9 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.infoType}>Email Address</Text>
             <TextInput
               style={styles.input}
-              placeholder={userInfo.email_address}
+              placeholder={userInfo.emailAddress}
               onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, email_address: text })
+                setEditUserInfo({ ...editUserInfo, emailAddress: text })
               }
               placeholderTextColor="#6A6A6A"
               autoCapitalize="none"
@@ -156,7 +155,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.inputContainer}>
             <DailyMacrosTextInput
               infoType="Calories"
-              value={userInfo.macros_goal.calories}
+              value={userInfo.macrosGoal.calories}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,
@@ -169,7 +168,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Fat"
-              value={userInfo.macros_goal.fat}
+              value={userInfo.macrosGoal.fat}
               onChangeText={(text) =>
                 setEditMacrosGoal({ ...editMacrosGoal, fat: parseInt(text) })
               }
@@ -179,7 +178,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Protein"
-              value={userInfo.macros_goal.protein}
+              value={userInfo.macrosGoal.protein}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,
@@ -192,7 +191,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
             <DailyMacrosTextInput
               infoType="Carbs"
-              value={userInfo.macros_goal.carbs}
+              value={userInfo.macrosGoal.carbs}
               onChangeText={(text) =>
                 setEditMacrosGoal({
                   ...editMacrosGoal,

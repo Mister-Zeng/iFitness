@@ -5,6 +5,7 @@ export interface StyleSheetProps {
   headerContainer: ViewStyle;
   headerText: TextStyle;
   pickerContainerStyleIOS: ViewStyle;
+  dateTimePickerButtom: ViewStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
@@ -22,6 +23,12 @@ const createStyles: () => StyleSheetProps = () =>
       alignSelf: "center",
       backgroundColor: "#6A6A6A",
       top: 90,
+    },
+    dateTimePickerButtom: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: RFValue(5),
     },
   });
 

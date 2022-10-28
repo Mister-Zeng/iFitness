@@ -58,12 +58,7 @@ const DatePickers: FC = () => {
 
     return (
       <TouchableOpacity
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: RFValue(5),
-        }}
+        style={styles.dateTimePickerButtom}
         onPress={showDatePicker}
       >
         <Image source={EXPAND_LEFT_ICON} />

@@ -41,13 +41,13 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
       isNaN(macrosInfo.protein) ||
       macrosInfo.carbs === null ||
       isNaN(macrosInfo.carbs) ||
-      macrosInfo == null
+      macrosInfo === null
     ) {
       Alert.alert("Alert", "Please enter value in number format");
     } else {
       const status: string | undefined = await register({
         ...value,
-        macros_goal: macrosInfo,
+        macrosGoal: macrosInfo,
       });
 
       if (status === "success") {

@@ -68,8 +68,8 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
         <View style={styles.greetingContainer}>
           <Text style={styles.greeting}>Hello </Text>
           <Text style={styles.userName}>
-            {userInfo.first_name[0].toUpperCase() +
-              userInfo.first_name.slice(1) +
+            {userInfo.firstName[0].toUpperCase() +
+              userInfo.firstName.slice(1) +
               "!"}
           </Text>
         </View>

@@ -27,26 +27,26 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
   const { isLoading } = AuthSelect();
 
   const [registerInfo, setRegisterInfo] = useState<RegisterType>({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     username: "",
-    email_address: "",
+    emailAddress: "",
     password: "",
-    macros_goal: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+    macrosGoal: { calories: 0, protein: 0, carbs: 0, fat: 0 },
   });
 
   const handleRegister: () => void = () => {
     let emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (
-      registerInfo.first_name.trim().length < 1 ||
-      registerInfo.last_name.trim().length < 1 ||
+      registerInfo.firstName.trim().length < 1 ||
+      registerInfo.lastName.trim().length < 1 ||
       registerInfo.username.trim().length < 1 ||
-      registerInfo.email_address.trim().length < 1 ||
+      registerInfo.emailAddress.trim().length < 1 ||
       registerInfo.password.trim().length < 1
     ) {
       Alert.alert("Alert", "Please enter all required value");
-    } else if (emailReg.test(registerInfo.email_address) === false) {
+    } else if (emailReg.test(registerInfo.emailAddress) === false) {
       Alert.alert("Alert", "Please enter valid email address");
     } else {
       AsyncStorage.setItem("userInfo", JSON.stringify(registerInfo));
@@ -67,9 +67,9 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
             <RegisterTextInput
               title={"Enter First Name"}
               icon={USER_CIRCLE_ICON}
-              value={registerInfo.first_name}
+              value={registerInfo.firstName}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, first_name: text })
+                setRegisterInfo({ ...registerInfo, firstName: text })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -78,9 +78,9 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
             <RegisterTextInput
               title={"Enter Last Name"}
               icon={USER_CIRCLE_ICON}
-              value={registerInfo.last_name}
+              value={registerInfo.lastName}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, last_name: text })
+                setRegisterInfo({ ...registerInfo, lastName: text })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -100,9 +100,9 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
             <RegisterTextInput
               title={"Enter Email Address"}
               icon={MESSAGE_ICON}
-              value={registerInfo.email_address}
+              value={registerInfo.emailAddress}
               onChangeText={(text) =>
-                setRegisterInfo({ ...registerInfo, email_address: text })
+                setRegisterInfo({ ...registerInfo, emailAddress: text })
               }
               autoCapitalize="none"
               autoCorrect={false}

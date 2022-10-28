@@ -1,28 +1,35 @@
 import { DailyEntryType, MacrosType } from "../dailyEntry";
 
+type AuthConfigType = {
+  headers: {
+    Authorization: string;
+    "Content-Type": string;
+  };
+};
+
 type LoginType = {
   username: string;
   password: string;
 };
 interface RegisterType extends LoginType {
-  first_name: string;
-  last_name: string;
-  email_address: string;
-  macros_goal: MacrosType;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  macrosGoal: MacrosType;
 }
 
 interface UserType extends RegisterType {
   id: number;
   role: string;
   token: string;
-  daily_entry: DailyEntryType[];
+  dailyEntry: DailyEntryType[];
 }
 
 type EditUserInfoType = {
   username: string;
-  first_name: string;
-  last_name: string;
-  email_address: string;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
 };
 
 interface AuthContextType {
@@ -35,4 +42,11 @@ interface AuthContextType {
   logout: () => void;
 }
 
-export { RegisterType, LoginType, UserType, EditUserInfoType, AuthContextType };
+export {
+  AuthConfigType,
+  RegisterType,
+  LoginType,
+  UserType,
+  EditUserInfoType,
+  AuthContextType,
+};

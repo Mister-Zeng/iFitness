@@ -9,7 +9,12 @@ import React, {
   useEffect,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
-import { UserType, EditUserInfoType, MacrosType } from "../../models";
+import {
+  UserType,
+  EditUserInfoType,
+  MacrosType,
+  AuthConfigType,
+} from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { RegisterType, LoginType, AuthContextType } from "../../models";
 import { Alert } from "react-native";
@@ -33,6 +38,19 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     timeout: 15000,
   });
 
+  // axios.interceptors.request.use(
+  //   async (config) => {
+  //     const token = await AsyncStorage.getItem("token");
+  //     if (token) {
+  //       config.headers.Authorization = "Bearer " + token;
+  //     }
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
+
   const [userInfo, setUserInfo] = useState<UserType>(userInfoConstants);
 
   const login: (loginInfo: LoginType) => Promise<void> = async (
@@ -42,10 +60,14 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       setIsLoading(true);
 
       const response: AxiosResponse = await instance.post("login", loginInfo);
-      const userInfo: UserType = response.data;
-      setUserInfo(userInfo);
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-      console.log(userInfo);
+
+      const userInfos: UserType = response.data;
+
+      setUserInfo(userInfos);
+
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfos));
+
+      console.log(userInfos);
 
       setIsLoading(false);
     } catch (error) {
@@ -91,18 +113,29 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
+      const config: AuthConfigType = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
       const response: AxiosResponse = await instance.put(
         "editUserInfo",
-        editUserInfo
+        editUserInfo,
+        config
       );
       const userInfos: UserType = response.data;
+
       setUserInfo({
         ...userInfo,
-        first_name: userInfos.first_name,
-        last_name: userInfos.last_name,
-        email_address: userInfos.email_address,
+        firstName: userInfos.firstName,
+        lastName: userInfos.lastName,
+        emailAddress: userInfos.emailAddress,
       });
+
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+
       console.log(userInfo);
 
       setIsLoading(false);
@@ -118,17 +151,27 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
+      const config: AuthConfigType = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
       const response: AxiosResponse = await instance.put(
         "editMacrosGoal",
-        editMacroInfo
+        editMacroInfo,
+        config
       );
+
       const userInfos: UserType = response.data;
 
       console.log(userInfos);
 
-      setUserInfo({ ...userInfo, macros_goal: editMacroInfo });
+      setUserInfo({ ...userInfo, macrosGoal: editMacroInfo });
 
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+
       console.log(userInfos);
 
       setIsLoading(false);
@@ -142,7 +185,11 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
-      await AsyncStorage.removeItem("userInfo");
+      // const response: AxiosResponse = await instance.get("logout");
+      // console.log(response.data);
+
+      await AsyncStorage.clear();
+
       setUserInfo(userInfoConstants);
 
       Alert.alert("Logout", "You have been logged out successfully");
