@@ -1,9 +1,6 @@
 package com.example.ifitness.controllers;
 
-import com.example.ifitness.models.EditUserInfo;
-import com.example.ifitness.models.LoginRequest;
-import com.example.ifitness.models.MacrosGoal;
-import com.example.ifitness.models.User;
+import com.example.ifitness.models.*;
 import com.example.ifitness.services.TokenService;
 import com.example.ifitness.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +52,14 @@ public class UserController {
     }
 
     @PutMapping("/editMacrosGoal")
-    public ResponseEntity<MacrosGoal> editMacrosGoal(@RequestBody MacrosGoal goal) throws ResponseStatusException {
-        userService.editDailyMacrosGoalInfo(goal);
-        return new ResponseEntity<>( goal, HttpStatus.OK);
+    public ResponseEntity<MacrosGoal> editMacrosGoal(@RequestBody MacrosGoal macrosGoal) throws ResponseStatusException {
+        userService.editMacrosGoal(macrosGoal);
+        return new ResponseEntity<>( macrosGoal, HttpStatus.OK);
+    }
+
+    @PutMapping("/addDailyEntry")
+    public ResponseEntity<DailyEntry> addDailyEntry(@RequestBody DailyEntry dailyEntry, @RequestParam("username") String username) throws ResponseStatusException {
+        userService.addDailyEntry(dailyEntry, username);
+        return new ResponseEntity<>( dailyEntry, HttpStatus.OK);
     }
 }

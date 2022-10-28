@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "Exercise")
+@Table(name= "exercises")
 public class Exercise {
 
     @Id
@@ -22,7 +22,7 @@ public class Exercise {
     private int reps;
     private int weight;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "daily_entry_id")
+    @ManyToOne
+    @JoinColumn(name = "daily_entry_id", unique = true)
     private DailyEntry dailyEntry;
 }

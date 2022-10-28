@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
@@ -8,6 +8,7 @@ import AuthSelect from "../../providers/auth";
 import DatePickers from "../../components/DatePicker";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import AddExerciseButton from "../../components/AddExerciseButton";
+import { DailyEntryType } from "../../models";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -18,6 +19,24 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const { userInfo } = AuthSelect();
 
+  const [dailyEntry, setDailyEntry] = useState<DailyEntryType>({
+    date: new Date(),
+    exercise: [],
+    macros: {
+      carbs: 0,
+      fat: 0,
+      protein: 0,
+      calories: 0,
+    },
+    weight: 0,
+  });
+
+  // Function to retrieve date from child component DatePicker
+  const retrieveDateHandler: (date: Date) => void = (date: Date) => {
+    console.log(date);
+    setDailyEntry({ ...dailyEntry, date: date });
+  };
+
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.header}>
@@ -25,7 +44,9 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
           icon="clipboard-edit-outline"
           onPress={() => navigation.navigate("EditProgressScreen")}
         />
-        <Appbar.Content title={<DatePickers />} />
+        <Appbar.Content
+          title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
+        />
       </Appbar.Header>
 
       <ScrollView style={styles.infoContainer}>

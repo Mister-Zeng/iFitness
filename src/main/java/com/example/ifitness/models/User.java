@@ -4,6 +4,7 @@ package com.example.ifitness.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -11,30 +12,36 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-    private String first_name;
-    private String last_name;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
     private String role = "user";
     private String token;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     protected String username;
-    @Column(unique = true)
-    private String email_address;
-    @Column(unique = true)
+    @Column(unique = true ,nullable = false)
+    private String emailAddress;
+    @Column(nullable = false)
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    private List<DailyEntry> daily_entry;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "macros_goal_id")
-    private MacrosGoal macros_goal;
+    private MacrosGoal macrosGoal;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DailyEntry> dailyEntry = new ArrayList<>();
+
+
+
 
 
 }

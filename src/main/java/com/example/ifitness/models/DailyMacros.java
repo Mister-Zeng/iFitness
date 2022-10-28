@@ -21,8 +21,7 @@ public class DailyMacros {
     private int carbs;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "daily_entry_id")
-    private DailyEntry daily_entry_list;
+    @OneToOne(mappedBy = "dailyMacros", cascade = CascadeType.ALL, orphanRemoval = true)
+    private DailyEntry dailyEntry;
 
 }

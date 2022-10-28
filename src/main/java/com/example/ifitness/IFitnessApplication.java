@@ -1,6 +1,6 @@
 package com.example.ifitness;
 
-import com.example.ifitness.security.RsaKeyProperties;
+import com.example.ifitness.security.util.RsaKeyProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

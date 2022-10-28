@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DailyEntryRepository extends JpaRepository<DailyEntry, Long> {
-    List<DailyEntry> getDailyEntryById(Long id);
+    List<DailyEntry> findDailyEntryById(Long id);
 }

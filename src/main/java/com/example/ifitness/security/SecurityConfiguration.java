@@ -1,5 +1,6 @@
 package com.example.ifitness.security;
 
+import com.example.ifitness.security.util.Jwks;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -37,10 +38,16 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/api/v1/login","/api/v1/register", "/api/v1/", "/api/v1/editUserInfo", "/api/v1/editMacrosGoal").permitAll()
+                        .antMatchers("/api/v1/login","/api/v1/register").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/logout")
+                        .logoutSuccessUrl("/api/v1/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("userInfo")
+                )
                 .build();
     }
 

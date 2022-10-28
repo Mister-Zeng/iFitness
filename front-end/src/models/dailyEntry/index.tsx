@@ -1,5 +1,5 @@
 type DailyEntryType = {
-  id: number;
+  id?: number;
   date: Date;
   weight: number;
   macros: MacrosType;

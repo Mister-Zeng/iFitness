@@ -31,17 +31,56 @@ const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
     ],
     datasets: [
       {
-        data: [150, 160, 180, 183, 176],
+        data: [
+          150,
+          160,
+          null,
+          180,
+          183,
+          176,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
         color: () => "#2a9d8f",
         strokeWidth: 2,
       },
       {
-        data: [173, 172, 171, 170, 169],
+        data: [
+          173,
+          172,
+          171,
+          170,
+          169,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
         color: () => "#219ebc",
         strokeWidth: 2,
       },
       {
-        data: [155, 158, 161, 168, 179],
+        data: [
+          155,
+          158,
+          161,
+          168,
+          179,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ],
         color: () => "#e63946",
         strokeWidth: 2,
       },
@@ -78,6 +117,12 @@ const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
             style={{ paddingRight: RFValue(35), marginLeft: RFValue(25) }}
             segments={8}
             yAxisInterval={0.5}
+            getDotColor={(datapoint) => {
+              if (datapoint === null) {
+                return "transparent";
+              }
+              return "black";
+            }}
           />
         </View>
 

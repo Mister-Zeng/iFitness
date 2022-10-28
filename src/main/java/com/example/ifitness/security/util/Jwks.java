@@ -1,4 +1,4 @@
-package com.example.ifitness.security;
+package com.example.ifitness.security.util;
 
 import com.nimbusds.jose.jwk.RSAKey;
 

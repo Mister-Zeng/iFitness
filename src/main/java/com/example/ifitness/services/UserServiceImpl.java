@@ -1,6 +1,7 @@
 package com.example.ifitness.services;
 
 import com.example.ifitness.models.*;
+import com.example.ifitness.repositories.DailyEntryRepository;
 import com.example.ifitness.repositories.MacrosGoalRepository;
 import com.example.ifitness.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +30,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private MacrosGoalRepository macrosGoalRepository;
+    @Autowired
+    private DailyEntryRepository dailyEntryRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,9 +60,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.info("User {} is registered successfully!", user);
         userRepository.save(user);
 
-        MacrosGoal macrosGoal = user.getMacros_goal();
+        MacrosGoal macrosGoal = user.getMacrosGoal();
         macrosGoal.setUser(user);
-        macrosGoalRepository.save(user.getMacros_goal());
+        macrosGoalRepository.save(user.getMacrosGoal());
 
         return user;
     }
@@ -64,16 +70,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User editUserInfo(EditUserInfo editUserInfo) {
         Optional<User> userFromDatabase = userRepository.findByUsername(editUserInfo.username());
-        User userInfo = (userFromDatabase.get());
-        userInfo.setEmail_address(editUserInfo.email_address());
-        userInfo.setFirst_name(editUserInfo.first_name());
-        userInfo.setLast_name(editUserInfo.last_name());
+        User userInfo = userFromDatabase.get();
+        userInfo.setEmailAddress(editUserInfo.emailAddress());
+        userInfo.setFirstName(editUserInfo.firstName());
+        userInfo.setLastName(editUserInfo.lastName());
         userRepository.save(userInfo);
         return userInfo;
     }
 
     @Override
-    public MacrosGoal editDailyMacrosGoalInfo(MacrosGoal macrosGoal) {
+    public MacrosGoal editMacrosGoal(MacrosGoal macrosGoal) {
 //        Optional<User> userFromDatabase = userRepository.findByUsername(editMacrosGoal.username());
 //        User userInfo = (userFromDatabase.get());
 //        MacrosGoal mg = new MacrosGoal();
@@ -85,6 +91,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         macrosGoalRepository.save(macrosGoal);
       return macrosGoal;
     }
+
+    @Override
+    public DailyEntry addDailyEntry(DailyEntry dailyEntry, String username) {
+        // Find user
+        Optional<User> userFromDatabase = userRepository.findByUsername(username);
+        User user = userFromDatabase.get();
+        // Parse date to LocalDate format
+        LocalDate date = LocalDate.parse(dailyEntry.getDate().toString());
+        // Create new entry and set data
+        DailyEntry entry = new DailyEntry();
+        entry.setDate(date);
+        entry.setWeight(dailyEntry.getWeight());
+        entry.setDailyMacros(dailyEntry.getDailyMacros());
+        entry.setExercise(dailyEntry.getExercise());
+        // Create a DailyEntry list variable that stores the user's previous entries if any
+        List<DailyEntry> list = user.getDailyEntry();
+        // Add this new entry to the list
+        list.add(entry);
+        // Add the list that contains previous entries and this new entry to this user
+        user.setDailyEntry(list);
+
+        userRepository.save(user);
+        dailyEntryRepository.save(entry);
+        return dailyEntry;
+    }
+
+
 
 
 }

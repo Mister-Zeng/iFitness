@@ -13,7 +13,15 @@ import {
 } from "../../assets";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const DatePickers: FC = () => {
+const DatePickers: ({
+  retrieveDateHandler,
+}: {
+  retrieveDateHandler: (date: Date) => void;
+}) => JSX.Element = ({
+  retrieveDateHandler,
+}: {
+  retrieveDateHandler: (date: Date) => void;
+}) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const [dateSelected, setDateSelected] = useState(new Date().toDateString());
@@ -32,6 +40,9 @@ const DatePickers: FC = () => {
   const handleConfirm: (date: Date) => void = (date: Date) => {
     setDateSelected(date.toDateString());
     console.warn("A date has been picked: ", date);
+
+    // Send selected date to parent component to be used in DailyEntryScreen
+    retrieveDateHandler(date);
     hideDatePicker();
   };
 
@@ -42,8 +53,6 @@ const DatePickers: FC = () => {
       </View>
     );
   };
-
-  console.log(new Date().toLocaleString());
 
   const ModalHeader: FC = () => {
     const isToday: () => string = () => {

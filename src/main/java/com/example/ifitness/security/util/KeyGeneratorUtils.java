@@ -1,4 +1,4 @@
-package com.example.ifitness.security;
+package com.example.ifitness.security.util;
 
 import org.springframework.stereotype.Component;
 

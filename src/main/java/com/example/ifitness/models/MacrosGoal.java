@@ -24,7 +24,7 @@ public class MacrosGoal {
     @Getter
     private int carbs;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "macros_goal")
+    @OneToOne(mappedBy = "macrosGoal", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 }
 

@@ -3,7 +3,10 @@ package com.example.ifitness.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "daily_entry")
@@ -14,20 +17,20 @@ import java.util.Date;
 public class DailyEntry {
 
     @Id
-    @GeneratedValue
-    @Column(name = "daily_entry_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "daily_entry_id", unique = true)
     private Long id;
-    private Date date;
+    private LocalDate date;
     private Long weight;
 
-    @OneToOne
-    @JoinColumn(name="daily_macros_id")
-    private DailyMacros dailyMacros;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "dailyEntry")
-    private Exercise exercise;
+    @OneToOne
+    @JoinColumn(name = "daily_macros_id", unique = true)
+    private DailyMacros dailyMacros;
+
+    @OneToMany(mappedBy = "dailyEntry", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Exercise> exercise = new ArrayList<Exercise>();
 }
