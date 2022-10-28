@@ -2,6 +2,7 @@ package com.example.ifitness.services;
 
 import com.example.ifitness.models.*;
 import com.example.ifitness.repositories.DailyEntryRepository;
+import com.example.ifitness.repositories.DailyMacrosRepository;
 import com.example.ifitness.repositories.MacrosGoalRepository;
 import com.example.ifitness.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private MacrosGoalRepository macrosGoalRepository;
     @Autowired
     private DailyEntryRepository dailyEntryRepository;
+    @Autowired
+    private DailyMacrosRepository dailyMacrosRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -112,6 +115,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Add the list that contains previous entries and this new entry to this user
         user.setDailyEntry(list);
 
+        dailyMacrosRepository.save(dailyEntry.getDailyMacros());
         userRepository.save(user);
         dailyEntryRepository.save(entry);
         return dailyEntry;
