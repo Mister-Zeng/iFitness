@@ -27,7 +27,7 @@ public class DailyEntry {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "daily_macros_id", unique = true)
     private DailyMacros dailyMacros;
 

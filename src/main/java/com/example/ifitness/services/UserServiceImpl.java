@@ -1,10 +1,7 @@
 package com.example.ifitness.services;
 
 import com.example.ifitness.models.*;
-import com.example.ifitness.repositories.DailyEntryRepository;
-import com.example.ifitness.repositories.DailyMacrosRepository;
-import com.example.ifitness.repositories.MacrosGoalRepository;
-import com.example.ifitness.repositories.UserRepository;
+import com.example.ifitness.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +31,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private DailyEntryRepository dailyEntryRepository;
     @Autowired
     private DailyMacrosRepository dailyMacrosRepository;
+    @Autowired
+    private ExerciseRepository exerciseRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,8 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User login(LoginRequest userLogin) {
         Optional<User> userFromDatabase = userRepository.findByUsername(userLogin.username());
-        User userInfo = (userFromDatabase.get());
-        return userInfo;
+        return (userFromDatabase.get());
     }
 
     @Override
@@ -108,16 +105,37 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         entry.setWeight(dailyEntry.getWeight());
         entry.setDailyMacros(dailyEntry.getDailyMacros());
         entry.setExercise(dailyEntry.getExercise());
+        entry.setUser(user);
+        dailyEntryRepository.save(entry);
+
+
         // Create a DailyEntry list variable that stores the user's previous entries if any
         List<DailyEntry> list = user.getDailyEntry();
         // Add this new entry to the list
         list.add(entry);
         // Add the list that contains previous entries and this new entry to this user
         user.setDailyEntry(list);
-
-        dailyMacrosRepository.save(dailyEntry.getDailyMacros());
         userRepository.save(user);
-        dailyEntryRepository.save(entry);
+
+
+        List<Exercise> exercises = dailyEntry.getExercise();
+        exercises.forEach(e -> {
+            Exercise exercise = new Exercise();
+            exercise.setName(e.getName());
+            exercise.setWeight(e.getWeight());
+            exercise.setSets(e.getSets());
+            exercise.setReps(e.getReps());
+            exercise.setDailyEntry(entry);
+            exerciseRepository.save(exercise);
+        });
+
+
+        DailyMacros dailyMacros = new DailyMacros();
+        dailyMacros.setCalories(dailyEntry.getDailyMacros().getCalories());
+        dailyMacros.setProtein(dailyEntry.getDailyMacros().getProtein());
+        dailyMacros.setFat(dailyEntry.getDailyMacros().getFat());
+        dailyMacros.setCarbs(dailyEntry.getDailyMacros().getCarbs());
+        dailyMacrosRepository.save(dailyMacros);
         return dailyEntry;
     }
 
