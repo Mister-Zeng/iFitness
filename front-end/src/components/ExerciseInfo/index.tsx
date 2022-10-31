@@ -10,14 +10,14 @@ import { CANCEL_ICON } from "../../assets";
 import createStyles, { StyleSheetProps } from "./styles";
 
 type IProps = {
-  exercise_name: string;
-  sets: number;
-  reps: number;
-  weight: number;
+  exerciseName: string | null;
+  sets: number | null;
+  reps: number | null;
+  weight: number | null;
 };
 
 const ExerciseInfo: FC<IProps> = ({
-  exercise_name,
+  exerciseName,
   sets,
   reps,
   weight,
@@ -31,7 +31,7 @@ const ExerciseInfo: FC<IProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.exerciseContainer}>
-        <Text style={styles.exerciseName}>{exercise_name}</Text>
+        <Text style={styles.exerciseName}>{exerciseName}</Text>
 
         <Text style={styles.exerciseInfo}>
           {sets} sets, {reps} reps, {weight} lbs

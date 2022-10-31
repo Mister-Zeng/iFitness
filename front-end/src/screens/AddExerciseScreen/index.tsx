@@ -5,7 +5,7 @@ import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
 import Spinner from "react-native-loading-spinner-overlay/lib";
-import AuthSelect from "../../providers/auth";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -14,7 +14,7 @@ interface IProps {
 const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { isLoading } = AuthSelect();
+  const { isLoading } = useAuthSelect();
 
   const [exerciseInfo, setExerciseInfo] = useState({
     exercise_name: "",

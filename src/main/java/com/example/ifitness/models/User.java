@@ -1,6 +1,8 @@
 package com.example.ifitness.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,12 +38,7 @@ public class User {
     @JoinColumn(name = "macros_goal_id")
     private MacrosGoal macrosGoal;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DailyEntry> dailyEntry = new ArrayList<>();
-
-
-
-
-
 }

@@ -14,9 +14,9 @@ import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
 import { RegisterType } from "../../models";
 
-import AuthSelect from "../../providers/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import useAuthSelect from "../../providers/auth";
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -24,7 +24,7 @@ interface IProps {
 const RegisterScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { isLoading } = AuthSelect();
+  const { isLoading } = useAuthSelect();
 
   const [registerInfo, setRegisterInfo] = useState<RegisterType>({
     firstName: "",

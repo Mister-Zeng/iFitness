@@ -1,8 +1,10 @@
+import { Dispatch, SetStateAction } from "react";
+
 type DailyEntryType = {
   id?: number;
-  date: Date;
-  weight: number;
-  macros: MacrosType;
+  date: Date | string;
+  weight: number | null;
+  dailyMacros: MacrosType;
   exercise: ExerciseType[];
 };
 
@@ -15,11 +17,11 @@ type MacrosType = {
 };
 
 type ExerciseType = {
-  id: number;
-  name: string;
-  sets: number;
-  reps: number;
-  weight: number;
+  id?: number;
+  name: string | null;
+  sets: number | null;
+  reps: number | null;
+  weight: number | null;
 };
 
 type EditProgressType = {
@@ -28,4 +30,24 @@ type EditProgressType = {
   exercise: ExerciseType[];
 };
 
-export { MacrosType, DailyEntryType, ExerciseType, EditProgressType };
+type GetDailyEntryProps = {
+  username: string;
+  date: string;
+};
+
+interface DailyEntryContextType {
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  dailyEntry: DailyEntryType | undefined;
+  getDailyEntry: (dailyEntryInfo: GetDailyEntryProps) => Promise<void>;
+  createDailyEntry: (createDailyEntryInfo: DailyEntryType) => Promise<void>;
+}
+
+export {
+  GetDailyEntryProps,
+  MacrosType,
+  DailyEntryType,
+  ExerciseType,
+  EditProgressType,
+  DailyEntryContextType,
+};

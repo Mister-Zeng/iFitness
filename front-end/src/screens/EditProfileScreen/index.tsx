@@ -7,8 +7,8 @@ import SaveButton from "../../components/SaveButton";
 import { MacrosType } from "../../models";
 import { EditUserInfoType } from "../../models/auth";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
-import AuthSelect from "../../providers/auth";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,7 +17,7 @@ interface IProps {
 const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { userInfo, editProfile, editMacro, isLoading } = AuthSelect();
+  const { userInfo, editProfile, editMacro, isLoading } = useAuthSelect();
 
   const [editUserInfo, setEditUserInfo] = useState<EditUserInfoType>({
     username: userInfo.username,
@@ -35,9 +35,11 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   });
 
   const handleEditProfile: () => void = () => {
-    let emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    // Email format validation
+    const emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     if (
+      // Check if input is not empty
       editUserInfo.firstName.trim().length < 1 ||
       editUserInfo.lastName.trim().length < 1 ||
       editUserInfo.emailAddress.trim().length < 1
@@ -54,6 +56,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const handleDailyMacrosGoalSubmit: () => void = () => {
     if (
+      // Check if input in a number
       editMacrosGoal.calories === null ||
       isNaN(editMacrosGoal.calories) ||
       editMacrosGoal.fat === null ||

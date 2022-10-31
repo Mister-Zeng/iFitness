@@ -1,5 +1,6 @@
 package com.example.ifitness.models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,17 +21,22 @@ public class DailyEntry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "daily_entry_id", unique = true)
     private Long id;
+    @Column(unique = true)
     private LocalDate date;
-    private Long weight;
+    private int weight;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "daily_macros_id", unique = true)
     private DailyMacros dailyMacros;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "dailyEntry", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Exercise> exercise = new ArrayList<Exercise>();
+
 }

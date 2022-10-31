@@ -1,15 +1,11 @@
-import React, { ComponentType, useState, useMemo, FC, useEffect } from "react";
-import { Alert, Text, TextInput, View } from "react-native";
+import React, { useState, useMemo, FC, useEffect } from "react";
+import { Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
-import SaveButton from "../../components/SaveButton";
-import { MacrosType } from "../../models";
 import { EditUserInfoType } from "../../models/auth";
-import { macrosConstant } from "../../constants/dailyEntry";
-import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
-import AuthSelect from "../../providers/auth";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -18,7 +14,7 @@ interface IProps {
 const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { userInfo, logout, isLoading } = AuthSelect();
+  const { userInfo, logout, isLoading } = useAuthSelect();
 
   const [profileInfo, setProfileInfo] = useState<EditUserInfoType>({
     username: userInfo.username,

@@ -1,5 +1,6 @@
 package com.example.ifitness.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,8 +21,7 @@ public class DailyMacros {
     private int fat;
     private int carbs;
 
-
+    @JsonBackReference
     @OneToOne(mappedBy = "dailyMacros", cascade = CascadeType.ALL, orphanRemoval = true)
     private DailyEntry dailyEntry;
-
 }

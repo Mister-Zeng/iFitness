@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { DailyEntryType, MacrosType } from "../dailyEntry";
 
 type AuthConfigType = {
@@ -19,7 +20,7 @@ interface RegisterType extends LoginType {
 }
 
 interface UserType extends RegisterType {
-  id: number;
+  id?: number;
   role: string;
   token: string;
   dailyEntry: DailyEntryType[];
@@ -40,6 +41,7 @@ interface AuthContextType {
   editProfile: (editUserInfo: EditUserInfoType) => void;
   editMacro: (macrosInfo: MacrosType) => void;
   logout: () => void;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserType>>;
 }
 
 export {

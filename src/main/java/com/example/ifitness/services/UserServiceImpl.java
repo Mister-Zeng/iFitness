@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         MacrosGoal macrosGoal = user.getMacrosGoal();
         macrosGoal.setUser(user);
-        macrosGoalRepository.save(user.getMacrosGoal());
+        macrosGoalRepository.save(macrosGoal);
 
         return user;
     }
@@ -91,55 +92,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         macrosGoalRepository.save(macrosGoal);
       return macrosGoal;
     }
-
-    @Override
-    public DailyEntry addDailyEntry(DailyEntry dailyEntry, String username) {
-        // Find user
-        Optional<User> userFromDatabase = userRepository.findByUsername(username);
-        User user = userFromDatabase.get();
-        // Parse date to LocalDate format
-        LocalDate date = LocalDate.parse(dailyEntry.getDate().toString());
-        // Create new entry and set data
-        DailyEntry entry = new DailyEntry();
-        entry.setDate(date);
-        entry.setWeight(dailyEntry.getWeight());
-        entry.setDailyMacros(dailyEntry.getDailyMacros());
-        entry.setExercise(dailyEntry.getExercise());
-        entry.setUser(user);
-        dailyEntryRepository.save(entry);
-
-
-        // Create a DailyEntry list variable that stores the user's previous entries if any
-        List<DailyEntry> list = user.getDailyEntry();
-        // Add this new entry to the list
-        list.add(entry);
-        // Add the list that contains previous entries and this new entry to this user
-        user.setDailyEntry(list);
-        userRepository.save(user);
-
-
-        List<Exercise> exercises = dailyEntry.getExercise();
-        exercises.forEach(e -> {
-            Exercise exercise = new Exercise();
-            exercise.setName(e.getName());
-            exercise.setWeight(e.getWeight());
-            exercise.setSets(e.getSets());
-            exercise.setReps(e.getReps());
-            exercise.setDailyEntry(entry);
-            exerciseRepository.save(exercise);
-        });
-
-
-        DailyMacros dailyMacros = new DailyMacros();
-        dailyMacros.setCalories(dailyEntry.getDailyMacros().getCalories());
-        dailyMacros.setProtein(dailyEntry.getDailyMacros().getProtein());
-        dailyMacros.setFat(dailyEntry.getDailyMacros().getFat());
-        dailyMacros.setCarbs(dailyEntry.getDailyMacros().getCarbs());
-        dailyMacrosRepository.save(dailyMacros);
-        return dailyEntry;
-    }
-
-
 
 
 }

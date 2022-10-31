@@ -7,6 +7,7 @@ import React, {
   Context,
   PropsWithChildren,
   useEffect,
+  SetStateAction,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
 import {
@@ -28,6 +29,7 @@ export const AuthContext: Context<AuthContextType> =
     editProfile: () => Promise.resolve(),
     editMacro: () => Promise.resolve(),
     logout: () => Promise.resolve(),
+    setUserInfo: () => {},
   });
 
 export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
@@ -71,7 +73,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
-      const response: AxiosResponse<UserType> = await instance.post(
+      const response: AxiosResponse = await instance.post(
         "register",
         registerInfo
       );
@@ -214,19 +216,20 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     register,
     editProfile,
     editMacro,
+    setUserInfo,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-const AuthSelect: () => AuthContextType = () => {
+const useAuthSelect: () => AuthContextType = () => {
   const context: AuthContextType = useContext(AuthContext);
 
   if (context === undefined) {
-    throw new Error("useAuth must be used within AuthContext");
+    throw new Error("useAuthSelect must be used within AuthContext");
   }
 
   return context;
 };
 
-export default AuthSelect;
+export default useAuthSelect;

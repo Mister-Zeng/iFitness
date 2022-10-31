@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 )
                 .build();
     }
-
+//"/api/v1/getDailyEntry", "/api/v1/addDailyEntry"
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

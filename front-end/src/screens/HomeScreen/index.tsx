@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
@@ -6,8 +6,8 @@ import { LineChart } from "react-native-chart-kit";
 import * as Progress from "react-native-progress";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
-import AuthSelect from "../../providers/auth";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -15,7 +15,8 @@ interface IProps {
 const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { userInfo } = AuthSelect();
+  const { userInfo } = useAuthSelect();
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

@@ -13,8 +13,8 @@ import InitialScreenButton from "../../components/InitialScreenButton";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import { LoginType } from "../../models";
-import AuthSelect from "../../providers/auth";
 import Spinner from "react-native-loading-spinner-overlay";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -23,7 +23,7 @@ interface IProps {
 const LoginScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { login, isLoading } = AuthSelect();
+  const { login, isLoading } = useAuthSelect();
 
   const [loginInfo, setLoginInfo] = useState<LoginType>({
     username: "",

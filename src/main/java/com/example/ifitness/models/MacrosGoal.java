@@ -1,5 +1,7 @@
 package com.example.ifitness.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,23 +9,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "macros_goal")
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MacrosGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "macros_goal_id")
-    @Getter
     private Long id;
-    @Getter
     private int calories;
-    @Getter
     private int protein;
-    @Getter
     private int fat;
-    @Getter
     private int carbs;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "macrosGoal", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 }

@@ -1,5 +1,7 @@
 package com.example.ifitness.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class Exercise {
     private int reps;
     private int weight;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "daily_entry_id", unique = true)
     private DailyEntry dailyEntry;

@@ -4,7 +4,7 @@ import createStyles, { StyleSheetProps } from "./styles";
 
 interface IProps {
   infoType: string;
-  value: number;
+  value: number | undefined | null;
   measurement: string;
 }
 const DailyMacroText: FC<IProps> = ({ infoType, value, measurement }) => {

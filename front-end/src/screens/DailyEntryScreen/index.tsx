@@ -1,14 +1,18 @@
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import DailyMacroText from "../../ui/DailyMacroText";
-import AuthSelect from "../../providers/auth";
 import DatePickers from "../../components/DatePicker";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import AddExerciseButton from "../../components/AddExerciseButton";
 import { DailyEntryType } from "../../models";
+import useAuthSelect from "../../providers/auth";
+import useDailyEntrySelect from "../../providers/dailyEntry";
+import moment from "moment";
+import { useIsFocused } from "@react-navigation/native";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,28 +21,37 @@ interface IProps {
 const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { userInfo } = AuthSelect();
+  const isFocused: boolean = useIsFocused();
 
-  const [dailyEntry, setDailyEntry] = useState<DailyEntryType>({
-    date: new Date(),
-    exercise: [],
-    macros: {
-      carbs: 0,
-      fat: 0,
-      protein: 0,
-      calories: 0,
-    },
-    weight: 0,
+  const { userInfo } = useAuthSelect();
+
+  const { dailyEntry, getDailyEntry, isLoading } = useDailyEntrySelect();
+
+  const [dailyEntryInfo, setDailyEntryInfo] = useState<{
+    username: string;
+    date: string;
+  }>({
+    username: userInfo.username,
+    date: moment(new Date()).format("YYYY-MM-DD"),
   });
+
+  useEffect(() => {
+    console.log("called");
+
+    getDailyEntry(dailyEntryInfo);
+  }, [dailyEntryInfo]);
 
   // Function to retrieve date from child component DatePicker
   const retrieveDateHandler: (date: Date) => void = (date: Date) => {
-    console.log(date);
-    setDailyEntry({ ...dailyEntry, date: date });
+    setDailyEntryInfo({
+      username: userInfo.username,
+      date: moment(date).format("YYYY-MM-DD"),
+    });
   };
 
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
       <Appbar.Header style={styles.header}>
         <Appbar.Action
           icon="clipboard-edit-outline"
@@ -57,7 +70,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
             <DailyMacroText
               infoType="Weight"
               // value={userInfo.macros.calories}
-              value={0}
+              value={dailyEntry ? dailyEntry?.weight : 0}
               measurement="Lbs"
             />
           </View>
@@ -69,26 +82,22 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View>
             <DailyMacroText
               infoType="Calories"
-              // value={userInfo.macros.calories}
-              value={0}
+              value={dailyEntry ? dailyEntry?.dailyMacros.calories : 0}
               measurement="Calories"
             />
             <DailyMacroText
               infoType="Fat"
-              value={0}
-              // value={userInfo.macros.fat}
+              value={dailyEntry ? dailyEntry?.dailyMacros.fat : 0}
               measurement="Grams"
             />
             <DailyMacroText
               infoType="Protein"
-              value={0}
-              // value={userInfo.macros.protein}
+              value={dailyEntry ? dailyEntry?.dailyMacros.protein : 0}
               measurement="Grams"
             />
             <DailyMacroText
               infoType="Carbs"
-              value={0}
-              // value={userInfo.macros.carbs}
+              value={dailyEntry ? dailyEntry?.dailyMacros.carbs : 0}
               measurement="Grams"
             />
           </View>
@@ -97,26 +106,21 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
         <View>
           <Text style={styles.infoTitle}>Exercise</Text>
 
-          <ExerciseInfo
-            exercise_name="Bench Press"
-            sets={4}
-            reps={8}
-            weight={120}
-          />
-
-          <ExerciseInfo
-            exercise_name="Bench Press"
-            sets={4}
-            reps={8}
-            weight={120}
-          />
-
-          <ExerciseInfo
-            exercise_name="Bench Press"
-            sets={4}
-            reps={8}
-            weight={120}
-          />
+          {dailyEntry ? (
+            dailyEntry?.exercise.map((exercise, index) => {
+              return (
+                <ExerciseInfo
+                  key={index}
+                  exerciseName={exercise.name}
+                  sets={exercise.sets}
+                  reps={exercise.reps}
+                  weight={exercise.weight}
+                />
+              );
+            })
+          ) : (
+            <View></View>
+          )}
 
           <View style={styles.addExerciseBtn}>
             <AddExerciseButton

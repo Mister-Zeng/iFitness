@@ -11,6 +11,6 @@ public interface UserService {
     User register(User user);
     User editUserInfo(EditUserInfo editUserInfo);
     MacrosGoal editMacrosGoal(MacrosGoal macrosGoal);
-    DailyEntry addDailyEntry(DailyEntry entry, String username);
+
 }
 

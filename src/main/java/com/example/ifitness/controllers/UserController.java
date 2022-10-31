@@ -23,12 +23,8 @@ public class UserController {
     private final TokenService tokenService;
 
     private final AuthenticationManager authenticationManager;
-    @GetMapping(path = "/")
-    public String welcomePage() {
-        return "Success to load welcome page...!";
-    }
 
-    @PostMapping(path = "/register")
+    @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) throws ResponseStatusException {
         User userInfo = userService.register(user);
         System.out.println(user);
@@ -53,13 +49,7 @@ public class UserController {
 
     @PutMapping("/editMacrosGoal")
     public ResponseEntity<MacrosGoal> editMacrosGoal(@RequestBody MacrosGoal macrosGoal) throws ResponseStatusException {
-        userService.editMacrosGoal(macrosGoal);
-        return new ResponseEntity<>( macrosGoal, HttpStatus.OK);
-    }
-
-    @PutMapping("/addDailyEntry")
-    public ResponseEntity<DailyEntry> addDailyEntry(@RequestBody DailyEntry dailyEntry, @RequestParam("username") String username) throws ResponseStatusException {
-        userService.addDailyEntry(dailyEntry, username);
-        return new ResponseEntity<>( dailyEntry, HttpStatus.OK);
+        MacrosGoal macroGoalInfo = userService.editMacrosGoal(macrosGoal);
+        return new ResponseEntity<>( macroGoalInfo, HttpStatus.OK);
     }
 }

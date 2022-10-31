@@ -8,7 +8,7 @@ import AddExerciseButton from "../../components/AddExerciseButton";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import { EditProgressType } from "../../models";
 import Spinner from "react-native-loading-spinner-overlay/lib";
-import AuthSelect from "../../providers/auth";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,7 +17,7 @@ interface IProps {
 const EditProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { isLoading } = AuthSelect();
+  const { isLoading } = useAuthSelect();
 
   const [editProgressInfo, setEditProgressInfo] = useState<EditProgressType>({
     weight: 0,

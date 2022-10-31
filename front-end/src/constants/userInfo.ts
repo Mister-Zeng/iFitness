@@ -1,5 +1,6 @@
+import moment from "moment";
+
 const userInfoConstants = {
-  id: 0,
   firstName: "",
   lastName: "",
   username: "",
@@ -9,11 +10,9 @@ const userInfoConstants = {
   token: "",
   dailyEntry: [
     {
-      id: 0,
-      date: new Date(),
+      date: moment(new Date()).format("YYYY-MM-DD"),
       weight: 0,
-      macros: {
-        id: 0,
+      dailyMacros: {
         calories: 0,
         protein: 0,
         carbs: 0,
@@ -21,7 +20,6 @@ const userInfoConstants = {
       },
       exercise: [
         {
-          id: 0,
           name: "",
           sets: 0,
           reps: 0,

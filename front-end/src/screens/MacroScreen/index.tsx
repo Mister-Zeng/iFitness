@@ -8,9 +8,9 @@ import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
 import { MacrosType, RegisterType } from "../../models";
 import { Appbar } from "react-native-paper";
-import AuthSelect from "../../providers/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import useAuthSelect from "../../providers/auth";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -19,7 +19,7 @@ interface IProps {
 const MacroScreen: FC<IProps> = ({ navigation }) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const { register, isLoading } = AuthSelect();
+  const { register, isLoading } = useAuthSelect();
 
   const [macrosInfo, setMacrosInfo] = React.useState<MacrosType>({
     calories: null,

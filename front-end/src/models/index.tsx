@@ -11,6 +11,7 @@ import {
   DailyEntryType,
   ExerciseType,
   EditProgressType,
+  DailyEntryContextType,
 } from "./dailyEntry";
 
 export {
@@ -24,4 +25,5 @@ export {
   ExerciseType,
   AuthContextType,
   EditProgressType,
+  DailyEntryContextType,
 };
