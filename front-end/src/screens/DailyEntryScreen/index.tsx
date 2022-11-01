@@ -54,7 +54,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
         <Appbar.Action
           icon="clipboard-edit-outline"
           onPress={() =>
-            navigation.navigate("EditProgressScreen", {
+            navigation.navigate("EditDailyEntryScreen", {
               params: { dailyEntry },
             })
           }
