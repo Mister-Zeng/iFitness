@@ -43,9 +43,9 @@ public class DailyEntryServiceImpl implements DailyEntryService {
 
     @Override
     @Transactional
-    public DailyEntry createDailyEntry(DailyEntry dailyEntry, String username) {
+    public DailyEntry createDailyEntry(DailyEntry dailyEntry, Long userId) {
         User user = userRepository
-                .findByUsername(username)
+                .findById(userId)
                 .get();
 
         user.getDailyEntry().add(dailyEntry);

@@ -76,7 +76,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       );
 
       const dailyEntryData: DailyEntryType = await response.data;
-      console.log(dailyEntryData + " daily entry data");
+
       dailyEntryData === undefined
         ? setDailyEntry(dailyEntryConstant)
         : setDailyEntry(dailyEntryData);
@@ -100,10 +100,11 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
         },
-        params: createDailyEntryInfo,
+        body: createDailyEntryInfo,
+        params: { userId: userInfo.userId },
       };
 
-      const response: AxiosResponse = await instance.put(
+      const response: AxiosResponse = await instance.post(
         "createDailyEntry",
         config
       );

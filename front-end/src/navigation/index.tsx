@@ -8,29 +8,36 @@ import {
   RegisterScreen,
   LoginScreen,
   HomeScreen,
-  DailyEntryScreen,
+  CreateDailyEntryScreen,
   ProgressScreen,
   ProfileScreen,
   MacroScreen,
   AddExerciseScreen,
-  EditProgressScreen,
+  DailyEntryScreen,
   EditProfileScreen,
+  EditDailyEntryScreen,
 } from "../screens";
 
 import AuthSelect from "../providers/auth";
 
 export type MainStackParamList = {
-  InitialScreen: undefined;
-  RegisterScreen: undefined;
-  MacroScreen: undefined;
-  LoginScreen: undefined;
   HomeScreen: undefined;
-  DailyEntryScreen: undefined;
+  CreateDailyEntryScreen: {
+    params: { dailyEntry: { userId: number; date: string } };
+  };
   ProgressScreen: undefined;
   EditProfileScreen: undefined;
   ProfileScreen: undefined;
   AddExerciseScreen: undefined;
-  EditProgressScreen: undefined;
+  DailyEntryScreen: undefined;
+  EditDailyEntryScreen: undefined;
+};
+
+export type AuthStackParamList = {
+  InitialScreen: undefined;
+  RegisterScreen: undefined;
+  MacroScreen: undefined;
+  LoginScreen: undefined;
 };
 
 const Navigation = () => {
@@ -38,21 +45,23 @@ const Navigation = () => {
 
   const Tab = createMaterialBottomTabNavigator();
 
+  const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+
   const MainStack = createNativeStackNavigator<MainStackParamList>();
 
   function InitialScreens() {
     return (
-      <MainStack.Navigator
+      <AuthStack.Navigator
         initialRouteName="InitialScreen"
         screenOptions={{
           headerShown: false,
         }}
       >
-        <MainStack.Screen name="InitialScreen" component={InitialScreen} />
-        <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <MainStack.Screen name="MacroScreen" component={MacroScreen} />
-        <MainStack.Screen name="LoginScreen" component={LoginScreen} />
-      </MainStack.Navigator>
+        <AuthStack.Screen name="InitialScreen" component={InitialScreen} />
+        <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <AuthStack.Screen name="MacroScreen" component={MacroScreen} />
+        <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      </AuthStack.Navigator>
     );
   }
 
@@ -65,6 +74,10 @@ const Navigation = () => {
           screenOptions={{ headerShown: false }}
         >
           <MainStack.Screen
+            name="CreateDailyEntryScreen"
+            component={CreateDailyEntryScreen}
+          />
+          <MainStack.Screen
             name="DailyEntryScreen"
             component={DailyEntryScreen}
           />
@@ -73,8 +86,8 @@ const Navigation = () => {
             component={AddExerciseScreen}
           />
           <MainStack.Screen
-            name="EditProgressScreen"
-            component={EditProgressScreen}
+            name="EditDailyEntryScreen"
+            component={EditDailyEntryScreen}
           />
         </MainStack.Navigator>
       );

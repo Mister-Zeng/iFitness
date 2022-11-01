@@ -13,7 +13,7 @@ public interface DailyEntryService {
 
     DailyEntry getDailyEntry(String username, String date);
 
-    DailyEntry createDailyEntry(DailyEntry entry, String username);
+    DailyEntry createDailyEntry(DailyEntry entry, Long userId);
 
     DailyEntry updateDailyEntry(DailyEntry dailyEntry, Long userId);
 }

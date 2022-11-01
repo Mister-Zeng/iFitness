@@ -23,7 +23,7 @@ interface IProps {
   >;
 }
 
-const EditProgressScreen: FC<IProps> = ({ navigation, route }: IProps) => {
+const EditDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const dailyEntry: DailyEntryType = route.params.params.dailyEntry;
@@ -37,7 +37,6 @@ const EditProgressScreen: FC<IProps> = ({ navigation, route }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <Spinner visible={isLoading} />
       <Appbar.Header style={styles.header}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Progress" />
@@ -163,4 +162,4 @@ const EditProgressScreen: FC<IProps> = ({ navigation, route }: IProps) => {
   );
 };
 
-export default EditProgressScreen;
+export default EditDailyEntryScreen;
