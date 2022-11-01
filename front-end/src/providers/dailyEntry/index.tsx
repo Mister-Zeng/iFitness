@@ -23,7 +23,7 @@ import moment from "moment";
 
 export const DailyEntryContext: Context<DailyEntryContextType> =
   createContext<DailyEntryContextType>({
-    dailyEntry: dailyEntryConstant,
+    dailyEntry: null,
     getDailyEntry: () => Promise.resolve(),
     isLoading: true,
     createDailyEntry: () => Promise.resolve(),
@@ -79,9 +79,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const dailyEntryData: DailyEntryType = await response.data;
 
-      dailyEntryData === undefined
-        ? setDailyEntry(dailyEntryConstant)
-        : setDailyEntry(dailyEntryData);
+      dailyEntryData && setDailyEntry(dailyEntryData);
 
       setIsLoading(false);
     } catch (error) {

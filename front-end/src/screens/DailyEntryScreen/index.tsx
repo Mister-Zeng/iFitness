@@ -38,7 +38,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
 
     getDailyEntry(dailyEntryInfo);
   }, [dailyEntryInfo]);
-  console.log(userInfo.id);
+
   // Function to retrieve date from child component DatePicker
   const retrieveDateHandler: (date: Date) => void = (date: Date) => {
     setDailyEntryInfo({
@@ -64,7 +64,26 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
         />
       </Appbar.Header>
 
-      {!isLoading ? (
+      {dailyEntry?.date !== dailyEntryInfo.date ? (
+        <View
+          style={{
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("CreateDailyEntryScreen", {
+                params: { dailyEntryInfo },
+              })
+            }
+            style={{ backgroundColor: "orange", padding: 10, borderRadius: 50 }}
+          >
+            <Text style={{ color: "white" }}>Create Entry</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
         <ScrollView style={styles.infoContainer}>
           <View>
             <Text style={styles.infoTitle}>Weight</Text>
@@ -73,7 +92,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
               <DailyMacroText
                 infoType="Weight"
                 // value={userInfo.macros.calories}
-                value={dailyEntry ? dailyEntry?.weight : 0}
+                value={dailyEntry?.weight}
                 measurement="Lbs"
               />
             </View>
@@ -85,22 +104,22 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
             <View>
               <DailyMacroText
                 infoType="Calories"
-                value={dailyEntry ? dailyEntry?.dailyMacros.calories : 0}
+                value={dailyEntry?.dailyMacros.calories}
                 measurement="Calories"
               />
               <DailyMacroText
                 infoType="Fat"
-                value={dailyEntry ? dailyEntry?.dailyMacros.fat : 0}
+                value={dailyEntry?.dailyMacros.fat}
                 measurement="Grams"
               />
               <DailyMacroText
                 infoType="Protein"
-                value={dailyEntry ? dailyEntry?.dailyMacros.protein : 0}
+                value={dailyEntry?.dailyMacros.protein}
                 measurement="Grams"
               />
               <DailyMacroText
                 infoType="Carbs"
-                value={dailyEntry ? dailyEntry?.dailyMacros.carbs : 0}
+                value={dailyEntry?.dailyMacros.carbs}
                 measurement="Grams"
               />
             </View>
@@ -132,25 +151,6 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
             </View>
           </View>
         </ScrollView>
-      ) : (
-        <View
-          style={{
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("CreateDailyEntryScreen", {
-                params: { dailyEntryInfo },
-              })
-            }
-            style={{ backgroundColor: "orange", padding: 10, borderRadius: 50 }}
-          >
-            <Text style={{ color: "white" }}>Create Entry</Text>
-          </TouchableOpacity>
-        </View>
       )}
     </View>
   );

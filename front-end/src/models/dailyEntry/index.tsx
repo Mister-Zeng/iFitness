@@ -46,7 +46,7 @@ type GetDailyEntryProps = {
 interface DailyEntryContextType {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
-  dailyEntry: DailyEntryType | undefined;
+  dailyEntry: DailyEntryType | null;
   getDailyEntry: (dailyEntryInfo: {
     userId: number;
     date: string;
