@@ -2,7 +2,7 @@ import moment from "moment";
 import { DailyEntryType, DailyMacrosType, MacrosGoalType } from "../models";
 
 const dailyMacrosConstant: DailyMacrosType = {
-  dailyMacrosId: 0,
+  id: 0,
   protein: 0,
   carbs: 0,
   fat: 0,
@@ -10,7 +10,7 @@ const dailyMacrosConstant: DailyMacrosType = {
 };
 
 const macrosGoalConstant: MacrosGoalType = {
-  macrosGoalId: 0,
+  id: 0,
   protein: 0,
   carbs: 0,
   fat: 0,
@@ -18,10 +18,10 @@ const macrosGoalConstant: MacrosGoalType = {
 };
 
 const dailyEntryConstant: DailyEntryType = {
-  dailyEntryId: 0,
+  id: 0,
   date: moment(new Date()).format("YYYY-MM-DD"),
   dailyMacros: {
-    dailyMacrosId: 0,
+    id: 0,
     carbs: 10,
     calories: 0,
     fat: 0,

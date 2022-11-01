@@ -41,10 +41,10 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [dailyEntry, setDailyEntry] = useState<DailyEntryType>({
-    dailyEntryId: 0,
+    id: 0,
     date: moment(new Date()).format("YYYY-MM-DD"),
     dailyMacros: {
-      dailyMacrosId: 0,
+      id: 0,
       carbs: 0,
       calories: 0,
       fat: 0,
@@ -54,11 +54,13 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     exercise: [],
   });
 
-  const getDailyEntry: (
-    dailyEntryInfo: GetDailyEntryProps
-  ) => Promise<void> = async (
-    dailyEntryInfo: GetDailyEntryProps
-  ): Promise<void> => {
+  const getDailyEntry: (dailyEntryInfo: {
+    userId: number;
+    date: string;
+  }) => Promise<void> = async (dailyEntryInfo: {
+    userId: number;
+    date: string;
+  }): Promise<void> => {
     try {
       setIsLoading(true);
 
@@ -102,7 +104,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
           Accept: "application/json",
         },
         body: createDailyEntryInfo,
-        params: { userId: userInfo.userId },
+        params: { userId: userInfo.id },
       };
 
       const response: AxiosResponse = await instance.post(

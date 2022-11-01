@@ -19,7 +19,7 @@ interface RegisterType extends LoginType {
 }
 
 interface UserType extends RegisterType {
-  userId: number;
+  id: number;
   role: string;
   token: string;
   dailyEntry: DailyEntryType[];

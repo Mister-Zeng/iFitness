@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 type DailyEntryType = {
-  dailyEntryId?: number;
+  id?: number;
   date: Date | string;
   weight: number | null;
   dailyMacros: DailyMacrosType;
@@ -9,7 +9,7 @@ type DailyEntryType = {
 };
 
 type DailyMacrosType = {
-  dailyMacrosId?: number | null;
+  id?: number | null;
   calories: number | null;
   protein: number | null;
   carbs: number | null;
@@ -17,7 +17,7 @@ type DailyMacrosType = {
 };
 
 type MacrosGoalType = {
-  macrosGoalId?: number | null;
+  id?: number | null;
   calories: number | null;
   protein: number | null;
   carbs: number | null;
@@ -25,7 +25,7 @@ type MacrosGoalType = {
 };
 
 type ExerciseType = {
-  exerciseId?: number | null;
+  id?: number | null;
   name: string | null;
   sets: number | null;
   reps: number | null;
@@ -47,7 +47,10 @@ interface DailyEntryContextType {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   dailyEntry: DailyEntryType | undefined;
-  getDailyEntry: (dailyEntryInfo: GetDailyEntryProps) => Promise<void>;
+  getDailyEntry: (dailyEntryInfo: {
+    userId: number;
+    date: string;
+  }) => Promise<void>;
   createDailyEntry: (createDailyEntryInfo: DailyEntryType) => Promise<void>;
 }
 

@@ -39,7 +39,6 @@ const DatePickers: ({
 
   const handleConfirm: (date: Date) => void = (date: Date) => {
     setDateSelected(date.toDateString());
-    console.warn("A date has been picked: ", date);
 
     // Send selected date to parent component to be used in DailyEntryScreen
     retrieveDateHandler(date);

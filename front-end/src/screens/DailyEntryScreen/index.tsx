@@ -29,7 +29,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
     userId: number;
     date: string;
   }>({
-    userId: userInfo.userId,
+    userId: 3,
     date: moment(new Date()).format("YYYY-MM-DD"),
   });
 
@@ -37,12 +37,13 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
     console.log("called");
 
     getDailyEntry(dailyEntryInfo);
-  }, [dailyEntryInfo.date]);
-
+  }, [dailyEntryInfo]);
+  console.log(userInfo.id);
   // Function to retrieve date from child component DatePicker
   const retrieveDateHandler: (date: Date) => void = (date: Date) => {
     setDailyEntryInfo({
-      userId: userInfo.userId,
+      ...dailyEntryInfo,
+      userId: userInfo.id,
       date: moment(date).format("YYYY-MM-DD"),
     });
   };
