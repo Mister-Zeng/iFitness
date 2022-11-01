@@ -6,7 +6,7 @@ import { MACRO_BACKGROUND, MACROS_ICON } from "../../assets";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
-import { MacrosType, RegisterType } from "../../models";
+import { MacrosGoalType, RegisterType } from "../../models";
 import { Appbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
@@ -21,7 +21,8 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
 
   const { register, isLoading } = useAuthSelect();
 
-  const [macrosInfo, setMacrosInfo] = React.useState<MacrosType>({
+  const [macrosInfo, setMacrosInfo] = React.useState<MacrosGoalType>({
+    macrosGoalId: null,
     calories: null,
     protein: null,
     carbs: null,
@@ -33,6 +34,8 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
     const value: RegisterType = JSON.parse(jsonValue as string);
 
     if (
+      macrosInfo.macrosGoalId === null ||
+      isNaN(macrosInfo.macrosGoalId) ||
       macrosInfo.calories === null ||
       isNaN(macrosInfo.calories) ||
       macrosInfo.fat === null ||

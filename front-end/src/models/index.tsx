@@ -7,7 +7,8 @@ import {
   AuthConfigType,
 } from "./auth";
 import {
-  MacrosType,
+  MacrosGoalType,
+  DailyMacrosType,
   DailyEntryType,
   ExerciseType,
   EditProgressType,
@@ -20,7 +21,8 @@ export {
   LoginType,
   UserType,
   EditUserInfoType,
-  MacrosType,
+  MacrosGoalType,
+  DailyMacrosType,
   DailyEntryType,
   ExerciseType,
   AuthContextType,

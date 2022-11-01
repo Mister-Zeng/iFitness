@@ -13,7 +13,7 @@ import { userInfoConstants } from "../../constants/userInfo";
 import {
   UserType,
   EditUserInfoType,
-  MacrosType,
+  MacrosGoalType,
   AuthConfigType,
 } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
@@ -134,8 +134,8 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     }
   };
 
-  const editMacro: (editMacroInfo: MacrosType) => Promise<void> = async (
-    editMacroInfo: MacrosType
+  const editMacro: (editMacroInfo: MacrosGoalType) => Promise<void> = async (
+    editMacroInfo: MacrosGoalType
   ) => {
     try {
       setIsLoading(true);

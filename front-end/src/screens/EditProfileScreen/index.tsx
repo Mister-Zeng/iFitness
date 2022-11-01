@@ -4,7 +4,7 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
-import { MacrosType } from "../../models";
+import { MacrosGoalType } from "../../models";
 import { EditUserInfoType } from "../../models/auth";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import Spinner from "react-native-loading-spinner-overlay/lib";
@@ -26,8 +26,8 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
     emailAddress: userInfo.emailAddress,
   });
   console.log(editUserInfo);
-  const [editMacrosGoal, setEditMacrosGoal] = useState<MacrosType>({
-    id: userInfo.macrosGoal.id,
+  const [editMacrosGoal, setEditMacrosGoal] = useState<MacrosGoalType>({
+    macrosGoalId: userInfo.macrosGoal.macrosGoalId,
     calories: userInfo.macrosGoal.calories,
     carbs: userInfo.macrosGoal.carbs,
     fat: userInfo.macrosGoal.fat,

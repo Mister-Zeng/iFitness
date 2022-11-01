@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -63,6 +62,38 @@ public class DailyEntryServiceImpl implements DailyEntryService {
                     e.setDailyEntry(dailyEntry);
                     exerciseRepository.save(e);
                 });
+
+        return dailyEntry;
+    }
+
+
+    @Override
+    @Transactional
+    public DailyEntry updateDailyEntry(DailyEntry dailyEntry, Long userId) {
+//        DailyEntry entry = userRepository.findDailyEntryByUserIdAndDailyEntryId(userId, dailyEntry.getId(), dailyEntry);
+//        entry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
+//        entry.setDailyMacros(dailyEntry.getDailyMacros());
+//        entry.setExercise(dailyEntry.getExercise());
+//        entry.setWeight(dailyEntry.getWeight());
+
+        DailyEntry entry = userRepository.findById(userId)
+                .get()
+                .getDailyEntry()
+                .stream()
+                .filter( e -> e.getId().equals(dailyEntry.getId()))
+                .findFirst()
+                .get();
+        entry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
+        entry.setDailyMacros(dailyEntry.getDailyMacros());
+        entry.setExercise(dailyEntry.getExercise());
+        entry.setWeight(dailyEntry.getWeight());
+
+        exerciseRepository.saveAll(dailyEntry.getExercise());
+
+        dailyMacrosRepository.save(dailyEntry.getDailyMacros());
+
+        dailyEntry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
+        dailyEntryRepository.save(dailyEntry);
 
         return dailyEntry;
     }

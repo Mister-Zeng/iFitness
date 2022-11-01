@@ -41,9 +41,10 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [dailyEntry, setDailyEntry] = useState<DailyEntryType>({
-    id: 0,
+    dailyEntryId: 0,
     date: moment(new Date()).format("YYYY-MM-DD"),
     dailyMacros: {
+      dailyMacrosId: 0,
       carbs: 0,
       calories: 0,
       fat: 0,
@@ -76,8 +77,9 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const dailyEntryData: DailyEntryType = await response.data;
       console.log(dailyEntryData + " daily entry data");
-
-      setDailyEntry(dailyEntryData);
+      dailyEntryData === undefined
+        ? setDailyEntry(dailyEntryConstant)
+        : setDailyEntry(dailyEntryData);
 
       setIsLoading(false);
     } catch (error) {
@@ -101,7 +103,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         params: createDailyEntryInfo,
       };
 
-      const response: AxiosResponse = await instance.get(
+      const response: AxiosResponse = await instance.put(
         "createDailyEntry",
         config
       );

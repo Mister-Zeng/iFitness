@@ -21,8 +21,6 @@ interface IProps {
 const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const isFocused: boolean = useIsFocused();
-
   const { userInfo } = useAuthSelect();
 
   const { dailyEntry, getDailyEntry, isLoading } = useDailyEntrySelect();
@@ -55,7 +53,11 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
       <Appbar.Header style={styles.header}>
         <Appbar.Action
           icon="clipboard-edit-outline"
-          onPress={() => navigation.navigate("EditProgressScreen")}
+          onPress={() =>
+            navigation.navigate("EditProgressScreen", {
+              params: { dailyEntry },
+            })
+          }
         />
         <Appbar.Content
           title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}

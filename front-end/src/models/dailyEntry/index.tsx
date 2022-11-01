@@ -1,15 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
 
 type DailyEntryType = {
-  id?: number;
+  dailyEntryId: number;
   date: Date | string;
   weight: number | null;
-  dailyMacros: MacrosType;
+  dailyMacros: DailyMacrosType;
   exercise: ExerciseType[];
 };
 
-type MacrosType = {
-  id?: number;
+type DailyMacrosType = {
+  dailyMacrosId: number | null;
+  calories: number | null;
+  protein: number | null;
+  carbs: number | null;
+  fat: number | null;
+};
+
+type MacrosGoalType = {
+  macrosGoalId: number | null;
   calories: number | null;
   protein: number | null;
   carbs: number | null;
@@ -17,7 +25,7 @@ type MacrosType = {
 };
 
 type ExerciseType = {
-  id?: number;
+  exerciseId: number | null;
   name: string | null;
   sets: number | null;
   reps: number | null;
@@ -26,7 +34,7 @@ type ExerciseType = {
 
 type EditProgressType = {
   weight: number;
-  macros: MacrosType;
+  macros: DailyMacrosType;
   exercise: ExerciseType[];
 };
 
@@ -45,7 +53,8 @@ interface DailyEntryContextType {
 
 export {
   GetDailyEntryProps,
-  MacrosType,
+  MacrosGoalType,
+  DailyMacrosType,
   DailyEntryType,
   ExerciseType,
   EditProgressType,
