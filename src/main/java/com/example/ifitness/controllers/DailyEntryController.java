@@ -27,8 +27,8 @@ public class DailyEntryController {
     DailyEntryService dailyEntryService;
     @CrossOrigin(origins=("*"), allowedHeaders = ("*"))
     @GetMapping("/getDailyEntry")
-    public ResponseEntity<DailyEntry> getDailyEntry(@RequestParam("username")  String username, @RequestParam String date) throws ResponseStatusException {
-        DailyEntry dailyEntry = dailyEntryService.getDailyEntry(username, date);
+    public ResponseEntity<DailyEntry> getDailyEntry(@RequestParam("userId")  Long userId, @RequestParam("date") String date) throws ResponseStatusException {
+        DailyEntry dailyEntry = dailyEntryService.getDailyEntry(userId, date);
 //        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication()
 //                .getPrincipal();
 //        String asd = jwt.getExpiresAt().toString();

@@ -11,7 +11,7 @@ public interface DailyEntryService {
 
     DailyEntry addExercise(Exercise exercise);
 
-    DailyEntry getDailyEntry(String username, String date);
+    DailyEntry getDailyEntry(Long userId, String date);
 
     DailyEntry createDailyEntry(DailyEntry entry, Long userId);
 

@@ -36,9 +36,9 @@ public class DailyEntryServiceImpl implements DailyEntryService {
 
 
     @Override
-    public DailyEntry getDailyEntry(String username, String date) {
+    public DailyEntry getDailyEntry(Long userId, String date) {
         LocalDate localDate = LocalDate.parse(date);
-        return dailyEntryRepository.findByUsernameAndDate(username, localDate);
+        return dailyEntryRepository.findByUserIdAndDate(userId, localDate);
     }
 
     @Override

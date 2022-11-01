@@ -81,14 +81,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public MacrosGoal editMacrosGoal(MacrosGoal macrosGoal) {
-//        Optional<User> userFromDatabase = userRepository.findByUsername(editMacrosGoal.username());
-//        User userInfo = (userFromDatabase.get());
-//        MacrosGoal mg = new MacrosGoal();
-//        mg.setFat(editMacrosGoal.fat());
-//        mg.setProtein(editMacrosGoal.protein());
-//        mg.setCarbs(editMacrosGoal.carbs());
-//        mg.setCalories(editMacrosGoal.calories());
-//        mg.setUser(userInfo);
         macrosGoalRepository.save(macrosGoal);
       return macrosGoal;
     }

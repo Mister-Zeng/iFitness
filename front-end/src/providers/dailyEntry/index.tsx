@@ -99,6 +99,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: createDailyEntryInfo,
         params: { userId: userInfo.userId },

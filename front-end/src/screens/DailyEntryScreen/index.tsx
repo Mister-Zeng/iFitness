@@ -37,7 +37,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
     console.log("called");
 
     getDailyEntry(dailyEntryInfo);
-  }, [dailyEntryInfo]);
+  }, [dailyEntryInfo.date]);
 
   // Function to retrieve date from child component DatePicker
   const retrieveDateHandler: (date: Date) => void = (date: Date) => {

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface DailyEntryRepository extends JpaRepository<DailyEntry, Long> {
     List<DailyEntry> findDailyEntryById(Long id);
-    @Query("select de from DailyEntry de where de.user.username = :username and de.date = :localDate")
-    DailyEntry findByUsernameAndDate(@Param("username") String username, @Param("localDate") LocalDate date);
+    @Query("select de from DailyEntry de where de.user.id = :userId and de.date = :localDate")
+    DailyEntry findByUserIdAndDate(@Param("userId") Long userId, @Param("localDate") LocalDate date);
 
 }
