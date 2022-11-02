@@ -70,15 +70,7 @@ const DatePickers: ({
         onPress={showDatePicker}
       >
         <Image source={EXPAND_LEFT_ICON} />
-        <Text
-          style={{
-            color: "white",
-            fontSize: RFValue(14),
-            marginLeft: RFValue(5),
-          }}
-        >
-          {isToday()}
-        </Text>
+        <Text style={styles.todayHeaderText}>{isToday()}</Text>
         {isDatePickerVisible ? (
           <Image source={ARROW_UP_ICON} />
         ) : (

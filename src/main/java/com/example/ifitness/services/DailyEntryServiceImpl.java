@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -76,17 +78,20 @@ public class DailyEntryServiceImpl implements DailyEntryService {
 //        entry.setExercise(dailyEntry.getExercise());
 //        entry.setWeight(dailyEntry.getWeight());
 
-        DailyEntry entry = userRepository.findById(userId)
-                .get()
-                .getDailyEntry()
+        User user = userRepository.findById(userId)
+                .get();
+
+             DailyEntry entry=   user.getDailyEntry()
                 .stream()
                 .filter( e -> e.getId().equals(dailyEntry.getId()))
                 .findFirst()
                 .get();
+
         entry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
         entry.setDailyMacros(dailyEntry.getDailyMacros());
         entry.setExercise(dailyEntry.getExercise());
         entry.setWeight(dailyEntry.getWeight());
+        entry.setUser(user);
 
         exerciseRepository.saveAll(dailyEntry.getExercise());
 

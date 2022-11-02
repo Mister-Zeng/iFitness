@@ -6,6 +6,7 @@ export interface StyleSheetProps {
   headerText: TextStyle;
   pickerContainerStyleIOS: ViewStyle;
   dateTimePickerButtom: ViewStyle;
+  todayHeaderText: TextStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
@@ -29,6 +30,11 @@ const createStyles: () => StyleSheetProps = () =>
       alignItems: "center",
       justifyContent: "center",
       marginTop: RFValue(5),
+    },
+    todayHeaderText: {
+      color: "white",
+      fontSize: RFValue(14),
+      marginLeft: RFValue(5),
     },
   });
 

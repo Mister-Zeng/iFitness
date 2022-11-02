@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { Dimensions, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
@@ -7,7 +7,11 @@ export interface StyleSheetProps {
   container: ViewStyle;
   infoTitle: TextStyle;
   infoContainer: ViewStyle;
+  createEntryContainer: ViewStyle;
   addExerciseBtn: ViewStyle;
+  createEntryBtnText: TextStyle;
+  createEntryBtn: ViewStyle;
+  message: TextStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
@@ -26,11 +30,31 @@ const createStyles: () => StyleSheetProps = () =>
       marginVertical: RFValue(30),
     },
     infoContainer: {
-      height: "100%",
+      height: Dimensions.get("window").height,
     },
     addExerciseBtn: {
       marginLeft: RFValue(20),
       marginTop: RFValue(10),
+    },
+    createEntryContainer: {
+      height: Dimensions.get("window").height,
+      top: 300,
+      alignItems: "center",
+    },
+    createEntryBtnText: {
+      color: Colors.WHITE,
+    },
+    createEntryBtn: {
+      backgroundColor: Colors.ORANGE,
+      padding: RFValue(10),
+      borderRadius: RFValue(50),
+    },
+    message: {
+      fontSize: RFValue(15),
+      color: Colors.ORANGE,
+      width: RFValue(200),
+      textAlign: "center",
+      marginBottom: RFValue(20),
     },
   });
 

@@ -1,5 +1,11 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
@@ -29,7 +35,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
     userId: number;
     date: string;
   }>({
-    userId: 3,
+    userId: userInfo.id,
     date: moment(new Date()).format("YYYY-MM-DD"),
   });
 
@@ -50,37 +56,37 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
+
       <Appbar.Header style={styles.header}>
-        <Appbar.Action
-          icon="clipboard-edit-outline"
-          onPress={() =>
-            navigation.navigate("EditDailyEntryScreen", {
-              params: { dailyEntry },
-            })
-          }
-        />
+        {dailyEntry?.date != undefined && (
+          <Appbar.Action
+            icon="clipboard-edit-outline"
+            onPress={() =>
+              navigation.navigate("EditDailyEntryScreen", {
+                params: { dailyEntry },
+              })
+            }
+          />
+        )}
         <Appbar.Content
           title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
         />
       </Appbar.Header>
-
-      {dailyEntry?.date !== dailyEntryInfo.date ? (
-        <View
-          style={{
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+      {dailyEntry?.date == undefined ? (
+        <View style={styles.createEntryContainer}>
+          <Text style={styles.message}>
+            There is currently no entry for this date
+          </Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("CreateDailyEntryScreen", {
                 params: { dailyEntryInfo },
               })
             }
-            style={{ backgroundColor: "orange", padding: 10, borderRadius: 50 }}
+            style={styles.createEntryBtn}
           >
-            <Text style={{ color: "white" }}>Create Entry</Text>
+            <Text style={styles.createEntryBtnText}>Create Entry</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -91,7 +97,6 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
             <View>
               <DailyMacroText
                 infoType="Weight"
-                // value={userInfo.macros.calories}
                 value={dailyEntry?.weight}
                 measurement="Lbs"
               />

@@ -16,7 +16,7 @@ import java.util.Set;
 public class Exercise {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "exercise_id")
     private Long id;
     private String name;
@@ -26,6 +26,6 @@ public class Exercise {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "daily_entry_id", unique = true)
+    @JoinColumn(name = "daily_entry_id")
     private DailyEntry dailyEntry;
 }

@@ -38,21 +38,9 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const { userInfo, setUserInfo } = useAuthSelect();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [dailyEntry, setDailyEntry] = useState<DailyEntryType>({
-    id: 0,
-    date: moment(new Date()).format("YYYY-MM-DD"),
-    dailyMacros: {
-      id: 0,
-      carbs: 0,
-      calories: 0,
-      fat: 0,
-      protein: 0,
-    },
-    weight: 0,
-    exercise: [],
-  });
+  const [dailyEntry, setDailyEntry] = useState<DailyEntryType | null>(null);
 
   const getDailyEntry: (dailyEntryInfo: {
     userId: number;
@@ -62,8 +50,6 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     date: string;
   }): Promise<void> => {
     try {
-      setIsLoading(true);
-
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -79,7 +65,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const dailyEntryData: DailyEntryType = await response.data;
 
-      dailyEntryData && setDailyEntry(dailyEntryData);
+      dailyEntryData !== undefined ? setDailyEntry(dailyEntryData) : null;
 
       setIsLoading(false);
     } catch (error) {
@@ -93,8 +79,6 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     createDailyEntryInfo: DailyEntryType
   ): Promise<void> => {
     try {
-      setIsLoading(true);
-
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
