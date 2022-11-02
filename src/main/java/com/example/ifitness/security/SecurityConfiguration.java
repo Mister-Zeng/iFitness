@@ -39,7 +39,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 import java.util.List;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -59,6 +58,7 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .build();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -71,6 +71,7 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
         rsaKey = Jwks.generateRsa();
