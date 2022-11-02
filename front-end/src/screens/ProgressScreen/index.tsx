@@ -1,5 +1,5 @@
-import React, { ComponentType, FC, useMemo } from "react";
-import { ScrollView, View, Text } from "react-native";
+import React, { FC, useMemo } from "react";
+import { ScrollView, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";

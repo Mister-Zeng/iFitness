@@ -6,6 +6,7 @@ import com.example.ifitness.services.DailyEntryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,8 +41,8 @@ public class DailyEntryController {
         return new ResponseEntity<>( dailyEntryInfo, HttpStatus.OK);
     }
 
-    @PutMapping("/updateDailyEntry")
-    public ResponseEntity<DailyEntry> updateDailyEntry(@RequestBody DailyEntry dailyEntry, @RequestParam("userId") Long userId) throws ResponseStatusException {
+    @PutMapping("/updateDailyEntry/{userId}/dailyEntry")
+    public ResponseEntity<DailyEntry> updateDailyEntry(@RequestBody DailyEntry dailyEntry, @PathVariable("userId") Long userId) throws ResponseStatusException {
         DailyEntry dailyEntryInfo = dailyEntryService.updateDailyEntry(dailyEntry, userId);
         return new ResponseEntity<>( dailyEntryInfo, HttpStatus.OK);
     }

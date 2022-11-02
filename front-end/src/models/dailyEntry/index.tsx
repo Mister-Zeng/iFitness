@@ -17,19 +17,19 @@ type DailyMacrosType = {
 };
 
 type MacrosGoalType = {
-  id: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  id: number | null;
+  calories: number | null;
+  protein: number | null;
+  carbs: number | null;
+  fat: number | null;
 };
 
 type ExerciseType = {
-  id: number | null;
-  name: string | null;
-  sets: number | null;
-  reps: number | null;
-  weight: number | null;
+  id?: number;
+  name: string;
+  sets: number;
+  reps: number;
+  weight: number;
 };
 
 type EditProgressType = {
@@ -44,7 +44,6 @@ type GetDailyEntryProps = {
 };
 
 interface DailyEntryContextType {
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   dailyEntry: DailyEntryType | null;
   getDailyEntry: (dailyEntryInfo: {
@@ -52,6 +51,8 @@ interface DailyEntryContextType {
     date: string;
   }) => Promise<void>;
   createDailyEntry: (createDailyEntryInfo: DailyEntryType) => Promise<void>;
+  updateDailyEntry: (updateDailyEntryInfo: DailyEntryType) => Promise<void>;
+  deleteExercise: (exerciseId: number) => Promise<void>;
 }
 
 export {

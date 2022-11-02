@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
   createContext,
   FC,
@@ -6,24 +5,23 @@ import React, {
   useState,
   Context,
   PropsWithChildren,
-  useEffect,
 } from "react";
-import { userInfoConstants } from "../../constants/userInfo";
-import { DailyEntryContextType, DailyEntryType } from "../../models";
+import {
+  DailyEntryContextType,
+  DailyEntryType,
+  ExerciseType,
+} from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { Alert } from "react-native";
 import useAuthSelect from "../auth/index";
-import { GetDailyEntryProps } from "../../models/dailyEntry";
-import { dailyEntryConstant } from "../../constants/dailyEntry";
-import moment from "moment";
 
 export const DailyEntryContext: Context<DailyEntryContextType> =
   createContext<DailyEntryContextType>({
     dailyEntry: null,
-    getDailyEntry: () => Promise.resolve(),
     isLoading: true,
+    getDailyEntry: () => Promise.resolve(),
+    updateDailyEntry: () => Promise.resolve(),
     createDailyEntry: () => Promise.resolve(),
-    setIsLoading: () => {},
+    deleteExercise: () => Promise.resolve(),
   });
 
 export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
@@ -37,6 +35,8 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [dailyEntry, setDailyEntry] = useState<DailyEntryType | null>(null);
+
+  const [addedExercise, setAddedExercise] = useState<ExerciseType[]>([]);
 
   const getDailyEntry: (dailyEntryInfo: {
     userId: number;
@@ -74,22 +74,73 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   ) => Promise<void> = async (
     createDailyEntryInfo: DailyEntryType
   ): Promise<void> => {
-    console.log(createDailyEntryInfo);
-    console.log(userInfo.token);
-    console.log(userInfo.id);
-
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
         },
-        // params: { userId: userInfo.id },
       };
 
       const response: AxiosResponse = await instance.post(
         `createDailyEntry/user/${userInfo.id}`,
         createDailyEntryInfo,
+        config
+      );
+
+      const dailyEntryData: DailyEntryType = await response.data;
+
+      setDailyEntry(dailyEntryData);
+
+      console.log(dailyEntryData);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateDailyEntry: (
+    updateDailyEntryInfo: DailyEntryType
+  ) => Promise<void> = async (updateDailyEntryInfo: DailyEntryType) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response: AxiosResponse = await instance.put(
+        `updateDailyEntry/${userInfo.id}/dailyEntry`,
+        updateDailyEntryInfo,
+        config
+      );
+
+      const dailyEntryData: DailyEntryType = await response.data;
+
+      setDailyEntry(dailyEntryData);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteExercise: (id: number) => Promise<void> = async (id: number) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          exerciseId: id,
+        },
+      };
+
+      const response: AxiosResponse = await instance.delete(
+        "deleteExercise",
         config
       );
 
@@ -105,10 +156,11 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const value = {
     isLoading,
-    setIsLoading,
     dailyEntry,
     getDailyEntry,
     createDailyEntry,
+    updateDailyEntry,
+    deleteExercise,
   };
 
   return (

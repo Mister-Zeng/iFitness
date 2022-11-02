@@ -6,6 +6,8 @@ import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
+import { ExerciseType } from "../../models";
+import useDailyEntrySelect from "../../providers/dailyEntry";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -17,25 +19,32 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
   const { isLoading } = useAuthSelect();
 
   const [exerciseInfo, setExerciseInfo] = useState({
-    exercise_name: "",
-    sets: "",
-    reps: "",
-    weight: "",
+    name: "",
+    sets: 0,
+    reps: 0,
+    weight: 0,
   });
 
-  const onSubmit: () => void = () => {
+  const onSubmit: () => void = async () => {
     if (
-      exerciseInfo.exercise_name.trim().length < 1 ||
-      exerciseInfo.sets.trim().length < 1 ||
-      exerciseInfo.reps.trim().length < 1 ||
-      exerciseInfo.weight.trim().length < 1
+      exerciseInfo.name.trim().length < 1 ||
+      exerciseInfo.sets.toString().trim().length < 1 ||
+      exerciseInfo.reps.toString().trim().length < 1 ||
+      exerciseInfo.weight.toString().trim().length < 1
     ) {
       Alert.alert("Alert", "Please enter all required value");
       return;
     }
 
-    navigation.navigate("DailyEntryScreen");
+    Alert.alert("Success", "Exercise Added");
+
+    new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
+      return Promise.resolve();
+    });
+
+    navigation.goBack();
   };
+
   return (
     <View style={styles.body}>
       <Appbar.Header style={styles.header}>
@@ -53,7 +62,7 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
             placeholder={"Required"}
             placeholderTextColor={"#6A6A6A"}
             onChangeText={(text) =>
-              setExerciseInfo({ ...exerciseInfo, exercise_name: text })
+              setExerciseInfo({ ...exerciseInfo, name: text })
             }
           />
         </View>
@@ -65,7 +74,7 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
             placeholder={"Required"}
             placeholderTextColor={"#6A6A6A"}
             onChangeText={(text) =>
-              setExerciseInfo({ ...exerciseInfo, sets: text })
+              setExerciseInfo({ ...exerciseInfo, sets: parseInt(text) })
             }
           />
         </View>
@@ -77,7 +86,7 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
             placeholder={"Required"}
             placeholderTextColor={"#6A6A6A"}
             onChangeText={(text) =>
-              setExerciseInfo({ ...exerciseInfo, reps: text })
+              setExerciseInfo({ ...exerciseInfo, reps: parseInt(text) })
             }
           />
         </View>
@@ -89,7 +98,7 @@ const AddExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
             placeholderTextColor={"#6A6A6A"}
             placeholder={"Required"}
             onChangeText={(text) =>
-              setExerciseInfo({ ...exerciseInfo, weight: text })
+              setExerciseInfo({ ...exerciseInfo, weight: parseInt(text) })
             }
           />
         </View>

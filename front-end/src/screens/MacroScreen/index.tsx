@@ -21,8 +21,8 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
 
   const { register, isLoading } = useAuthSelect();
 
-  const [macrosInfo, setMacrosInfo] = React.useState<MacrosGoalType>({
-    macrosGoalId: null,
+  const [macrosGoalInfo, setMacrosGoalInfo] = React.useState<MacrosGoalType>({
+    id: null,
     calories: null,
     protein: null,
     carbs: null,
@@ -34,23 +34,23 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
     const value: RegisterType = JSON.parse(jsonValue as string);
 
     if (
-      macrosInfo.macrosGoalId === null ||
-      isNaN(macrosInfo.macrosGoalId) ||
-      macrosInfo.calories === null ||
-      isNaN(macrosInfo.calories) ||
-      macrosInfo.fat === null ||
-      isNaN(macrosInfo.fat) ||
-      macrosInfo.protein === null ||
-      isNaN(macrosInfo.protein) ||
-      macrosInfo.carbs === null ||
-      isNaN(macrosInfo.carbs) ||
-      macrosInfo === null
+      macrosGoalInfo.id === null ||
+      isNaN(macrosGoalInfo.id) ||
+      macrosGoalInfo.calories === null ||
+      isNaN(macrosGoalInfo.calories) ||
+      macrosGoalInfo.fat === null ||
+      isNaN(macrosGoalInfo.fat) ||
+      macrosGoalInfo.protein === null ||
+      isNaN(macrosGoalInfo.protein) ||
+      macrosGoalInfo.carbs === null ||
+      isNaN(macrosGoalInfo.carbs) ||
+      macrosGoalInfo === null
     ) {
       Alert.alert("Alert", "Please enter value in number format");
     } else {
       const status: string | undefined = await register({
         ...value,
-        macrosGoal: macrosInfo,
+        macrosGoal: macrosGoalInfo,
       });
 
       if (status === "success") {
@@ -82,7 +82,10 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Calories"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setMacrosInfo({ ...macrosInfo, calories: parseInt(text) })
+                setMacrosGoalInfo({
+                  ...macrosGoalInfo,
+                  calories: parseInt(text),
+                })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -93,7 +96,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Fat"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setMacrosInfo({ ...macrosInfo, fat: parseInt(text) })
+                setMacrosGoalInfo({ ...macrosGoalInfo, fat: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -104,7 +107,10 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Protein"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setMacrosInfo({ ...macrosInfo, protein: parseInt(text) })
+                setMacrosGoalInfo({
+                  ...macrosGoalInfo,
+                  protein: parseInt(text),
+                })
               }
               autoCapitalize="none"
               autoCorrect={false}
@@ -115,7 +121,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               title={"Enter Carbs"}
               icon={MACROS_ICON}
               onChangeText={(text) =>
-                setMacrosInfo({ ...macrosInfo, carbs: parseInt(text) })
+                setMacrosGoalInfo({ ...macrosGoalInfo, carbs: parseInt(text) })
               }
               autoCapitalize="none"
               autoCorrect={false}

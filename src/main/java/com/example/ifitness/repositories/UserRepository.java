@@ -19,7 +19,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(Long id);
 
-//    @Modifying
-//    @Query("update User u set u.dailyEntry = :dailyEntry where u.id = :userId and u.dailyEntry = :dailyEntryId")
-//    DailyEntry findDailyEntryByUserIdAndDailyEntryId(@Param("userid") Long userId, @Param("dailyEntryId") Long dailyEntryId, @Param("dailyEntry") DailyEntry dailyEntry);
 }

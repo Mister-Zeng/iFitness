@@ -12,7 +12,7 @@ import { Appbar } from "react-native-paper";
 import DailyMacroText from "../../ui/DailyMacroText";
 import DatePickers from "../../components/DatePicker";
 import ExerciseInfo from "../../components/ExerciseInfo";
-import AddExerciseButton from "../../components/AddExerciseButton";
+import AddExerciseButton from "../../components/AddButton";
 import { DailyEntryType } from "../../models";
 import useAuthSelect from "../../providers/auth";
 import useDailyEntrySelect from "../../providers/dailyEntry";
@@ -40,8 +40,6 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
   });
 
   useEffect(() => {
-    console.log("called");
-
     getDailyEntry(dailyEntryInfo);
   }, [dailyEntryInfo]);
 
@@ -53,6 +51,8 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
       date: moment(date).format("YYYY-MM-DD"),
     });
   };
+
+  console.log(dailyEntry);
 
   return (
     <View style={styles.container}>
@@ -73,6 +73,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
           title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
         />
       </Appbar.Header>
+
       {dailyEntry?.date == undefined ? (
         <View style={styles.createEntryContainer}>
           <Text style={styles.message}>
@@ -138,22 +139,18 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
                 return (
                   <ExerciseInfo
                     key={index}
+                    id={exercise.id}
                     exerciseName={exercise.name}
                     sets={exercise.sets}
                     reps={exercise.reps}
                     weight={exercise.weight}
+                    disabled={true}
                   />
                 );
               })
             ) : (
               <View></View>
             )}
-
-            <View style={styles.addExerciseBtn}>
-              <AddExerciseButton
-                onPress={() => navigation.navigate("AddExerciseScreen")}
-              />
-            </View>
           </View>
         </ScrollView>
       )}

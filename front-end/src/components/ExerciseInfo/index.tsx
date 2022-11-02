@@ -7,13 +7,20 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { CANCEL_ICON } from "../../assets";
+import { ExerciseType } from "../../models";
+import useDailyEntrySelect from "../../providers/dailyEntry";
 import createStyles, { StyleSheetProps } from "./styles";
 
 type IProps = {
+  exerciseList?: ExerciseType[];
+  id: number | undefined;
   exerciseName: string | null;
   sets: number | null;
   reps: number | null;
   weight: number | null;
+  disabled?: boolean;
+  apiCall?: boolean;
+  updateExerciseHandler?: (exerciseList: ExerciseType[]) => void;
 };
 
 const ExerciseInfo: FC<IProps> = ({
@@ -21,12 +28,26 @@ const ExerciseInfo: FC<IProps> = ({
   sets,
   reps,
   weight,
+  updateExerciseHandler,
+  id,
+  exerciseList,
+  disabled,
+  apiCall,
 }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const handleCancel: FC<GestureResponderEvent> = (
-    event: GestureResponderEvent
-  ) => {};
+  const { deleteExercise } = useDailyEntrySelect();
+
+  const handleCancel: () => Promise<void> = async () => {
+    apiCall && (await deleteExercise(id!));
+
+    const updatedExerciseList: ExerciseType[] | undefined =
+      exerciseList!.filter((exercise) => {
+        return exercise.id !== id;
+      });
+
+    updateExerciseHandler!(updatedExerciseList!);
+  };
 
   return (
     <View style={styles.container}>
@@ -37,7 +58,7 @@ const ExerciseInfo: FC<IProps> = ({
           {sets} sets, {reps} reps, {weight} lbs
         </Text>
       </View>
-      <View>
+      <View style={{ display: disabled ? "none" : "flex" }}>
         <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
           <Image source={CANCEL_ICON} />
         </TouchableOpacity>

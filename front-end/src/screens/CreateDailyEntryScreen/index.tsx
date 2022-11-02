@@ -1,5 +1,5 @@
-import React, { FC, useMemo, useState } from "react";
-import { View, Text, ScrollView, Alert } from "react-native";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import {
   NavigationProp,
   ParamListBase,
@@ -8,13 +8,12 @@ import {
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
-import AddExerciseButton from "../../components/AddExerciseButton";
+import AddButton from "../../components/AddButton";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import { DailyEntryType, EditProgressType, ExerciseType } from "../../models";
 import Spinner from "react-native-loading-spinner-overlay/lib";
-import useAuthSelect from "../../providers/auth";
 import useDailyEntrySelect from "../../providers/dailyEntry/index";
-import { dailyMacrosConstant } from "../../constants/dailyEntry";
+import AddExerciseModal from "../../components/AddExerciseModal";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -50,6 +49,10 @@ const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
         calories: 0,
       },
     });
+  console.log(createDailyEntryInfo);
+  const [addExerciseModalVisible, setAddExerciseModalVisible] = useState(false);
+  const showModal: () => void = () => setAddExerciseModalVisible(true);
+  const hideModal: () => void = () => setAddExerciseModalVisible(false);
 
   const createEntryHandler: () => void = async () => {
     await createDailyEntry(createDailyEntryInfo);
@@ -57,6 +60,22 @@ const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
     Alert.alert("Success", "Daily Entry Created");
 
     navigation.goBack();
+  };
+
+  const retrieveAddedExercise = (exercise: ExerciseType) => {
+    setCreateDailyEntryInfo({
+      ...createDailyEntryInfo,
+      exercise: [...createDailyEntryInfo.exercise, exercise],
+    });
+  };
+
+  const updateExerciseHandler: (exerciseList: ExerciseType[]) => void = (
+    exerciseList: ExerciseType[]
+  ) => {
+    setCreateDailyEntryInfo({
+      ...createDailyEntryInfo,
+      exercise: exerciseList,
+    });
   };
 
   return (
@@ -167,12 +186,32 @@ const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
         <View>
           <Text style={styles.infoTitle}>Exercise</Text>
 
+          {createDailyEntryInfo.exercise.map((exercise, index) => {
+            return (
+              <ExerciseInfo
+                id={exercise.id}
+                key={index}
+                exerciseName={exercise.name}
+                sets={exercise.sets}
+                reps={exercise.reps}
+                weight={exercise.weight}
+                updateExerciseHandler={updateExerciseHandler}
+                exerciseList={createDailyEntryInfo.exercise}
+                apiCall={false}
+              />
+            );
+          })}
+
           <View style={styles.addExerciseBtn}>
-            <AddExerciseButton
-              onPress={() => navigation.navigate("AddExerciseScreen")}
-            />
+            <AddButton onPress={showModal} buttonText={"Add Exercise"} />
           </View>
         </View>
+
+        <AddExerciseModal
+          addExerciseModalVisible={addExerciseModalVisible}
+          hideModal={hideModal}
+          retrieveAddedExercise={retrieveAddedExercise}
+        />
       </ScrollView>
     </View>
   );

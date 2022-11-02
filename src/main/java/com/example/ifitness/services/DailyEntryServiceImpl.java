@@ -72,36 +72,21 @@ public class DailyEntryServiceImpl implements DailyEntryService {
     @Override
     @Transactional
     public DailyEntry updateDailyEntry(DailyEntry dailyEntry, Long userId) {
-//        DailyEntry entry = userRepository.findDailyEntryByUserIdAndDailyEntryId(userId, dailyEntry.getId(), dailyEntry);
-//        entry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
-//        entry.setDailyMacros(dailyEntry.getDailyMacros());
-//        entry.setExercise(dailyEntry.getExercise());
-//        entry.setWeight(dailyEntry.getWeight());
+        User user = userRepository.findById(userId).get();
 
-        User user = userRepository.findById(userId)
-                .get();
+        dailyEntry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
+        dailyEntry.setUser(user);
+        dailyEntryRepository.save(dailyEntry);
 
-             DailyEntry entry=   user.getDailyEntry()
-                .stream()
-                .filter( e -> e.getId().equals(dailyEntry.getId()))
-                .findFirst()
-                .get();
-
-        entry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
-        entry.setDailyMacros(dailyEntry.getDailyMacros());
-        entry.setExercise(dailyEntry.getExercise());
-        entry.setWeight(dailyEntry.getWeight());
-        entry.setUser(user);
-
-        exerciseRepository.saveAll(dailyEntry.getExercise());
+        dailyEntry.getExercise()
+                .forEach( e -> {
+                    e.setDailyEntry(dailyEntry);
+                    exerciseRepository.save(e);
+                });
 
         dailyMacrosRepository.save(dailyEntry.getDailyMacros());
 
-        dailyEntry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
-        dailyEntryRepository.save(dailyEntry);
-
         return dailyEntry;
     }
-
 
 }

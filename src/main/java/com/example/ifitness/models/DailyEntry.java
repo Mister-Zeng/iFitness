@@ -19,7 +19,7 @@ public class DailyEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "daily_entry_id", unique = true)
+    @Column(name = "daily_entry_id")
     private Long id;
     @Column(unique = true)
     private LocalDate date;
