@@ -9,11 +9,7 @@ import React, {
   useEffect,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
-import {
-  AuthConfigType,
-  DailyEntryContextType,
-  DailyEntryType,
-} from "../../models";
+import { DailyEntryContextType, DailyEntryType } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Alert } from "react-native";
 import useAuthSelect from "../auth/index";
@@ -78,25 +74,26 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   ) => Promise<void> = async (
     createDailyEntryInfo: DailyEntryType
   ): Promise<void> => {
+    console.log(createDailyEntryInfo);
+    console.log(userInfo.token);
+    console.log(userInfo.id);
+
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
-        body: createDailyEntryInfo,
-        params: { userId: userInfo.id },
+        // params: { userId: userInfo.id },
       };
 
       const response: AxiosResponse = await instance.post(
-        "createDailyEntry",
+        `createDailyEntry/user/${userInfo.id}`,
+        createDailyEntryInfo,
         config
       );
 
       const dailyEntryData: DailyEntryType = await response.data;
-
-      console.log(dailyEntryData);
 
       setDailyEntry(dailyEntryData);
 

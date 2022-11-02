@@ -7,15 +7,9 @@ import React, {
   Context,
   PropsWithChildren,
   useEffect,
-  SetStateAction,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
-import {
-  UserType,
-  EditUserInfoType,
-  MacrosGoalType,
-  AuthConfigType,
-} from "../../models";
+import { UserType, EditUserInfoType, MacrosGoalType } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { RegisterType, LoginType, AuthContextType } from "../../models";
 import { Alert } from "react-native";
@@ -102,7 +96,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
-      const config: AuthConfigType = {
+      const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
@@ -114,7 +108,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         editUserInfo,
         config
       );
-      const userInfos: UserType = response.data;
+      const userInfos: UserType = await response.data;
 
       setUserInfo({
         ...userInfo,
@@ -140,7 +134,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
-      const config: AuthConfigType = {
+      const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
@@ -148,20 +142,21 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       };
 
       const response: AxiosResponse = await instance.put(
-        "editMacrosGoal",
+        `editMacrosGoal/user/${userInfo.id}`,
         editMacroInfo,
         config
       );
 
-      const userInfos: UserType = response.data;
+      const macrosGoalInfo: MacrosGoalType = await response.data;
 
-      console.log(userInfos);
+      console.log(macrosGoalInfo);
 
-      setUserInfo({ ...userInfo, macrosGoal: editMacroInfo });
+      setUserInfo({
+        ...userInfo,
+        macrosGoal: macrosGoalInfo,
+      });
 
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-
-      console.log(userInfos);
 
       setIsLoading(false);
     } catch (error) {

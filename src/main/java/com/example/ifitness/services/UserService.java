@@ -10,7 +10,7 @@ public interface UserService {
     User login(LoginRequest userLogin);
     User register(User user);
     User editUserInfo(EditUserInfo editUserInfo);
-    MacrosGoal editMacrosGoal(MacrosGoal macrosGoal);
+    MacrosGoal editMacrosGoal(MacrosGoal macrosGoal, Long userId);
 
 }
 

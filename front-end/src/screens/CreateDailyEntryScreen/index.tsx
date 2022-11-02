@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import {
   NavigationProp,
   ParamListBase,
@@ -36,7 +36,7 @@ const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
 
   const { createDailyEntry } = useDailyEntrySelect();
 
-  const { isLoading, setIsLoading } = useDailyEntrySelect();
+  const { isLoading } = useDailyEntrySelect();
 
   const [createDailyEntryInfo, setCreateDailyEntryInfo] =
     useState<DailyEntryType>({
@@ -50,17 +50,24 @@ const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
         calories: 0,
       },
     });
-  console.log(createDailyEntryInfo);
+
+  const createEntryHandler: () => void = async () => {
+    await createDailyEntry(createDailyEntryInfo);
+
+    Alert.alert("Success", "Daily Entry Created");
+
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.header}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Create Entry" />
-        <Appbar.Action
-          icon="content-save-check"
-          onPress={() => createDailyEntry(createDailyEntryInfo)}
-        />
+        <Appbar.Action icon="content-save-check" onPress={createEntryHandler} />
       </Appbar.Header>
+
+      <Spinner visible={isLoading} />
 
       <ScrollView style={styles.infoContainer}>
         <View>

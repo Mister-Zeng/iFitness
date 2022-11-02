@@ -25,7 +25,6 @@ public class DailyEntryController {
 
     @Autowired
     DailyEntryService dailyEntryService;
-    @CrossOrigin(origins=("*"), allowedHeaders = ("*"))
     @GetMapping("/getDailyEntry")
     public ResponseEntity<DailyEntry> getDailyEntry(@RequestParam("userId")  Long userId, @RequestParam("date") String date) throws ResponseStatusException {
         DailyEntry dailyEntry = dailyEntryService.getDailyEntry(userId, date);
@@ -35,8 +34,8 @@ public class DailyEntryController {
 //        log.info(asd);
         return new ResponseEntity<>(dailyEntry, HttpStatus.OK);
     }
-    @PostMapping("/createDailyEntry")
-    public ResponseEntity<DailyEntry> createDailyEntry(@RequestBody DailyEntry dailyEntry, @RequestParam("userId") Long userId) throws ResponseStatusException {
+    @PostMapping("/createDailyEntry/user/{userId}")
+    public ResponseEntity<DailyEntry> createDailyEntry(@RequestBody DailyEntry dailyEntry, @PathVariable("userId") Long userId) throws ResponseStatusException {
         DailyEntry dailyEntryInfo = dailyEntryService.createDailyEntry(dailyEntry, userId);
         return new ResponseEntity<>( dailyEntryInfo, HttpStatus.OK);
     }

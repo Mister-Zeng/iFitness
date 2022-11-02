@@ -47,9 +47,9 @@ public class UserController {
         return new ResponseEntity<>( userInfo, HttpStatus.OK);
     }
 
-    @PutMapping("/editMacrosGoal")
-    public ResponseEntity<MacrosGoal> editMacrosGoal(@RequestBody MacrosGoal macrosGoal) throws ResponseStatusException {
-        MacrosGoal macroGoalInfo = userService.editMacrosGoal(macrosGoal);
+    @PutMapping("/editMacrosGoal/user/{userId}")
+    public ResponseEntity<MacrosGoal> editMacrosGoal(@RequestBody MacrosGoal macrosGoal, @PathVariable Long userId) throws ResponseStatusException {
+        MacrosGoal macroGoalInfo = userService.editMacrosGoal(macrosGoal, userId);
         return new ResponseEntity<>( macroGoalInfo, HttpStatus.OK);
     }
 }

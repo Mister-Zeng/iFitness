@@ -70,19 +70,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User editUserInfo(EditUserInfo editUserInfo) {
-        Optional<User> userFromDatabase = userRepository.findByUsername(editUserInfo.username());
-        User userInfo = userFromDatabase.get();
-        userInfo.setEmailAddress(editUserInfo.emailAddress());
-        userInfo.setFirstName(editUserInfo.firstName());
-        userInfo.setLastName(editUserInfo.lastName());
-        userRepository.save(userInfo);
-        return userInfo;
+        User user = userRepository.findById(editUserInfo.id()).get();
+        user.setEmailAddress(editUserInfo.emailAddress());
+        user.setFirstName(editUserInfo.firstName());
+        user.setLastName(editUserInfo.lastName());
+        userRepository.save(user);
+        return user;
     }
 
     @Override
-    public MacrosGoal editMacrosGoal(MacrosGoal macrosGoal) {
+    public MacrosGoal editMacrosGoal(MacrosGoal macrosGoal, Long userId) {
+        User user = userRepository.findById(userId).get();
+        user.setMacrosGoal(macrosGoal);
+        userRepository.save(user);
+
+        MacrosGoal thisMacrosGoal = macrosGoalRepository.findById(macrosGoal.getId()).get();
+        thisMacrosGoal.setUser(user);
         macrosGoalRepository.save(macrosGoal);
-      return macrosGoal;
+        return thisMacrosGoal;
     }
 
 

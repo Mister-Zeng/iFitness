@@ -9,23 +9,23 @@ type DailyEntryType = {
 };
 
 type DailyMacrosType = {
-  id?: number | null;
-  calories: number | null;
-  protein: number | null;
-  carbs: number | null;
-  fat: number | null;
+  id?: number;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
 };
 
 type MacrosGoalType = {
-  id?: number | null;
-  calories: number | null;
-  protein: number | null;
-  carbs: number | null;
-  fat: number | null;
+  id: number;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
 };
 
 type ExerciseType = {
-  id?: number | null;
+  id: number | null;
   name: string | null;
   sets: number | null;
   reps: number | null;

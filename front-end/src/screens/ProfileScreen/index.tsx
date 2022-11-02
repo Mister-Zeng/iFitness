@@ -17,14 +17,24 @@ const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   const { userInfo, logout, isLoading } = useAuthSelect();
 
   const [profileInfo, setProfileInfo] = useState<EditUserInfoType>({
+    id: userInfo.id,
     username: userInfo.username,
     firstName: userInfo.firstName,
     lastName: userInfo.lastName,
     emailAddress: userInfo.emailAddress,
   });
 
+  const [macrosGoal, setMacrosGoal] = useState({
+    id: userInfo.macrosGoal.id,
+    calories: userInfo.macrosGoal.calories,
+    carbs: userInfo.macrosGoal.carbs,
+    fat: userInfo.macrosGoal.fat,
+    protein: userInfo.macrosGoal.protein,
+  });
+
   useEffect(() => {
-    setProfileInfo(userInfo);
+    setProfileInfo({ ...profileInfo, ...userInfo });
+    setMacrosGoal({ ...macrosGoal, ...userInfo.macrosGoal });
   }, [userInfo]);
 
   return (
@@ -79,29 +89,25 @@ const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.inputContainer}>
             <View style={styles.macroInfoContainer}>
               <Text style={styles.macroInfoType}>Calories</Text>
-              <Text style={styles.macroinput}>
-                {userInfo.macrosGoal.calories}
-              </Text>
+              <Text style={styles.macroinput}>{macrosGoal.calories}</Text>
               <Text style={styles.measurement}>Calories</Text>
             </View>
 
             <View style={styles.macroInfoContainer}>
               <Text style={styles.macroInfoType}>Fat</Text>
-              <Text style={styles.macroinput}>{userInfo.macrosGoal.fat}</Text>
+              <Text style={styles.macroinput}>{macrosGoal.fat}</Text>
               <Text style={styles.measurement}>Grams</Text>
             </View>
 
             <View style={styles.macroInfoContainer}>
               <Text style={styles.macroInfoType}>Protein</Text>
-              <Text style={styles.macroinput}>
-                {userInfo.macrosGoal.protein}
-              </Text>
+              <Text style={styles.macroinput}>{macrosGoal.protein}</Text>
               <Text style={styles.measurement}>Grams</Text>
             </View>
 
             <View style={styles.macroInfoContainer}>
               <Text style={styles.macroInfoType}>Carbs</Text>
-              <Text style={styles.macroinput}>{userInfo.macrosGoal.carbs}</Text>
+              <Text style={styles.macroinput}>{macrosGoal.carbs}</Text>
               <Text style={styles.measurement}>Grams</Text>
             </View>
           </View>

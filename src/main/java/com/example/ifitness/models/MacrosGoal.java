@@ -23,7 +23,7 @@ public class MacrosGoal {
     private int carbs;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "macrosGoal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "macrosGoal")
     private User user;
 }
 

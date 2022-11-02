@@ -35,7 +35,7 @@ public class User {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "macros_goal_id")
+    @JoinColumn(name = "macros_goal_id", unique = true)
     private MacrosGoal macrosGoal;
 
     @JsonManagedReference

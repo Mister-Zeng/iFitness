@@ -8,6 +8,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import useAuthSelect from "../../providers/auth";
+import useDailyEntrySelect from "../../providers/dailyEntry";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -16,6 +17,8 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { userInfo } = useAuthSelect();
+
+  const { dailyEntry } = useDailyEntrySelect();
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -95,7 +98,13 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Calories</Text>
             <Progress.Bar
-              progress={0.77}
+              progress={
+                // dailyEntry
+                //   ? dailyEntry.dailyMacros.calories /
+                //     userInfo.macrosGoal.calories
+                //   :
+                0
+              }
               width={320}
               height={25}
               borderRadius={20}
@@ -106,7 +115,12 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Fat</Text>
             <Progress.Bar
-              progress={0.65}
+              progress={
+                // dailyEntry
+                //   ? dailyEntry.dailyMacros.fat / userInfo.macrosGoal.fat
+                //   :
+                0
+              }
               width={320}
               height={25}
               borderRadius={20}
@@ -117,7 +131,12 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Protein</Text>
             <Progress.Bar
-              progress={0.5}
+              progress={
+                // dailyEntry !== null
+                //   ? dailyEntry.dailyMacros.protein / userInfo.macrosGoal.protein
+                //   :
+                0
+              }
               width={320}
               height={25}
               borderRadius={20}
@@ -128,7 +147,12 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Carb</Text>
             <Progress.Bar
-              progress={0.7}
+              progress={
+                // dailyEntry
+                //   ? dailyEntry.dailyMacros.carbs / userInfo.macrosGoal.carbs
+                //   :
+                0
+              }
               width={320}
               height={25}
               borderRadius={20}

@@ -20,19 +20,22 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
   const { userInfo, editProfile, editMacro, isLoading } = useAuthSelect();
 
   const [editUserInfo, setEditUserInfo] = useState<EditUserInfoType>({
+    id: userInfo.id,
     username: userInfo.username,
     firstName: userInfo.firstName,
     lastName: userInfo.lastName,
     emailAddress: userInfo.emailAddress,
   });
-  console.log(editUserInfo);
+
   const [editMacrosGoal, setEditMacrosGoal] = useState<MacrosGoalType>({
-    macrosGoalId: userInfo.macrosGoal.macrosGoalId,
+    id: userInfo.macrosGoal.id,
     calories: userInfo.macrosGoal.calories,
     carbs: userInfo.macrosGoal.carbs,
     fat: userInfo.macrosGoal.fat,
     protein: userInfo.macrosGoal.protein,
   });
+
+  console.log(editMacrosGoal);
 
   const handleEditProfile: () => void = () => {
     // Email format validation
@@ -54,7 +57,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
     }
   };
 
-  const handleDailyMacrosGoalSubmit: () => void = () => {
+  const handleMacrosGoalSubmit: () => void = () => {
     if (
       // Check if input in a number
       editMacrosGoal.calories === null ||
@@ -74,7 +77,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
       navigation.navigate("ProfileScreen");
     }
   };
-
+  console.log(editMacrosGoal);
   return (
     <View style={styles.body}>
       <Appbar.Header style={styles.header}>
@@ -207,10 +210,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
             />
 
             <View style={styles.saveButtonContainer}>
-              <SaveButton
-                title={"Save"}
-                onPress={handleDailyMacrosGoalSubmit}
-              />
+              <SaveButton title={"Save"} onPress={handleMacrosGoalSubmit} />
             </View>
           </View>
         </View>

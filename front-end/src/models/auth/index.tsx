@@ -1,12 +1,5 @@
 import { DailyEntryType, MacrosGoalType } from "../dailyEntry";
 
-type AuthConfigType = {
-  headers: {
-    Authorization: string;
-    "Content-Type": string;
-  };
-};
-
 type LoginType = {
   username: string;
   password: string;
@@ -26,6 +19,7 @@ interface UserType extends RegisterType {
 }
 
 type EditUserInfoType = {
+  id: number;
   username: string;
   firstName: string;
   lastName: string;
@@ -43,11 +37,4 @@ interface AuthContextType {
   setUserInfo: React.Dispatch<React.SetStateAction<UserType>>;
 }
 
-export {
-  AuthConfigType,
-  RegisterType,
-  LoginType,
-  UserType,
-  EditUserInfoType,
-  AuthContextType,
-};
+export { RegisterType, LoginType, UserType, EditUserInfoType, AuthContextType };
