@@ -1,11 +1,5 @@
 import React, { FC, useMemo } from "react";
-import {
-  Text,
-  Image,
-  GestureResponderEvent,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { Text, Image, View, TouchableOpacity } from "react-native";
 import { CANCEL_ICON } from "../../assets";
 import { ExerciseType } from "../../models";
 import useDailyEntrySelect from "../../providers/dailyEntry";
@@ -20,6 +14,7 @@ type IProps = {
   weight: number | null;
   disabled?: boolean;
   apiCall?: boolean;
+  tempId?: string | number[] | null | undefined;
   updateExerciseHandler?: (exerciseList: ExerciseType[]) => void;
 };
 
@@ -33,6 +28,7 @@ const ExerciseInfo: FC<IProps> = ({
   exerciseList,
   disabled,
   apiCall,
+  tempId,
 }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
@@ -40,13 +36,12 @@ const ExerciseInfo: FC<IProps> = ({
 
   const handleCancel: () => Promise<void> = async () => {
     apiCall && (await deleteExercise(id!));
-
-    const updatedExerciseList: ExerciseType[] | undefined =
+    console.log(tempId);
+    updateExerciseHandler!(
       exerciseList!.filter((exercise) => {
-        return exercise.id !== id;
-      });
-
-    updateExerciseHandler!(updatedExerciseList!);
+        return exercise.tempId !== tempId;
+      })
+    );
   };
 
   return (

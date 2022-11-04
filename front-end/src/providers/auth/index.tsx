@@ -36,6 +36,28 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [userInfo, setUserInfo] = useState<UserType>(userInfoConstants);
 
+  useEffect(() => {
+    const isLoggedIn: () => Promise<void> = async () => {
+      try {
+        setIsLoading(true);
+
+        let userInfo: string | any | null = (await AsyncStorage.getItem(
+          "userInfo"
+        )) as string;
+        userInfo = JSON.parse(userInfo);
+
+        if (userInfo) {
+          setUserInfo({ ...userInfo, token: userInfo.token });
+        }
+
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    isLoggedIn();
+  }, []);
+
   const login: (loginInfo: LoginType) => Promise<void> = async (
     loginInfo: LoginType
   ): Promise<void> => {
@@ -109,15 +131,16 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         config
       );
       const userInfos: UserType = await response.data;
-      console.log(userInfos);
-      setUserInfo({
+
+      const updatedUserInfo: UserType = {
         ...userInfo,
         firstName: userInfos.firstName,
         lastName: userInfos.lastName,
         emailAddress: userInfos.emailAddress,
-      });
+      };
+      setUserInfo(updatedUserInfo);
 
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      await AsyncStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
 
       setIsLoading(false);
     } catch (error) {
@@ -147,12 +170,14 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const macrosGoalInfo: MacrosGoalType = await response.data;
 
-      setUserInfo({
+      const updatedUserInfo: UserType = {
         ...userInfo,
         macrosGoal: macrosGoalInfo,
-      });
+      };
 
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setUserInfo(updatedUserInfo);
+
+      await AsyncStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
 
       setIsLoading(false);
     } catch (error) {
@@ -176,28 +201,6 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const isLoggedIn: () => Promise<void> = async () => {
-      try {
-        setIsLoading(true);
-
-        let userInfo: string | any | null = (await AsyncStorage.getItem(
-          "userInfo"
-        )) as string;
-        userInfo = JSON.parse(userInfo);
-
-        if (userInfo) {
-          setUserInfo(userInfo);
-        }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    isLoggedIn();
-  }, []);
 
   const value = {
     isLoading,

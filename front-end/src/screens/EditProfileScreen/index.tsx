@@ -1,5 +1,5 @@
 import React, { useState, useMemo, FC } from "react";
-import { Alert, Text, TextInput, View } from "react-native";
+import { Alert, Text, TextInput, View, Image } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
@@ -9,6 +9,7 @@ import { EditUserInfoType } from "../../models/auth";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
+import { PROFILE_PIC_ICON } from "../../assets";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -75,7 +76,7 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
       navigation.navigate("ProfileScreen");
     }
   };
-  console.log(editMacrosGoal);
+
   return (
     <View style={styles.body}>
       <Appbar.Header style={styles.header}>
@@ -87,8 +88,9 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
       <View>
         <Text style={styles.infoTitle}>Personal Details</Text>
+
         <View style={styles.profilePicture}>
-          <Text></Text>
+          <Image source={PROFILE_PIC_ICON} />
         </View>
 
         <View style={styles.inputContainer}>

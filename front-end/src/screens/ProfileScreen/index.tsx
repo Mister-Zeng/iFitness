@@ -18,27 +18,6 @@ const ProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const { userInfo, logout, isLoading } = useAuthSelect();
 
-  // const [profileInfo, setProfileInfo] = useState<EditUserInfoType>({
-  //   id: userInfo.id,
-  //   username: userInfo.username,
-  //   firstName: userInfo.firstName,
-  //   lastName: userInfo.lastName,
-  //   emailAddress: userInfo.emailAddress,
-  // });
-
-  // const [macrosGoal, setMacrosGoal] = useState<MacrosGoalType>({
-  //   id: userInfo.macrosGoal.id,
-  //   calories: userInfo.macrosGoal.calories,
-  //   carbs: userInfo.macrosGoal.carbs,
-  //   fat: userInfo.macrosGoal.fat,
-  //   protein: userInfo.macrosGoal.protein,
-  // });
-
-  // useEffect(() => {
-  //   setProfileInfo(userInfo);
-  //   setMacrosGoal(userInfo.macrosGoal);
-  // }, [userInfo]);
-
   return (
     <View style={styles.body}>
       <Appbar.Header style={styles.header}>

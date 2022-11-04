@@ -20,6 +20,8 @@ export const DailyEntryContext: Context<DailyEntryContextType> =
   createContext<DailyEntryContextType>({
     dailyEntry: null,
     isLoading: true,
+    allDailyEntries: [],
+    getEntries: async () => Promise.resolve(),
     getDailyEntry: () => Promise.resolve(),
     updateDailyEntry: () => Promise.resolve(),
     createDailyEntry: () => Promise.resolve(),
@@ -38,6 +40,34 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [dailyEntry, setDailyEntry] =
     useState<DailyEntryType>(dailyEntryConstant);
+
+  const [allDailyEntries, setAllDailyEntries] = useState<DailyEntryType[]>([]);
+
+  const getEntries: (userId: number) => Promise<void> = async (
+    userId: number
+  ): Promise<void> => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          userId: userId,
+        },
+      };
+
+      const response: AxiosResponse = await instance.get("getEntries", config);
+
+      const entries: DailyEntryType[] = await response.data;
+
+      setAllDailyEntries(entries);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getDailyEntry: (dailyEntryInfo: {
     userId: number;
@@ -160,6 +190,8 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const value = {
     isLoading,
     dailyEntry,
+    allDailyEntries,
+    getEntries,
     getDailyEntry,
     createDailyEntry,
     updateDailyEntry,

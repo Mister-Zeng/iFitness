@@ -11,6 +11,8 @@ import createStyles, { StyleSheetProps } from "./styles";
 import { Modal, Portal, Provider } from "react-native-paper";
 import AddButton from "../AddButton";
 import { ExerciseType } from "../../models";
+import uuid from "react-native-uuid";
+import ExerciseInfo from "../ExerciseInfo/index";
 
 type IProps = {
   addExerciseModalVisible: boolean;
@@ -25,25 +27,37 @@ const AddExerciseModal: FC<IProps> = ({
 }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const [exerciseInfo, setExerciseInfo] = useState({
-    name: "",
-    sets: 0,
-    reps: 0,
-    weight: 0,
-  });
+  const ExerciseInfoConstant = {
+    name: null,
+    sets: null,
+    reps: null,
+    weight: null,
+    // temp id used to delete exercise when creating entry
+    tempId: null,
+  };
+
+  const [exerciseInfo, setExerciseInfo] =
+    useState<ExerciseType>(ExerciseInfoConstant);
 
   const onSubmit: () => void = async () => {
     if (
-      exerciseInfo.name.trim().length < 1 ||
-      exerciseInfo.sets.toString().trim().length < 1 ||
-      exerciseInfo.reps.toString().trim().length < 1 ||
-      exerciseInfo.weight.toString().trim().length < 1
+      exerciseInfo.name === null ||
+      exerciseInfo.sets === null ||
+      exerciseInfo.reps === null ||
+      exerciseInfo.weight === null
     ) {
       Alert.alert("Alert", "Please enter all required value");
-      return;
+    } else if (
+      isNaN(exerciseInfo.sets) ||
+      isNaN(exerciseInfo.reps) ||
+      isNaN(exerciseInfo.weight)
+    ) {
+      Alert.alert("Alert", "Please enter valid number value");
+    } else {
+      retrieveAddedExercise(exerciseInfo);
+      hideModal();
+      setExerciseInfo(ExerciseInfoConstant);
     }
-    retrieveAddedExercise(exerciseInfo);
-    hideModal();
   };
 
   return (
@@ -67,9 +81,13 @@ const AddExerciseModal: FC<IProps> = ({
               style={styles.textInput}
               placeholder={"Required"}
               placeholderTextColor={"darkgray"}
-              // onChangeText={(text) =>
-              //   setExerciseInfo({ ...exerciseInfo, name: text })
-              // }
+              onChangeText={(text) =>
+                setExerciseInfo({
+                  ...exerciseInfo,
+                  name: text,
+                  tempId: uuid.v4(),
+                })
+              }
             />
           </View>
           <View style={styles.exerciseInputContainer}>
@@ -79,7 +97,7 @@ const AddExerciseModal: FC<IProps> = ({
               placeholder={"Required"}
               placeholderTextColor={"darkgray"}
               onChangeText={(text) =>
-                setExerciseInfo({ ...exerciseInfo, name: text })
+                setExerciseInfo({ ...exerciseInfo, weight: parseInt(text) })
               }
             />
           </View>
@@ -90,7 +108,7 @@ const AddExerciseModal: FC<IProps> = ({
               placeholder={"Required"}
               placeholderTextColor={"darkgray"}
               onChangeText={(text) =>
-                setExerciseInfo({ ...exerciseInfo, name: text })
+                setExerciseInfo({ ...exerciseInfo, sets: parseInt(text) })
               }
             />
           </View>
@@ -101,7 +119,10 @@ const AddExerciseModal: FC<IProps> = ({
               placeholder={"Required"}
               placeholderTextColor={"darkgray"}
               onChangeText={(text) =>
-                setExerciseInfo({ ...exerciseInfo, name: text })
+                setExerciseInfo({
+                  ...exerciseInfo,
+                  reps: parseInt(text),
+                })
               }
             />
           </View>

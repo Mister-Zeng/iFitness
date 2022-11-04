@@ -28,10 +28,11 @@ type MacrosGoalType = {
 
 type ExerciseType = {
   id?: number;
-  name: string;
-  sets: number;
-  reps: number;
-  weight: number;
+  name: string | null;
+  sets: number | null;
+  reps: number | null;
+  weight: number | null;
+  tempId?: string | number[] | null | undefined;
 };
 
 type EditProgressType = {
@@ -48,6 +49,8 @@ type GetDailyEntryProps = {
 interface DailyEntryContextType {
   isLoading: boolean;
   dailyEntry: DailyEntryType | null;
+  allDailyEntries: DailyEntryType[];
+  getEntries: (userId: number) => Promise<void>;
   getDailyEntry: (dailyEntryInfo: {
     userId: number;
     date: string;

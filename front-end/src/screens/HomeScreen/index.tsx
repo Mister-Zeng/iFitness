@@ -21,7 +21,8 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const { userInfo } = useAuthSelect();
 
-  const { dailyEntry, getDailyEntry } = useDailyEntrySelect();
+  const { dailyEntry, getDailyEntry, getEntries, allDailyEntries } =
+    useDailyEntrySelect();
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -42,11 +43,64 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
     }
   }, [userInfo]);
 
+  useEffect(() => {
+    getEntries(userInfo.id);
+  }, [dailyEntry]);
+
+  const weight: number[] = [];
+
+  const month: string[] = [];
+
+  let dateNum: { date: number; weight: number }[] = [];
+
+  let prev = Number.MAX_VALUE;
+  allDailyEntries.map((item) => {
+    const dateInfo = item.date as string;
+    dateNum.push({
+      date: parseInt(dateInfo.replaceAll("-", "")),
+      weight: item.weight as number,
+    });
+  });
+
+  const sortedDate = dateNum.sort((a, b) => {
+    return a.date - b.date;
+  });
+
+  if (allDailyEntries.length > 1) {
+    // Add first entry of user to the chart
+    weight.push(sortedDate[0].weight);
+
+    // If the current date is smaller or equal to the previous date
+    // then this is the first entry of the month
+    const getWeights = () => {
+      for (let i = 1; i < sortedDate.length - 1; i++) {
+        if (sortedDate[i].date >= sortedDate[i - 1].date === true) {
+          weight.push(sortedDate[i].weight);
+
+          prev = sortedDate[i].date;
+        }
+      }
+    };
+
+    getWeights();
+  }
+
+  // Using a set to filter out all daily entry to only one label for each month
+  let monthSet: Set<string> = new Set();
+  sortedDate.map((entry) => {
+    const date = entry.date.toString();
+    monthSet.add(date.slice(4, 6));
+  });
+
+  monthSet.forEach((item) => {
+    month.push(numToMonth(item));
+  });
+
   const data = {
-    labels: [],
+    labels: month,
     datasets: [
       {
-        data: [],
+        data: weight,
         color: () => Colors.ORANGE,
         strokeWidth: 2, // optional
       },

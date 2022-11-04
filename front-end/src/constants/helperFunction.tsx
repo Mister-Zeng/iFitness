@@ -45,41 +45,41 @@ export const numToMonth: (
   }
 };
 // let dateNum: { date: number; weight: number }[] = [];
-// // userInfo.dailyEntry.map((item) => {
-// //   const dateInfo = item.date as string;
-// //   dateNum.push({
-// //     date: parseInt(dateInfo.replaceAll("-", "")),
-// //     weight: item.weight as number,
-// //   });
-// // });
+// userInfo.dailyEntry.map((item) => {
+//   const dateInfo = item.date as string;
+//   dateNum.push({
+//     date: parseInt(dateInfo.replaceAll("-", "")),
+//     weight: item.weight as number,
+//   });
+// });
 
-// // const sortedDate = dateNum.sort((a, b) => {
-// //   return a.date - b.date;
-// // });
+// const sortedDate = dateNum.sort((a, b) => {
+//   return a.date - b.date;
+// });
 
 // let weight: number[] = [];
-// // const getWeight = async () => {
-// //   let prev = 0;
+// const getWeight = async () => {
+//   let prev = 0;
 
-// //   // for (let i = 0; i < sortedDate.length - 1; i++) {
-// //   //   console.log(parseInt(sortedDate[i].date.toString().slice(-2)));
-// //   //   if (parseInt(sortedDate[i].date.toString().slice(-2)) > prev) {
-// //   //     console.log("here");
-// //   //     prev = parseInt(sortedDate[i].date.toString().slice(-2));
-// //   //     weight.push(sortedDate[i].weight);
-// //   //   }
-// //   // }
-// // };
-// // getWeight();
+//   for (let i = 0; i < sortedDate.length - 1; i++) {
+//     console.log(parseInt(sortedDate[i].date.toString().slice(-2)));
+//     if (parseInt(sortedDate[i].date.toString().slice(-2)) > prev) {
+//       console.log("here");
+//       prev = parseInt(sortedDate[i].date.toString().slice(-2));
+//       weight.push(sortedDate[i].weight);
+//     }
+//   }
+// };
+// getWeight();
 
 // const month: string[] = [];
 
-// // let monthSet: Set<string> = new Set();
-// // sortedDate.map((entry) => {
-// //   const date = entry.date.toString();
-// //   monthSet.add(date.slice(4, 6));
-// // });
+// let monthSet: Set<string> = new Set();
+// sortedDate.map((entry) => {
+//   const date = entry.date.toString();
+//   monthSet.add(date.slice(4, 6));
+// });
 
-// // monthSet.forEach((item) => {
-// //   month.push(numToMonth(item));
-// // });
+// monthSet.forEach((item) => {
+//   month.push(numToMonth(item));
+// });

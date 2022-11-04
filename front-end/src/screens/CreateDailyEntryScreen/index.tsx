@@ -53,7 +53,7 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
         calories: 0,
       },
     });
-  console.log(createDailyEntryInfo);
+
   const [addExerciseModalVisible, setAddExerciseModalVisible] = useState(false);
   const showModal: () => void = () => setAddExerciseModalVisible(true);
   const hideModal: () => void = () => setAddExerciseModalVisible(false);
@@ -202,6 +202,7 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
                 updateExerciseHandler={updateExerciseHandler}
                 exerciseList={createDailyEntryInfo.exercise}
                 apiCall={false}
+                tempId={exercise.tempId}
               />
             );
           })}
