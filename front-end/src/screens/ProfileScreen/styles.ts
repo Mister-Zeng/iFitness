@@ -28,10 +28,6 @@ const createStyles: () => StyleSheetProps = () =>
       height: "100%",
     },
     profilePicture: {
-      backgroundColor: Colors.WHITE,
-      width: RFValue(65),
-      height: RFValue(65),
-      borderRadius: RFValue(50),
       alignSelf: "center",
       marginTop: RFValue(20),
     },

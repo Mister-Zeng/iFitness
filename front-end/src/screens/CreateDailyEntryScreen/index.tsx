@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import {
   NavigationProp,
   ParamListBase,
+  NavigationState,
   RouteProp,
 } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
@@ -15,8 +16,8 @@ import Spinner from "react-native-loading-spinner-overlay/lib";
 import useDailyEntrySelect from "../../providers/dailyEntry/index";
 import AddExerciseModal from "../../components/AddExerciseModal";
 
-interface IProps {
-  navigation: NavigationProp<ParamListBase>;
+export interface CreateDailyEntryScreenIProps {
+  navigation: NavigationProp<NavigationState>;
   route: RouteProp<
     {
       params: {
@@ -27,7 +28,10 @@ interface IProps {
   >;
 }
 
-const CreateDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
+const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
+  navigation,
+  route,
+}: CreateDailyEntryScreenIProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const params: { date: string; userId: number } =

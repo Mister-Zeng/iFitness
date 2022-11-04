@@ -35,8 +35,6 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
     protein: userInfo.macrosGoal.protein,
   });
 
-  console.log(editMacrosGoal);
-
   const handleEditProfile: () => void = () => {
     // Email format validation
     const emailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;

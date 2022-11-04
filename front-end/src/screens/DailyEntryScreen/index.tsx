@@ -41,18 +41,17 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   useEffect(() => {
     getDailyEntry(dailyEntryInfo);
-  }, [dailyEntryInfo]);
+  }, [dailyEntryInfo.date]);
 
   // Function to retrieve date from child component DatePicker
   const retrieveDateHandler: (date: Date) => void = (date: Date) => {
     setDailyEntryInfo({
-      ...dailyEntryInfo,
       userId: userInfo.id,
       date: moment(date).format("YYYY-MM-DD"),
     });
   };
 
-  console.log(dailyEntry);
+  // console.log(dailyEntry);
 
   return (
     <View style={styles.container}>
@@ -74,7 +73,7 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
         />
       </Appbar.Header>
 
-      {dailyEntry?.date == undefined ? (
+      {dailyEntry!.isTodayCreated === false ? (
         <View style={styles.createEntryContainer}>
           <Text style={styles.message}>
             There is currently no entry for this date

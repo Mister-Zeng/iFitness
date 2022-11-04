@@ -19,6 +19,7 @@ const ARROW_DOWN_ICON: ImageSourcePropType = require("./images/icons/arrow-down-
 const ARROW_UP_ICON: ImageSourcePropType = require("./images/icons/arrow-up-icon.png");
 const EXPAND_LEFT_ICON: ImageSourcePropType = require("./images/icons/expand-left-icon.png");
 const EXPAND_RIGHT_ICON: ImageSourcePropType = require("./images/icons/expand-right-icon.png");
+const PROFILE_PIC_ICON: ImageSourcePropType = require("./images/icons/profile-pic-icon.png");
 
 export {
   INITIAL_BACKGROUND,
@@ -40,4 +41,5 @@ export {
   ARROW_UP_ICON,
   EXPAND_LEFT_ICON,
   EXPAND_RIGHT_ICON,
+  PROFILE_PIC_ICON,
 };

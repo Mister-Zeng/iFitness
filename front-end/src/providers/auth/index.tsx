@@ -27,7 +27,7 @@ export const AuthContext: Context<AuthContextType> =
   });
 
 export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const instance: AxiosInstance = axios.create({
     baseURL: "http://localhost:8080/api/v1/",
@@ -44,7 +44,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const response: AxiosResponse = await instance.post("login", loginInfo);
 
-      const userInfos: UserType = response.data;
+      const userInfos: UserType = await response.data;
 
       setUserInfo(userInfos);
 
@@ -71,7 +71,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         "register",
         registerInfo
       );
-      const userInfo: UserType = response.data;
+      const userInfo: UserType = await response.data;
 
       setUserInfo(userInfo);
 
@@ -104,12 +104,12 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       };
 
       const response: AxiosResponse = await instance.put(
-        "editUserInfo",
+        `editUserInfo/user/${userInfo.id}`,
         editUserInfo,
         config
       );
       const userInfos: UserType = await response.data;
-
+      console.log(userInfos);
       setUserInfo({
         ...userInfo,
         firstName: userInfos.firstName,
@@ -118,8 +118,6 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       });
 
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-
-      console.log(userInfo);
 
       setIsLoading(false);
     } catch (error) {
@@ -149,8 +147,6 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const macrosGoalInfo: MacrosGoalType = await response.data;
 
-      console.log(macrosGoalInfo);
-
       setUserInfo({
         ...userInfo,
         macrosGoal: macrosGoalInfo,
@@ -169,9 +165,6 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       setIsLoading(true);
 
-      // const response: AxiosResponse = await instance.get("logout");
-      // console.log(response.data);
-
       await AsyncStorage.clear();
 
       setUserInfo(userInfoConstants);
@@ -180,7 +173,6 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       console.log(error);
     }
   };
@@ -188,6 +180,8 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   useEffect(() => {
     const isLoggedIn: () => Promise<void> = async () => {
       try {
+        setIsLoading(true);
+
         let userInfo: string | any | null = (await AsyncStorage.getItem(
           "userInfo"
         )) as string;
@@ -196,6 +190,8 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         if (userInfo) {
           setUserInfo(userInfo);
         }
+
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }

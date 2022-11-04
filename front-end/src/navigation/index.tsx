@@ -19,18 +19,18 @@ import {
 } from "../screens";
 
 import AuthSelect from "../providers/auth";
+import { CreateDailyEntryScreenIProps } from "../screens/CreateDailyEntryScreen";
+import { EditDailyEntryScreenIProps } from "../screens/EditDailyEntryScreen";
 
 export type MainStackParamList = {
   HomeScreen: undefined;
-  CreateDailyEntryScreen: {
-    params: { dailyEntry: { userId: number; date: string } };
-  };
+  CreateDailyEntryScreen: CreateDailyEntryScreenIProps;
   ProgressScreen: undefined;
   EditProfileScreen: undefined;
   ProfileScreen: undefined;
   AddExerciseScreen: undefined;
   DailyEntryScreen: undefined;
-  EditDailyEntryScreen: undefined;
+  EditDailyEntryScreen: EditDailyEntryScreenIProps;
 };
 
 export type AuthStackParamList = {

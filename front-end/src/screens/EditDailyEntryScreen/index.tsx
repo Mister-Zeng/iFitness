@@ -15,7 +15,7 @@ import Spinner from "react-native-loading-spinner-overlay/lib";
 import useDailyEntrySelect from "../../providers/dailyEntry/index";
 import AddExerciseModal from "../../components/AddExerciseModal";
 
-interface IProps {
+export interface EditDailyEntryScreenIProps {
   navigation: NavigationProp<ParamListBase>;
   route: RouteProp<
     { params: { params: { dailyEntry: DailyEntryType } } },
@@ -23,7 +23,10 @@ interface IProps {
   >;
 }
 
-const EditDailyEntryScreen: FC<IProps> = ({ navigation, route }: IProps) => {
+const EditDailyEntryScreen: FC<EditDailyEntryScreenIProps> = ({
+  navigation,
+  route,
+}: EditDailyEntryScreenIProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const dailyEntry: DailyEntryType = route.params.params.dailyEntry;

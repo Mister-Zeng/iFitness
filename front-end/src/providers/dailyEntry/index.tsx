@@ -13,6 +13,8 @@ import {
 } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import useAuthSelect from "../auth/index";
+import { dailyEntryConstant } from "../../constants/dailyEntry";
+import moment from "moment";
 
 export const DailyEntryContext: Context<DailyEntryContextType> =
   createContext<DailyEntryContextType>({
@@ -34,9 +36,8 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [dailyEntry, setDailyEntry] = useState<DailyEntryType | null>(null);
-
-  const [addedExercise, setAddedExercise] = useState<ExerciseType[]>([]);
+  const [dailyEntry, setDailyEntry] =
+    useState<DailyEntryType>(dailyEntryConstant);
 
   const getDailyEntry: (dailyEntryInfo: {
     userId: number;
@@ -61,7 +62,9 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const dailyEntryData: DailyEntryType = await response.data;
 
-      dailyEntryData !== undefined ? setDailyEntry(dailyEntryData) : null;
+      dailyEntryData.date == undefined
+        ? setDailyEntry(dailyEntryConstant)
+        : setDailyEntry(dailyEntryData);
 
       setIsLoading(false);
     } catch (error) {

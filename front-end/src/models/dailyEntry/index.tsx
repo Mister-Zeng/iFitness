@@ -6,6 +6,8 @@ type DailyEntryType = {
   weight: number | null;
   dailyMacros: DailyMacrosType;
   exercise: ExerciseType[];
+  // used to check if today's daily entry has been created
+  isTodayCreated?: boolean;
 };
 
 type DailyMacrosType = {

@@ -22,13 +22,14 @@ const dailyEntryConstant: DailyEntryType = {
   date: moment(new Date()).format("YYYY-MM-DD"),
   dailyMacros: {
     id: 0,
-    carbs: 10,
+    carbs: 0,
     calories: 0,
     fat: 0,
     protein: 0,
   },
   weight: 0,
   exercise: [],
+  isTodayCreated: false,
 };
 
 export { dailyMacrosConstant, dailyEntryConstant, macrosGoalConstant };

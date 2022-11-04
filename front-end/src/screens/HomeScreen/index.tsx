@@ -9,6 +9,9 @@ import { Colors } from "../../constants/colors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import useAuthSelect from "../../providers/auth";
 import useDailyEntrySelect from "../../providers/dailyEntry";
+import moment from "moment";
+import { numToMonth } from "../../constants/helperFunction";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -18,39 +21,38 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   const { userInfo } = useAuthSelect();
 
-  const { dailyEntry } = useDailyEntrySelect();
+  const { dailyEntry, getDailyEntry } = useDailyEntrySelect();
 
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (userInfo.token !== null) {
+    const getDailyEntryInfo = async () => {
+      await getDailyEntry({
+        userId: userInfo.id,
+        date: moment(new Date()).format("YYYY-MM-DD"),
+      });
+    };
+
+    getDailyEntryInfo();
+
+    if (userInfo.token == null) {
       setIsLoaded(true);
+    } else {
+      setIsLoaded(false);
     }
   }, [userInfo]);
 
   const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: [],
     datasets: [
       {
-        data: [200, 190, 180, 177, 176, 175, 174, 173, 172, 171, 170, 169],
+        data: [],
         color: () => Colors.ORANGE,
         strokeWidth: 2, // optional
       },
     ],
   };
+
   const chartConfig = {
     backgroundGradientFrom: Colors.BLACK,
     backgroundGradientTo: Colors.BLACK,
@@ -62,11 +64,13 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
     decimalPlaces: 0,
   };
 
-  return isLoaded ? (
+  return (
     <View style={styles.screen}>
       <Appbar.Header style={styles.header}>
         <Appbar.Content title="Home" />
       </Appbar.Header>
+
+      <Spinner visible={isLoaded} textContent={"Loading..."} />
 
       <ScrollView style={styles.infoContainer}>
         <View style={styles.greetingContainer}>
@@ -83,6 +87,8 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
         <View style={styles.weightContainer}>
           <Text style={styles.graphTitle}>Weight Tracker Per Month</Text>
           <LineChart
+            fromNumber={0}
+            fromZero={true}
             data={data}
             width={RFValue(280)}
             height={200}
@@ -99,11 +105,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.macroProgressTitle}>Calories</Text>
             <Progress.Bar
               progress={
-                // dailyEntry
-                //   ? dailyEntry.dailyMacros.calories /
-                //     userInfo.macrosGoal.calories
-                //   :
-                0
+                dailyEntry!.dailyMacros.calories / userInfo.macrosGoal.calories!
               }
               width={320}
               height={25}
@@ -115,12 +117,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
           <View style={styles.macroProgressContainer}>
             <Text style={styles.macroProgressTitle}>Fat</Text>
             <Progress.Bar
-              progress={
-                // dailyEntry
-                //   ? dailyEntry.dailyMacros.fat / userInfo.macrosGoal.fat
-                //   :
-                0
-              }
+              progress={dailyEntry!.dailyMacros.fat / userInfo.macrosGoal.fat!}
               width={320}
               height={25}
               borderRadius={20}
@@ -132,10 +129,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.macroProgressTitle}>Protein</Text>
             <Progress.Bar
               progress={
-                // dailyEntry !== null
-                //   ? dailyEntry.dailyMacros.protein / userInfo.macrosGoal.protein
-                //   :
-                0
+                dailyEntry!.dailyMacros.protein / userInfo.macrosGoal.protein!
               }
               width={320}
               height={25}
@@ -148,10 +142,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
             <Text style={styles.macroProgressTitle}>Carb</Text>
             <Progress.Bar
               progress={
-                // dailyEntry
-                //   ? dailyEntry.dailyMacros.carbs / userInfo.macrosGoal.carbs
-                //   :
-                0
+                dailyEntry!.dailyMacros.carbs / userInfo.macrosGoal.carbs!
               }
               width={320}
               height={25}
@@ -163,8 +154,6 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
         </View>
       </ScrollView>
     </View>
-  ) : (
-    <Text>loading</Text>
   );
 };
 
