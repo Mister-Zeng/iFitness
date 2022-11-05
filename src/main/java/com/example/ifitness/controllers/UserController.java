@@ -4,12 +4,15 @@ import com.example.ifitness.models.*;
 import com.example.ifitness.services.TokenService;
 import com.example.ifitness.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,11 +27,12 @@ public class UserController {
 
     private final AuthenticationManager authenticationManager;
 
+
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) throws ResponseStatusException {
         User userInfo = userService.register(user);
         System.out.println(user);
-        return new ResponseEntity<>( userInfo, HttpStatus.OK);
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -37,12 +41,12 @@ public class UserController {
         String token = tokenService.generateToken(authentication);
         User userInfo = userService.login(userLogin);
         userInfo.setToken(token);
-        return new ResponseEntity<>( userInfo, HttpStatus.OK);
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
-    @PutMapping("/editUserInfo")
-    public ResponseEntity<User> editUserInfo(@RequestBody EditUserInfo editUserInfo) throws ResponseStatusException {
-        User userInfo = userService.editUserInfo(editUserInfo);
+    @PutMapping("/editUserInfo/user/{userId}")
+    public ResponseEntity<User> editUserInfo(@RequestBody EditUserInfo editUserInfo, @PathVariable Long userId) throws ResponseStatusException {
+        User userInfo = userService.editUserInfo(editUserInfo, userId);
 
         return new ResponseEntity<>( userInfo, HttpStatus.OK);
     }

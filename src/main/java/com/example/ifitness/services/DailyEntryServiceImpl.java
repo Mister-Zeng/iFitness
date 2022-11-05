@@ -31,11 +31,6 @@ public class DailyEntryServiceImpl implements DailyEntryService {
     @Autowired
     DailyMacrosRepository dailyMacrosRepository;
 
-    @Override
-    public DailyEntry addExercise(Exercise exercise) {
-        return null;
-    }
-
 
     @Override
     public DailyEntry getDailyEntry(Long userId, String date) {
@@ -87,6 +82,13 @@ public class DailyEntryServiceImpl implements DailyEntryService {
         dailyMacrosRepository.save(dailyEntry.getDailyMacros());
 
         return dailyEntry;
+    }
+
+    @Override
+    public List<DailyEntry> getEntries(Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        return user.getDailyEntry();
     }
 
 }

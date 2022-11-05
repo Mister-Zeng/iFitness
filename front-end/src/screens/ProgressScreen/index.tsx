@@ -1,11 +1,21 @@
-import React, { FC, useMemo } from "react";
-import { ScrollView, View } from "react-native";
+import React, { FC, useMemo, useState } from "react";
+
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
+import ModalDropdown from "react-native-modal-dropdown";
 import { Appbar } from "react-native-paper";
-import { LineChart } from "react-native-chart-kit";
-import { Colors } from "../../constants/colors";
-import { RFValue } from "react-native-responsive-fontsize";
+import { Text, View, ScrollView } from "react-native";
+import useExerciseSelect from "../../providers/exerciseSuggestion";
+import AddButton from "../../components/AddButton/index";
+import {
+  typeList,
+  muscleList,
+  difficultyList,
+} from "../../constants/exerciseSelection";
+import {
+  ExerciseInfoType,
+  ExerciseResponseType,
+} from "../../models/exerciseSuggestion";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -14,131 +24,108 @@ interface IProps {
 const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
-  const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    datasets: [
-      {
-        data: [
-          150,
-          160,
-          null,
-          180,
-          183,
-          176,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-        ],
-        color: () => "#2a9d8f",
-        strokeWidth: 2,
-      },
-      {
-        data: [
-          173,
-          172,
-          171,
-          170,
-          169,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-        ],
-        color: () => "#219ebc",
-        strokeWidth: 2,
-      },
-      {
-        data: [
-          155,
-          158,
-          161,
-          168,
-          179,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-        ],
-        color: () => "#e63946",
-        strokeWidth: 2,
-      },
-    ],
-    legend: ["Bench Press", "Squats", "Deadlifts"],
-  };
-  const chartConfig = {
-    backgroundGradientFrom: Colors.BLACK,
-    backgroundGradientTo: Colors.BLACK,
-    color: () => Colors.WHITE,
-    useShadowColorFromDataset: true,
-    propsForBackgroundLines: {
-      strokeDasharray: "", // solid background lines with no dashes
-    },
-    decimalPlaces: 0,
-  };
+  const { getExercise, ExerciseInfo } = useExerciseSelect();
+
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfoType>({
+    type: "",
+    muscle: "",
+    difficulty: "",
+  });
 
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.header}>
-        <Appbar.Content title={"Progress"} />
+        <Appbar.Content title={"Exercises"} />
       </Appbar.Header>
 
-      <ScrollView style={styles.infoContainer}>
-        <View style={styles.weightContainer}>
-          <LineChart
-            data={data}
-            width={RFValue(280)}
-            height={200}
-            withShadow={false}
-            verticalLabelRotation={25}
-            chartConfig={chartConfig}
-            bezier
-            style={{ paddingRight: RFValue(35), marginLeft: RFValue(25) }}
-            segments={8}
-            yAxisInterval={0.5}
-            getDotColor={(datapoint) => {
-              if (datapoint === null) {
-                return "transparent";
-              }
-              return "black";
-            }}
+      <View style={styles.dropdownContainer}>
+        <Text style={styles.heading}>Looking For Exercises?</Text>
+
+        <View style={styles.selectContainer}>
+          <Text style={styles.title}>Type</Text>
+          <ModalDropdown
+            options={typeList}
+            onSelect={(index, value) =>
+              setExerciseInfo({ ...exerciseInfo, type: value })
+            }
+            style={styles.dropdownBoxStyle}
+            dropdownStyle={styles.dropdownStyle}
+            dropdownTextStyle={styles.dropdownTextStyle}
+            textStyle={styles.dropdownTextStyle}
+            animated={true}
           />
         </View>
 
-        <View style={styles.weightContainer}>
-          <LineChart
-            data={data}
-            width={RFValue(280)}
-            height={200}
-            withShadow={false}
-            verticalLabelRotation={25}
-            chartConfig={chartConfig}
-            bezier
-            style={{ paddingRight: RFValue(35), marginLeft: RFValue(25) }}
-            segments={8}
-            yAxisInterval={0.5}
+        <View style={styles.selectContainer}>
+          <Text style={styles.title}>Muscle Target</Text>
+          <ModalDropdown
+            options={muscleList}
+            onSelect={(index, value) =>
+              setExerciseInfo({ ...exerciseInfo, muscle: value })
+            }
+            style={styles.dropdownBoxStyle}
+            dropdownStyle={styles.dropdownStyle}
+            dropdownTextStyle={styles.dropdownTextStyle}
+            textStyle={styles.dropdownTextStyle}
+            animated={true}
           />
+        </View>
+
+        <View style={styles.selectContainer}>
+          <Text style={styles.title}>Difficulty</Text>
+          <ModalDropdown
+            options={difficultyList}
+            onSelect={(index, value) =>
+              setExerciseInfo({ ...exerciseInfo, difficulty: value })
+            }
+            style={styles.dropdownBoxStyle}
+            dropdownStyle={styles.dropdownStyle}
+            dropdownTextStyle={styles.dropdownTextStyle}
+            textStyle={styles.dropdownTextStyle}
+            animated={true}
+          />
+        </View>
+        <Text style={styles.subHeading}>
+          Select At Least One To Search Exercises
+        </Text>
+        <View style={styles.searchButtonContainer}>
+          <AddButton
+            buttonText={"Search"}
+            onPress={() => getExercise(exerciseInfo)}
+          />
+        </View>
+      </View>
+      <ScrollView style={styles.scroll}>
+        <View>
+          {ExerciseInfo.map((exercise: ExerciseResponseType, index: number) => {
+            return (
+              <View key={index} style={styles.exerciseContainer}>
+                <View style={styles.groupContainer}>
+                  <Text style={styles.exerciseTitle}>Exercise Name:</Text>
+                  <Text style={styles.response}>{exercise.name}</Text>
+                </View>
+                <View style={styles.groupContainer}>
+                  <Text style={styles.exerciseTitle}>Exercise Type:</Text>
+                  <Text style={styles.response}>{exercise.type}</Text>
+                </View>
+                <View style={styles.groupContainer}>
+                  <Text style={styles.exerciseTitle}>Muscle Target:</Text>
+                  <Text style={styles.response}>{exercise.muscle}</Text>
+                </View>
+                <View style={styles.groupContainer}>
+                  <Text style={styles.exerciseTitle}>Equiment:</Text>
+                  <Text style={styles.response}>{exercise.equipment}</Text>
+                </View>
+                <View style={styles.groupContainer}>
+                  <Text style={styles.exerciseTitle}>Difficulty:</Text>
+                  <Text style={styles.response}>{exercise.difficulty}</Text>
+                </View>
+
+                <Text style={styles.exerciseTitle}>Instructions: </Text>
+                <Text style={styles.instruction}>{exercise.instructions}</Text>
+              </View>
+            );
+          })}
         </View>
       </ScrollView>
     </View>

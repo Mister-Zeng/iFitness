@@ -120,7 +120,7 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
             <DailyMacrosTextInput
               infoType="Calories"
               value={0}
-              measurement="Grams"
+              measurement="Calories"
               onChangeText={(text) =>
                 setCreateDailyEntryInfo({
                   ...createDailyEntryInfo,

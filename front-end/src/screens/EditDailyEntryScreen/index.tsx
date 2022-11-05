@@ -105,7 +105,7 @@ const EditDailyEntryScreen: FC<EditDailyEntryScreenIProps> = ({
             <DailyMacrosTextInput
               infoType="Calories"
               value={dailyEntry ? dailyEntry?.dailyMacros.calories : 0}
-              measurement="Grams"
+              measurement="Calories"
               onChangeText={(text) =>
                 setUpdateDailyEntryInfo({
                   ...updateDailyEntryInfo,

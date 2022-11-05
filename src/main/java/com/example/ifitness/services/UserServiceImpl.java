@@ -14,9 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .map(AuthUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+
 
     @Override
     public User login(LoginRequest userLogin) {
@@ -69,8 +67,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User editUserInfo(EditUserInfo editUserInfo) {
-        User user = userRepository.findById(editUserInfo.id()).get();
+    public User editUserInfo(EditUserInfo editUserInfo,Long userId) {
+        User user = userRepository.findById(userId).get();
         user.setEmailAddress(editUserInfo.emailAddress());
         user.setFirstName(editUserInfo.firstName());
         user.setLastName(editUserInfo.lastName());

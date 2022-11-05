@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/")
@@ -26,13 +27,9 @@ public class DailyEntryController {
 
     @Autowired
     DailyEntryService dailyEntryService;
-    @GetMapping("/getDailyEntry")
-    public ResponseEntity<DailyEntry> getDailyEntry(@RequestParam("userId")  Long userId, @RequestParam("date") String date) throws ResponseStatusException {
-        DailyEntry dailyEntry = dailyEntryService.getDailyEntry(userId, date);
-//        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication()
-//                .getPrincipal();
-//        String asd = jwt.getExpiresAt().toString();
-//        log.info(asd);
+    @GetMapping("/getEntries")
+    public ResponseEntity<List<DailyEntry>> getEntry(@RequestParam("userId")  Long userId) throws ResponseStatusException {
+        List<DailyEntry> dailyEntry = dailyEntryService.getEntries(userId);
         return new ResponseEntity<>(dailyEntry, HttpStatus.OK);
     }
     @PostMapping("/createDailyEntry/user/{userId}")
@@ -47,4 +44,9 @@ public class DailyEntryController {
         return new ResponseEntity<>( dailyEntryInfo, HttpStatus.OK);
     }
 
+    @GetMapping("/getDailyEntry")
+    public ResponseEntity<DailyEntry> getDailyEntry(@RequestParam("userId")  Long userId, @RequestParam("date") String date) throws ResponseStatusException {
+        DailyEntry dailyEntry = dailyEntryService.getDailyEntry(userId, date);
+        return new ResponseEntity<>(dailyEntry, HttpStatus.OK);
+    }
 }
