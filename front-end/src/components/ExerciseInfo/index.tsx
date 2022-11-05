@@ -7,14 +7,13 @@ import createStyles, { StyleSheetProps } from "./styles";
 
 type IProps = {
   exerciseList?: ExerciseType[];
-  id: number | undefined;
+  id: number | undefined | null;
   exerciseName: string | null;
   sets: number | null;
   reps: number | null;
   weight: number | null;
   disabled?: boolean;
   apiCall?: boolean;
-  tempId?: string | number[] | null | undefined;
   updateExerciseHandler?: (exerciseList: ExerciseType[]) => void;
 };
 
@@ -28,7 +27,6 @@ const ExerciseInfo: FC<IProps> = ({
   exerciseList,
   disabled,
   apiCall,
-  tempId,
 }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
@@ -36,10 +34,11 @@ const ExerciseInfo: FC<IProps> = ({
 
   const handleCancel: () => Promise<void> = async () => {
     apiCall && (await deleteExercise(id!));
-    console.log(tempId);
+    console.log(exerciseList);
+
     updateExerciseHandler!(
       exerciseList!.filter((exercise) => {
-        return exercise.tempId !== tempId;
+        return exercise.id !== id;
       })
     );
   };

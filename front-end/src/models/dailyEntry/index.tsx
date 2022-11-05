@@ -27,12 +27,11 @@ type MacrosGoalType = {
 };
 
 type ExerciseType = {
-  id?: number;
+  id?: number | null;
   name: string | null;
   sets: number | null;
   reps: number | null;
   weight: number | null;
-  tempId?: string | number[] | null | undefined;
 };
 
 type EditProgressType = {

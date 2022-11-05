@@ -66,17 +66,14 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const response: AxiosResponse = await instance.post("login", loginInfo);
 
-      const userInfos: UserType = await response.data;
+      const userInfo: UserType = response.data;
 
-      setUserInfo(userInfos);
+      setUserInfo({ ...userInfo, token: userInfo.token });
 
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfos));
-
-      console.log(userInfos);
-
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
+      Alert.alert("Alert", "Invalid username or password");
       console.log(error);
     }
   };

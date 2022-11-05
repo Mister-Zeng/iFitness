@@ -16,7 +16,7 @@ import java.util.Set;
 public class Exercise {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "exercise_id")
     private Long id;
     private String name;

@@ -73,7 +73,7 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
     });
   };
 
-  const updateExerciseHandler: (exerciseList: ExerciseType[]) => void = (
+  const updateCExerciseHandler: (exerciseList: ExerciseType[]) => void = (
     exerciseList: ExerciseType[]
   ) => {
     setCreateDailyEntryInfo({
@@ -199,10 +199,9 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
                 sets={exercise.sets}
                 reps={exercise.reps}
                 weight={exercise.weight}
-                updateExerciseHandler={updateExerciseHandler}
+                updateExerciseHandler={updateCExerciseHandler}
                 exerciseList={createDailyEntryInfo.exercise}
                 apiCall={false}
-                tempId={exercise.tempId}
               />
             );
           })}

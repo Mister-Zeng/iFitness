@@ -51,14 +51,12 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
     });
   };
 
-  // console.log(dailyEntry);
-
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
 
       <Appbar.Header style={styles.header}>
-        {dailyEntry?.date != undefined && (
+        {dailyEntry!.isTodayCreated !== false && (
           <Appbar.Action
             icon="clipboard-edit-outline"
             onPress={() =>

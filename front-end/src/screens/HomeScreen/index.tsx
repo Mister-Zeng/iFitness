@@ -53,7 +53,6 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
 
   let dateNum: { date: number; weight: number }[] = [];
 
-  let prev = Number.MAX_VALUE;
   allDailyEntries.map((item) => {
     const dateInfo = item.date as string;
     dateNum.push({
@@ -65,16 +64,18 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const sortedDate = dateNum.sort((a, b) => {
     return a.date - b.date;
   });
-
+  let prev = Number.MAX_VALUE;
   if (allDailyEntries.length > 1) {
-    // Add first entry of user to the chart
-    weight.push(sortedDate[0].weight);
-
     // If the current date is smaller or equal to the previous date
     // then this is the first entry of the month
     const getWeights = () => {
-      for (let i = 1; i < sortedDate.length - 1; i++) {
-        if (sortedDate[i].date >= sortedDate[i - 1].date === true) {
+      for (let i = 0; i < sortedDate.length - 1; i++) {
+        if (
+          sortedDate[i].date.toString().slice(-2) >
+            sortedDate[i + 1].date.toString().slice(-2) &&
+          sortedDate[i].date.toString().slice(-4, -2) !==
+            sortedDate[i + 1].date.toString().slice(-4, -2)
+        ) {
           weight.push(sortedDate[i].weight);
 
           prev = sortedDate[i].date;

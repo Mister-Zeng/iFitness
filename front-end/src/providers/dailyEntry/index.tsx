@@ -179,8 +179,6 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       const dailyEntryData: DailyEntryType = await response.data;
 
-      setDailyEntry(dailyEntryData);
-
       setIsLoading(false);
     } catch (error) {
       console.log(error);

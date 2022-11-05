@@ -69,8 +69,14 @@ public class DailyEntryServiceImpl implements DailyEntryService {
     public DailyEntry updateDailyEntry(DailyEntry dailyEntry, Long userId) {
         User user = userRepository.findById(userId).get();
 
+        dailyEntry.getExercise().forEach( e -> {
+            e.setDailyEntry(dailyEntry);
+            exerciseRepository.save(e);
+        });
+
         dailyEntry.setDate(LocalDate.parse(dailyEntry.getDate().toString()));
         dailyEntry.setUser(user);
+
         dailyEntryRepository.save(dailyEntry);
 
         dailyEntry.getExercise()

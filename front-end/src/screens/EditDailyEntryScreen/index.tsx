@@ -48,14 +48,16 @@ const EditDailyEntryScreen: FC<EditDailyEntryScreenIProps> = ({
   const showModal: () => void = () => setAddExerciseModalVisible(true);
   const hideModal: () => void = () => setAddExerciseModalVisible(false);
 
-  const retrieveAddedExercise = (exercise: ExerciseType) => {
+  const retrieveAddedExercise: (exercise: ExerciseType) => void = (
+    exercise: ExerciseType
+  ) => {
     setUpdateDailyEntryInfo({
       ...updateDailyEntryInfo,
       exercise: [...updateDailyEntryInfo.exercise, exercise],
     });
   };
-
-  const updateExerciseHandler: (exerciseList: ExerciseType[]) => void = (
+  console.log(updateDailyEntryInfo);
+  const updateEExerciseHandler: (exerciseList: ExerciseType[]) => void = (
     exerciseList: ExerciseType[]
   ) => {
     setUpdateDailyEntryInfo({
@@ -185,7 +187,7 @@ const EditDailyEntryScreen: FC<EditDailyEntryScreenIProps> = ({
                   sets={exercise.sets}
                   reps={exercise.reps}
                   weight={exercise.weight}
-                  updateExerciseHandler={updateExerciseHandler}
+                  updateExerciseHandler={updateEExerciseHandler}
                   exerciseList={updateDailyEntryInfo.exercise}
                   apiCall={true}
                 />

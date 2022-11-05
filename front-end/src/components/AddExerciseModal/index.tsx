@@ -32,13 +32,12 @@ const AddExerciseModal: FC<IProps> = ({
     sets: null,
     reps: null,
     weight: null,
-    // temp id used to delete exercise when creating entry
-    tempId: null,
+    id: null,
   };
 
   const [exerciseInfo, setExerciseInfo] =
     useState<ExerciseType>(ExerciseInfoConstant);
-
+  console.log(exerciseInfo);
   const onSubmit: () => void = async () => {
     if (
       exerciseInfo.name === null ||
@@ -85,7 +84,7 @@ const AddExerciseModal: FC<IProps> = ({
                 setExerciseInfo({
                   ...exerciseInfo,
                   name: text,
-                  tempId: uuid.v4(),
+                  id: parseInt(uuid.v4().toString().replace(/-/g, "")),
                 })
               }
             />
@@ -128,7 +127,7 @@ const AddExerciseModal: FC<IProps> = ({
           </View>
 
           <View style={styles.saveButton}>
-            <AddButton buttonText={"Add Exercise"} onPress={onSubmit} />
+            <AddButton buttonText={"Add"} onPress={onSubmit} />
           </View>
         </Modal>
       </Portal>
