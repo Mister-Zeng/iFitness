@@ -54,25 +54,13 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
-
-      <Appbar.Header style={styles.header}>
-        {dailyEntry!.isTodayCreated !== false && (
-          <Appbar.Action
-            icon="clipboard-edit-outline"
-            onPress={() =>
-              navigation.navigate("EditDailyEntryScreen", {
-                params: { dailyEntry },
-              })
-            }
-          />
-        )}
-        <Appbar.Content
-          title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
-        />
-      </Appbar.Header>
-
       {dailyEntry!.isTodayCreated === false ? (
         <View style={styles.createEntryContainer}>
+          <Appbar.Header style={styles.header}>
+            <Appbar.Content
+              title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
+            />
+          </Appbar.Header>
           <Text style={styles.message}>
             There is currently no entry for this date
           </Text>
@@ -89,6 +77,20 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
         </View>
       ) : (
         <ScrollView style={styles.infoContainer}>
+          <Appbar.Header style={styles.header}>
+            <Appbar.Action
+              icon="clipboard-edit-outline"
+              onPress={() =>
+                navigation.navigate("EditDailyEntryScreen", {
+                  params: { dailyEntry },
+                })
+              }
+            />
+
+            <Appbar.Content
+              title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
+            />
+          </Appbar.Header>
           <View>
             <Text style={styles.infoTitle}>Weight</Text>
 
