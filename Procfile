@@ -1,1 +1,1 @@
-web: java -server.port=$PORT -jar target/classes.jar
+web: java -server.port=$PORT
