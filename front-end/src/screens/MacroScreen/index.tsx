@@ -34,8 +34,6 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
     const value: RegisterType = JSON.parse(jsonValue as string);
 
     if (
-      macrosGoalInfo.id === null ||
-      isNaN(macrosGoalInfo.id) ||
       macrosGoalInfo.calories === null ||
       isNaN(macrosGoalInfo.calories) ||
       macrosGoalInfo.fat === null ||
