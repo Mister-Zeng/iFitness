@@ -25,12 +25,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private MacrosGoalRepository macrosGoalRepository;
-    @Autowired
-    private DailyEntryRepository dailyEntryRepository;
-    @Autowired
-    private DailyMacrosRepository dailyMacrosRepository;
-    @Autowired
-    private ExerciseRepository exerciseRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
