@@ -52,6 +52,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
         setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     };
