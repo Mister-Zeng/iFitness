@@ -30,7 +30,7 @@ const createStyles: () => StyleSheetProps = () =>
       marginVertical: RFValue(30),
     },
     infoContainer: {
-      height: Dimensions.get("window").height,
+      height: "100%",
     },
     addExerciseBtn: {
       marginLeft: RFValue(20),

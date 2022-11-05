@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from "react";
-import { ImageBackground, Alert, Text, View } from "react-native";
+import { ImageBackground, Alert, Text, View, SafeAreaView } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { MACRO_BACKGROUND, MACROS_ICON } from "../../assets";
@@ -75,7 +75,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
         <View style={styles.footer}>
           <Text style={styles.title}>What Is Your Macro Goal?</Text>
 
-          <View style={styles.inputContainer}>
+          <SafeAreaView style={styles.inputContainer}>
             <RegisterTextInput
               title={"Enter Calories"}
               icon={MACROS_ICON}
@@ -88,7 +88,6 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="numeric"
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Fat"}
@@ -99,7 +98,6 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="numeric"
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Protein"}
@@ -113,7 +111,6 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="numeric"
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Carbs"}
@@ -124,9 +121,8 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="numeric"
-              autoFocus={true}
             />
-          </View>
+          </SafeAreaView>
           <InitialScreenButton
             title="Register"
             disabled={false}

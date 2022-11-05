@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useState } from "react";
-import { ImageBackground, Alert, Text, View } from "react-native";
+import { ImageBackground, Alert, Text, View, SafeAreaView } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import {
@@ -56,7 +56,7 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <Spinner visible={isLoading} />
 
       <ImageBackground source={REGISTER_BACKGROUND} style={styles.background}>
@@ -73,7 +73,6 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Last Name"}
@@ -84,7 +83,6 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Username"}
@@ -95,7 +93,6 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Email Address"}
@@ -106,7 +103,6 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
-              autoFocus={true}
             />
             <RegisterTextInput
               title={"Enter Password"}
@@ -117,7 +113,6 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               }
               autoCapitalize="none"
               autoCorrect={false}
-              autoFocus={true}
               secureTextEntry={true}
             />
           </View>
@@ -142,7 +137,7 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 

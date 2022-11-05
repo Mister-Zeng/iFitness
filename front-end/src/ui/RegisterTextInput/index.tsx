@@ -10,7 +10,6 @@ interface IProps {
   onChangeText: (text: string) => void;
   autoCorrect: boolean;
   keyboardType?: any;
-  autoFocus?: boolean;
   secureTextEntry?: boolean;
 }
 const RegisterTextInput: FC<IProps> = ({ title, icon, ...props }) => {

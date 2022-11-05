@@ -64,11 +64,12 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const sortedDate = dateNum.sort((a, b) => {
     return a.date - b.date;
   });
-  let prev = Number.MAX_VALUE;
+  console.log(sortedDate);
   if (allDailyEntries.length > 1) {
     // If the current date is smaller or equal to the previous date
     // then this is the first entry of the month
     const getWeights = () => {
+      let prev = Number.MAX_VALUE;
       for (let i = 0; i < sortedDate.length - 1; i++) {
         if (
           sortedDate[i].date.toString().slice(-2) >
@@ -77,7 +78,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
             sortedDate[i + 1].date.toString().slice(-4, -2)
         ) {
           weight.push(sortedDate[i].weight);
-
+          month.push(numToMonth(sortedDate[i].date.toString().slice(-4, -2)));
           prev = sortedDate[i].date;
         }
       }
@@ -85,17 +86,6 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
 
     getWeights();
   }
-
-  // Using a set to filter out all daily entry to only one label for each month
-  let monthSet: Set<string> = new Set();
-  sortedDate.map((entry) => {
-    const date = entry.date.toString();
-    monthSet.add(date.slice(4, 6));
-  });
-
-  monthSet.forEach((item) => {
-    month.push(numToMonth(item));
-  });
 
   const data = {
     labels: month,
