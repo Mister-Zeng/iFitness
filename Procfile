@@ -1,1 +1,1 @@
-web: java -server.port=$PORT -jar target/demo-0.0.1-SNAPSHOT.jar
+web: java -server.port=$PORT -jar target/java-getting-started-1.0.jar
