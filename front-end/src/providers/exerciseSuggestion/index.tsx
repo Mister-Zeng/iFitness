@@ -7,7 +7,7 @@ import React, {
   PropsWithChildren,
 } from "react";
 
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import {
   ExerciseContextType,

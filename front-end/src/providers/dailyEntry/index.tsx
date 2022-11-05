@@ -30,7 +30,7 @@ export const DailyEntryContext: Context<DailyEntryContextType> =
 
 export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const instance: AxiosInstance = axios.create({
-    baseURL: "http://localhost:8080/api/v1/",
+    baseURL: "https://ifitness-backend.herokuapp.com/api/v1/",
     timeout: 15000,
   });
 
