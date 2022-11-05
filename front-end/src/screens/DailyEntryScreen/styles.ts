@@ -37,7 +37,7 @@ const createStyles: () => StyleSheetProps = () =>
       marginTop: RFValue(10),
     },
     createEntryContainer: {
-      height: Dimensions.get("window").height,
+      height: "100%",
       top: 300,
       alignItems: "center",
     },

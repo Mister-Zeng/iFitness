@@ -22,7 +22,6 @@ const createStyles: () => StyleSheetProps = () =>
     },
     body: {
       backgroundColor: Colors.BLACK,
-      height: "100%",
     },
     profilePicture: {
       alignSelf: "center",
