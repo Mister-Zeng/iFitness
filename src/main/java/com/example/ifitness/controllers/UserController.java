@@ -27,12 +27,6 @@ public class UserController {
 
     private final AuthenticationManager authenticationManager;
 
-
-    @GetMapping(path = "/")
-    public String welcome() {
-        return "Welcome";
-    }
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) throws ResponseStatusException {
         User userInfo = userService.register(user);
