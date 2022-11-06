@@ -36,14 +36,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User login(LoginRequest userLogin) {
-        Optional<User> userFromDatabase = userRepository.findByUsername(userLogin.username());
-        return (userFromDatabase.get());
+        Optional<User> userFromDB = userRepository.findByUsername(userLogin.username());
+
+        if(userFromDB.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User does not exists!");
+        }
+
+        return (userFromDB.get());
     }
 
     @Override
     public User register(User user) {
-        Optional<User> userFromDatabase = userRepository.findByUsername(user.getUsername());
-        if(userFromDatabase.isPresent()){
+        Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
+        if(userFromDB.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists!");
         }
 
@@ -62,7 +67,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User editUserInfo(EditUserInfo editUserInfo,Long userId) {
-        User user = userRepository.findById(userId).get();
+        Optional<User> userFromDB = userRepository.findById(userId);
+
+        if(userFromDB.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find user with id " + userId);
+        }
+
+        User user = userFromDB.get();
         user.setEmailAddress(editUserInfo.emailAddress());
         user.setFirstName(editUserInfo.firstName());
         user.setLastName(editUserInfo.lastName());
@@ -72,15 +83,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public MacrosGoal editMacrosGoal(MacrosGoal macrosGoal, Long userId) {
-        User user = userRepository.findById(userId).get();
+        Optional<User> userFromDatabase = userRepository.findById(userId);
+
+        if(userFromDatabase.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find user with id " + userId);
+        }
+
+        User user = userFromDatabase.get();
         user.setMacrosGoal(macrosGoal);
         userRepository.save(user);
 
-        MacrosGoal thisMacrosGoal = macrosGoalRepository.findById(macrosGoal.getId()).get();
+        Optional<MacrosGoal> macrosGoalFromDB = macrosGoalRepository.findById(macrosGoal.getId());
+
+        if(macrosGoalFromDB.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find Macros Goal with id " + macrosGoal.getId());
+        }
+
+        MacrosGoal thisMacrosGoal = macrosGoalFromDB.get();
+
         thisMacrosGoal.setUser(user);
         macrosGoalRepository.save(macrosGoal);
         return thisMacrosGoal;
     }
+
 
 
 }

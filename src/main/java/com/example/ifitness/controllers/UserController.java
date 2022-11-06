@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,9 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
 
     private final UserService userService;
-
     private final TokenService tokenService;
-
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
@@ -38,15 +35,20 @@ public class UserController {
     public ResponseEntity<User> login(@RequestBody LoginRequest userLogin) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password()));
         String token = tokenService.generateToken(authentication);
-        User userInfo = userService.login(userLogin);
-        userInfo.setToken(token);
-        return new ResponseEntity<>(userInfo, HttpStatus.OK);
+        User user = userService.login(userLogin);
+        user.setToken(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/isAuthenticated")
+    public ResponseEntity<Boolean> isAuthenticated(@Param("userId")Long userId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<Boolean>(authentication.isAuthenticated(), HttpStatus.OK);
     }
 
     @PutMapping("/editUserInfo/user/{userId}")
     public ResponseEntity<User> editUserInfo(@RequestBody EditUserInfo editUserInfo, @PathVariable Long userId) throws ResponseStatusException {
         User userInfo = userService.editUserInfo(editUserInfo, userId);
-
         return new ResponseEntity<>( userInfo, HttpStatus.OK);
     }
 
