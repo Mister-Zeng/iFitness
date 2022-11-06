@@ -109,7 +109,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
           "Content-Type": "application/json",
         },
       };
-
+      console.log(createDailyEntryInfo, userInfo.id);
       const response: AxiosResponse = await instance.post(
         `createDailyEntry/user/${userInfo.id}`,
         createDailyEntryInfo,

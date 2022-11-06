@@ -32,7 +32,9 @@ const createStyles: () => StyleSheetProps = () =>
       fontSize: RFValue(18),
     },
     inputContainer: {
+      marginTop: RFValue(60),
       height: RFValue(300),
+      justifyContent: "center",
     },
     text: {
       fontSize: RFValue(25),

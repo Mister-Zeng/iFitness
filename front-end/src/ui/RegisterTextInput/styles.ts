@@ -24,11 +24,12 @@ const createStyles: () => StyleSheetProps = () =>
     inputIconContainer: {
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
     },
     icon: {
       position: "absolute",
       justifyContent: "flex-end",
-      right: RFValue(10),
+      right: RFValue(30),
     },
   });
 

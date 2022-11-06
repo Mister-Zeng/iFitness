@@ -73,7 +73,7 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
           <Text style={styles.title}>Add Your Details Below To Sign Up</Text>
 
           <KeyboardAwareScrollView
-            style={styles.inputContainer}
+            contentContainerStyle={styles.inputContainer}
             showsVerticalScrollIndicator={false}
           >
             <RegisterTextInput
