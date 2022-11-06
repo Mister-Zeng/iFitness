@@ -40,7 +40,7 @@ const CreateDailyEntryScreen: FC<CreateDailyEntryScreenIProps> = ({
   const { createDailyEntry } = useDailyEntrySelect();
 
   const { isLoading } = useDailyEntrySelect();
-
+  console.log(params.date);
   const [createDailyEntryInfo, setCreateDailyEntryInfo] =
     useState<DailyEntryType>({
       date: params.date,

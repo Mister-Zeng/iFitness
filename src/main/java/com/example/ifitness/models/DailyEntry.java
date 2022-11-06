@@ -21,7 +21,6 @@ public class DailyEntry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "daily_entry_id")
     private Long id;
-    @Column(unique = true)
     private LocalDate date;
     private int weight;
 

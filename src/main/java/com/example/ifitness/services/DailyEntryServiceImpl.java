@@ -43,6 +43,10 @@ public class DailyEntryServiceImpl implements DailyEntryService {
     public DailyEntry createDailyEntry(DailyEntry dailyEntry, Long userId) {
         Optional<User> userFromDB = userRepository.findById(userId);
 
+        if(userFromDB.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find user with id " + userId);
+        }
+
         User user = userFromDB.get();
 
         user.getDailyEntry().add(dailyEntry);
