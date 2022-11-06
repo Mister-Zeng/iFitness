@@ -65,6 +65,7 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
         if (data === false) {
           logout();
+          setIsLoading(false);
         } else {
           if (userInfo) {
             setUserInfo({ ...userInfo, token: userInfo.token });
