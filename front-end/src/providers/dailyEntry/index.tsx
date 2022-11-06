@@ -6,15 +6,10 @@ import React, {
   Context,
   PropsWithChildren,
 } from "react";
-import {
-  DailyEntryContextType,
-  DailyEntryType,
-  ExerciseType,
-} from "../../models";
+import { DailyEntryContextType, DailyEntryType } from "../../models";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import useAuthSelect from "../auth/index";
 import { dailyEntryConstant } from "../../constants/dailyEntry";
-import moment from "moment";
 
 export const DailyEntryContext: Context<DailyEntryContextType> =
   createContext<DailyEntryContextType>({
@@ -65,7 +60,7 @@ export const DailyEntryProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
