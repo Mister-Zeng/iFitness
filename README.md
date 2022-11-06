@@ -8,11 +8,10 @@
     - [Features](#features)
     - [Demo](#demo)
 - [Want To Try Out The App?](#want-to-try-out-the-app)
+    - [Installation](#installation)
     - [How to try out the app](#download-the-expo-app-from-the-app-store-and-login-with-the-following-credentials)
-- [My process](#my-process)
     - [Built with](#built-with)
     - [Deployment](#deployment)
-    - [What I learned](#deployment)
     - [License](#license)
 - [Author](#author)
 
@@ -46,23 +45,42 @@ Users should be able to:
 
 ## Want To Try Out The App? 
 
-#### Download the Expo App from the app store and login with the following credentials
+### Download the Expo App from the app store and login with the following credentials
 
 - Username: ifitness
 - Password: Ifitness123 
 
-#### iFitness App Login Credential / Register 
+### iFitness App Login Credential / Register 
 
 - Username: test
 - Password: test
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Mister-Zeng/iFitness.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. To use your own database for MySQL: Inside of application.properties file, add your database credentials
+    ```sh
+    spring.datasource.url=jdbc:mysql://
+    spring.datasource.username = 
+    spring.datasource.password = 
+    ```
+4. Run the app
+   ```sh
+   expo start
+   ```
 
 ## Built with
 
 - React Native
 - TypeScript
-- NPM
+- Expo
 - Java
 - Spring Boot
 - MySQL
@@ -78,7 +96,7 @@ The security of this project is configured by using asymmetric keys to encrypt J
 This project is using self-signed certificate. As it is not free to use SSL certificate on Heroku, 
 the private key is pushed into this repository in order to successfully be deployed on Heroku. 
 
-*For good practice, private key should not be pushed to your repository. 
+*For good practice, API/private key should not be pushed to your repository. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
