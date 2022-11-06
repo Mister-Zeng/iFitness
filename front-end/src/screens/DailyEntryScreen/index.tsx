@@ -70,87 +70,88 @@ const DailyEntryScreen: FC<IProps> = ({ navigation }: IProps) => {
           title={<DatePickers retrieveDateHandler={retrieveDateHandler} />}
         />
       </Appbar.Header>
-
-      {dailyEntry!.isTodayCreated === false ? (
-        <View style={styles.createEntryContainer}>
-          <Text style={styles.message}>
-            There is currently no entry for this date
-          </Text>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("CreateDailyEntryScreen", {
-                params: { dailyEntryInfo },
-              })
-            }
-            style={styles.createEntryBtn}
-          >
-            <Text style={styles.createEntryBtnText}>Create Entry</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <ScrollView style={styles.infoContainer}>
+      <ScrollView style={styles.infoContainer}>
+        {dailyEntry!.isTodayCreated === false ? (
+          <View style={styles.createEntryContainer}>
+            <Text style={styles.message}>
+              There is currently no entry for this date
+            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("CreateDailyEntryScreen", {
+                  params: { dailyEntryInfo },
+                })
+              }
+              style={styles.createEntryBtn}
+            >
+              <Text style={styles.createEntryBtnText}>Create Entry</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
           <View>
-            <Text style={styles.infoTitle}>Weight</Text>
+            <View>
+              <Text style={styles.infoTitle}>Weight</Text>
+
+              <View>
+                <DailyMacroText
+                  infoType="Weight"
+                  value={dailyEntry?.weight}
+                  measurement="Lbs"
+                />
+              </View>
+            </View>
 
             <View>
-              <DailyMacroText
-                infoType="Weight"
-                value={dailyEntry?.weight}
-                measurement="Lbs"
-              />
-            </View>
-          </View>
+              <Text style={styles.infoTitle}>Macros</Text>
 
-          <View>
-            <Text style={styles.infoTitle}>Macros</Text>
+              <View>
+                <DailyMacroText
+                  infoType="Calories"
+                  value={dailyEntry?.dailyMacros.calories}
+                  measurement="Calories"
+                />
+                <DailyMacroText
+                  infoType="Fat"
+                  value={dailyEntry?.dailyMacros.fat}
+                  measurement="Grams"
+                />
+                <DailyMacroText
+                  infoType="Protein"
+                  value={dailyEntry?.dailyMacros.protein}
+                  measurement="Grams"
+                />
+                <DailyMacroText
+                  infoType="Carbs"
+                  value={dailyEntry?.dailyMacros.carbs}
+                  measurement="Grams"
+                />
+              </View>
+            </View>
 
             <View>
-              <DailyMacroText
-                infoType="Calories"
-                value={dailyEntry?.dailyMacros.calories}
-                measurement="Calories"
-              />
-              <DailyMacroText
-                infoType="Fat"
-                value={dailyEntry?.dailyMacros.fat}
-                measurement="Grams"
-              />
-              <DailyMacroText
-                infoType="Protein"
-                value={dailyEntry?.dailyMacros.protein}
-                measurement="Grams"
-              />
-              <DailyMacroText
-                infoType="Carbs"
-                value={dailyEntry?.dailyMacros.carbs}
-                measurement="Grams"
-              />
+              <Text style={styles.infoTitle}>Exercise</Text>
+
+              {dailyEntry ? (
+                dailyEntry?.exercise.map((exercise, index) => {
+                  return (
+                    <ExerciseInfo
+                      key={index}
+                      id={exercise.id}
+                      exerciseName={exercise.name}
+                      sets={exercise.sets}
+                      reps={exercise.reps}
+                      weight={exercise.weight}
+                      disabled={true}
+                    />
+                  );
+                })
+              ) : (
+                <View></View>
+              )}
             </View>
           </View>
-
-          <View>
-            <Text style={styles.infoTitle}>Exercise</Text>
-
-            {dailyEntry ? (
-              dailyEntry?.exercise.map((exercise, index) => {
-                return (
-                  <ExerciseInfo
-                    key={index}
-                    id={exercise.id}
-                    exerciseName={exercise.name}
-                    sets={exercise.sets}
-                    reps={exercise.reps}
-                    weight={exercise.weight}
-                    disabled={true}
-                  />
-                );
-              })
-            ) : (
-              <View></View>
-            )}
-          </View>
-        </ScrollView>
-      )}
+        )}
+      </ScrollView>
     </View>
   );
 };

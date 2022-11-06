@@ -13,7 +13,7 @@ import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
 import { RegisterType } from "../../models";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
@@ -63,7 +63,7 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
         <View style={styles.footer}>
           <Text style={styles.title}>Add Your Details Below To Sign Up</Text>
 
-          <View style={styles.inputContainer}>
+          <KeyboardAwareScrollView style={styles.inputContainer}>
             <RegisterTextInput
               title={"Enter First Name"}
               icon={USER_CIRCLE_ICON}
@@ -115,7 +115,8 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               autoCorrect={false}
               secureTextEntry={true}
             />
-          </View>
+          </KeyboardAwareScrollView>
+
           <InitialScreenButton
             title="Continue"
             disabled={false}

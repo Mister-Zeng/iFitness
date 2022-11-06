@@ -86,132 +86,130 @@ const EditProfileScreen: FC<IProps> = ({ navigation }: IProps) => {
 
       <Spinner visible={isLoading} />
 
-      <View>
-        <Text style={styles.infoTitle}>Personal Details</Text>
+      <Text style={styles.infoTitle}>Personal Details</Text>
 
-        <View style={styles.profilePicture}>
-          <Image source={PROFILE_PIC_ICON} />
+      <View style={styles.profilePicture}>
+        <Image source={PROFILE_PIC_ICON} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <View style={styles.inputIconContainer}>
+          <Text style={styles.infoType}>Username</Text>
+          <TextInput
+            style={styles.input}
+            editable={false}
+            value={userInfo.username}
+            onChangeText={(text) =>
+              setEditUserInfo({ ...editUserInfo, username: text })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
         </View>
+
+        <View style={styles.inputIconContainer}>
+          <Text style={styles.infoType}>First Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={userInfo.firstName}
+            onChangeText={(text) =>
+              setEditUserInfo({ ...editUserInfo, firstName: text })
+            }
+            placeholderTextColor="#6A6A6A"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+
+        <View style={styles.inputIconContainer}>
+          <Text style={styles.infoType}>Last name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={userInfo.lastName}
+            onChangeText={(text) =>
+              setEditUserInfo({ ...editUserInfo, lastName: text })
+            }
+            placeholderTextColor="#6A6A6A"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+
+        <View style={styles.inputIconContainer}>
+          <Text style={styles.infoType}>Email Address</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={userInfo.emailAddress}
+            onChangeText={(text) =>
+              setEditUserInfo({ ...editUserInfo, emailAddress: text })
+            }
+            placeholderTextColor="#6A6A6A"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+
+        <View style={styles.saveButtonContainer}>
+          <SaveButton title={"Save"} onPress={handleEditProfile} />
+        </View>
+      </View>
+
+      <View>
+        <Text style={styles.infoTitle}>Daily Macros Goal</Text>
 
         <View style={styles.inputContainer}>
-          <View style={styles.inputIconContainer}>
-            <Text style={styles.infoType}>Username</Text>
-            <TextInput
-              style={styles.input}
-              editable={false}
-              value={userInfo.username}
-              onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, username: text })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-
-          <View style={styles.inputIconContainer}>
-            <Text style={styles.infoType}>First Name</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={userInfo.firstName}
-              onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, firstName: text })
-              }
-              placeholderTextColor="#6A6A6A"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-
-          <View style={styles.inputIconContainer}>
-            <Text style={styles.infoType}>Last name</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={userInfo.lastName}
-              onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, lastName: text })
-              }
-              placeholderTextColor="#6A6A6A"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-
-          <View style={styles.inputIconContainer}>
-            <Text style={styles.infoType}>Email Address</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={userInfo.emailAddress}
-              onChangeText={(text) =>
-                setEditUserInfo({ ...editUserInfo, emailAddress: text })
-              }
-              placeholderTextColor="#6A6A6A"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
+          <DailyMacrosTextInput
+            infoType="Calories"
+            value={userInfo.macrosGoal.calories}
+            onChangeText={(text) =>
+              setEditMacrosGoal({
+                ...editMacrosGoal,
+                calories: parseInt(text),
+              })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+            measurement="Calories"
+          />
+          <DailyMacrosTextInput
+            infoType="Fat"
+            value={userInfo.macrosGoal.fat}
+            onChangeText={(text) =>
+              setEditMacrosGoal({ ...editMacrosGoal, fat: parseInt(text) })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+            measurement="Grams"
+          />
+          <DailyMacrosTextInput
+            infoType="Protein"
+            value={userInfo.macrosGoal.protein}
+            onChangeText={(text) =>
+              setEditMacrosGoal({
+                ...editMacrosGoal,
+                protein: parseInt(text),
+              })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+            measurement="Grams"
+          />
+          <DailyMacrosTextInput
+            infoType="Carbs"
+            value={userInfo.macrosGoal.carbs}
+            onChangeText={(text) =>
+              setEditMacrosGoal({
+                ...editMacrosGoal,
+                carbs: parseInt(text),
+              })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+            measurement="Grams"
+          />
 
           <View style={styles.saveButtonContainer}>
-            <SaveButton title={"Save"} onPress={handleEditProfile} />
-          </View>
-        </View>
-
-        <View>
-          <Text style={styles.infoTitle}>Daily Macros Goal</Text>
-
-          <View style={styles.inputContainer}>
-            <DailyMacrosTextInput
-              infoType="Calories"
-              value={userInfo.macrosGoal.calories}
-              onChangeText={(text) =>
-                setEditMacrosGoal({
-                  ...editMacrosGoal,
-                  calories: parseInt(text),
-                })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              measurement="Calories"
-            />
-            <DailyMacrosTextInput
-              infoType="Fat"
-              value={userInfo.macrosGoal.fat}
-              onChangeText={(text) =>
-                setEditMacrosGoal({ ...editMacrosGoal, fat: parseInt(text) })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              measurement="Grams"
-            />
-            <DailyMacrosTextInput
-              infoType="Protein"
-              value={userInfo.macrosGoal.protein}
-              onChangeText={(text) =>
-                setEditMacrosGoal({
-                  ...editMacrosGoal,
-                  protein: parseInt(text),
-                })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              measurement="Grams"
-            />
-            <DailyMacrosTextInput
-              infoType="Carbs"
-              value={userInfo.macrosGoal.carbs}
-              onChangeText={(text) =>
-                setEditMacrosGoal({
-                  ...editMacrosGoal,
-                  carbs: parseInt(text),
-                })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              measurement="Grams"
-            />
-
-            <View style={styles.saveButtonContainer}>
-              <SaveButton title={"Save"} onPress={handleMacrosGoalSubmit} />
-            </View>
+            <SaveButton title={"Save"} onPress={handleMacrosGoalSubmit} />
           </View>
         </View>
       </View>

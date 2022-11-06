@@ -11,6 +11,7 @@ import { Appbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
@@ -72,10 +73,13 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
             />
           </Appbar.Header>
         </View>
+
         <View style={styles.footer}>
           <Text style={styles.title}>What Is Your Macro Goal?</Text>
 
-          <SafeAreaView style={styles.inputContainer}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={styles.inputContainer}
+          >
             <RegisterTextInput
               title={"Enter Calories"}
               icon={MACROS_ICON}
@@ -122,7 +126,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCorrect={false}
               keyboardType="numeric"
             />
-          </SafeAreaView>
+          </KeyboardAwareScrollView>
           <InitialScreenButton
             title="Register"
             disabled={false}

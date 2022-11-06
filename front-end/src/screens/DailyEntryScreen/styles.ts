@@ -21,6 +21,7 @@ const createStyles: () => StyleSheetProps = () =>
     },
     container: {
       backgroundColor: Colors.BLACK,
+      height: Dimensions.get("window").height,
     },
     infoTitle: {
       fontSize: RFValue(15),
@@ -37,8 +38,7 @@ const createStyles: () => StyleSheetProps = () =>
       marginTop: RFValue(10),
     },
     createEntryContainer: {
-      height: "100%",
-      top: 300,
+      top: RFValue(200),
       alignItems: "center",
     },
     createEntryBtnText: {

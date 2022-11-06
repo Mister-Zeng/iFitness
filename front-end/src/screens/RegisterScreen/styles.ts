@@ -24,6 +24,7 @@ const createStyles: () => StyleSheetProps = () =>
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+      backgroundColor: Colors.BLACK,
     },
     background: {
       width: "100%",
