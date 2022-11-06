@@ -46,8 +46,29 @@ export const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         )) as string;
         userInfo = JSON.parse(userInfo);
 
-        if (userInfo) {
-          setUserInfo({ ...userInfo, token: userInfo.token });
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            userId: userInfo.id,
+          },
+        };
+
+        const response: AxiosResponse = await instance.get(
+          "isAuthenticated",
+          config
+        );
+
+        const data = await response.data;
+
+        if (data === false) {
+          logout();
+        } else {
+          if (userInfo) {
+            setUserInfo({ ...userInfo, token: userInfo.token });
+          }
         }
 
         setIsLoading(false);
