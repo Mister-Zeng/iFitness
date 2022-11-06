@@ -39,9 +39,7 @@ Users should be able to:
 
 ## Demo
 
-![]()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Click on this [Link](https://youtu.be/_Dc5uGm0aaQ) to view a small demo of this app
 
 ## Want To Try Out The App? 
 

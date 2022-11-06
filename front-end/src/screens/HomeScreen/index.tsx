@@ -64,7 +64,7 @@ const HomeScreen: FC<IProps> = ({ navigation }: IProps) => {
   const sortedDate = dateNum.sort((a, b) => {
     return a.date - b.date;
   });
-  console.log(sortedDate);
+
   if (allDailyEntries.length > 1) {
     // If the current date is smaller or equal to the previous date
     // then this is the first entry of the month
