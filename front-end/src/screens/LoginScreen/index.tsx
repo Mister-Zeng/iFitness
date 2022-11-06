@@ -44,56 +44,56 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
     login(loginInfo);
   };
   return (
-    <View style={styles.body}>
-      <ImageBackground source={LOGIN_BACKGROUND} style={styles.background}>
-        <View style={styles.footer}>
-          <KeyboardAwareScrollView
-            contentContainerStyle={styles.inputContainer}
-          >
-            <RegisterTextInput
-              title={"Enter Username"}
-              icon={USER_ICON}
-              value={loginInfo.username}
-              onChangeText={(text) =>
-                setLoginInfo({ ...loginInfo, username: text })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <RegisterTextInput
-              title={"Enter Password"}
-              icon={VIEW_ICON}
-              value={loginInfo.password}
-              onChangeText={(text) =>
-                setLoginInfo({ ...loginInfo, password: text })
-              }
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry={true}
-            />
-          </KeyboardAwareScrollView>
+    <ImageBackground source={LOGIN_BACKGROUND} style={styles.background}>
+      <Spinner visible={isLoading} />
 
-          <Spinner visible={isLoading} />
-
-          <InitialScreenButton
-            title="Login"
-            disabled={false}
-            onPress={() => {
-              handleLogin(loginInfo);
-            }}
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.inputContainer}>
+          <RegisterTextInput
+            title={"Enter Username"}
+            icon={USER_ICON}
+            value={loginInfo.username}
+            onChangeText={(text) =>
+              setLoginInfo({ ...loginInfo, username: text })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
           />
-          <TouchableOpacity style={styles.forgotPasswordBtn}>
-            <Text style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          <RegisterLoginText
-            title={"Don't have an account? "}
-            link={"Register Now"}
-            onPress={() => navigation.navigate("RegisterScreen")}
+          <RegisterTextInput
+            title={"Enter Password"}
+            icon={VIEW_ICON}
+            value={loginInfo.password}
+            onChangeText={(text) =>
+              setLoginInfo({ ...loginInfo, password: text })
+            }
+            autoCapitalize="none"
+            autoCorrect={false}
+            secureTextEntry={true}
           />
         </View>
-      </ImageBackground>
-    </View>
+
+        <InitialScreenButton
+          title="Login"
+          disabled={false}
+          onPress={() => {
+            handleLogin(loginInfo);
+          }}
+        />
+
+        <TouchableOpacity style={styles.forgotPasswordBtn}>
+          <Text style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
+        </TouchableOpacity>
+
+        <RegisterLoginText
+          title={"Don't have an account? "}
+          link={"Register Now"}
+          onPress={() => navigation.navigate("RegisterScreen")}
+        />
+      </KeyboardAwareScrollView>
+    </ImageBackground>
   );
 };
 

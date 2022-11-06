@@ -79,6 +79,7 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
 
           <KeyboardAwareScrollView
             contentContainerStyle={styles.inputContainer}
+            showsVerticalScrollIndicator={false}
           >
             <RegisterTextInput
               title={"Enter Calories"}
@@ -126,26 +127,29 @@ const MacroScreen: FC<IProps> = ({ navigation }) => {
               autoCorrect={false}
               keyboardType="numeric"
             />
+
+            <View style={styles.buttonContainer}>
+              <InitialScreenButton
+                title="Register"
+                disabled={false}
+                onPress={handleRegister}
+              />
+            </View>
+
+            <View style={styles.footerLink}>
+              <RegisterLoginText
+                title={"Have an account? "}
+                link={"Login Now"}
+                onPress={() => navigation.navigate("LoginScreen")}
+                disabled={false}
+              />
+
+              <RegisterLoginText
+                title={"By signing up, you agree with our "}
+                link={"Terms & Conditions"}
+              />
+            </View>
           </KeyboardAwareScrollView>
-          <InitialScreenButton
-            title="Register"
-            disabled={false}
-            onPress={handleRegister}
-          />
-
-          <View style={styles.footerLink}>
-            <RegisterLoginText
-              title={"Have an account? "}
-              link={"Login Now"}
-              onPress={() => navigation.navigate("LoginScreen")}
-              disabled={false}
-            />
-
-            <RegisterLoginText
-              title={"By signing up, you agree with our "}
-              link={"Terms & Conditions"}
-            />
-          </View>
         </View>
       </ImageBackground>
     </View>

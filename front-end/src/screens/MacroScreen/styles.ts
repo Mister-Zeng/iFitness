@@ -8,6 +8,7 @@ export interface StyleSheetProps {
   title: TextStyle;
   inputContainer: ViewStyle;
   text: TextStyle;
+  buttonContainer: ViewStyle;
   footer: ViewStyle;
   footerLink: TextStyle;
 }
@@ -42,6 +43,9 @@ const createStyles: () => StyleSheetProps = () =>
       bottom: RFValue(20),
       width: "100%",
       alignItems: "center",
+    },
+    buttonContainer: {
+      marginTop: RFValue(20),
     },
     footerLink: {
       marginTop: RFValue(20),

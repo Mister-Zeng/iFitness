@@ -1,10 +1,4 @@
-import {
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from "react-native";
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Colors } from "../../constants/colors";
 
@@ -14,8 +8,9 @@ export interface StyleSheetProps {
   title: TextStyle;
   inputContainer: ViewStyle;
   text: TextStyle;
-  footer: ViewStyle;
+  container: ViewStyle;
   footerLink: TextStyle;
+  buttonContainer: ViewStyle;
 }
 
 const createStyles: () => StyleSheetProps = () =>
@@ -37,17 +32,18 @@ const createStyles: () => StyleSheetProps = () =>
       fontSize: RFValue(18),
     },
     inputContainer: {
-      paddingVertical: RFValue(20),
+      height: RFValue(300),
     },
     text: {
       fontSize: RFValue(25),
       fontWeight: "300",
       color: Colors.BLACK,
     },
-    footer: {
-      position: "absolute",
-      bottom: RFValue(20),
-      width: "100%",
+    buttonContainer: {
+      marginTop: RFValue(20),
+    },
+    container: {
+      marginTop: RFValue(240),
       alignItems: "center",
     },
     footerLink: {

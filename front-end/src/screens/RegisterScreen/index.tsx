@@ -1,5 +1,13 @@
 import React, { FC, useMemo, useState } from "react";
-import { ImageBackground, Alert, Text, View, SafeAreaView } from "react-native";
+import {
+  ImageBackground,
+  Alert,
+  Text,
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import {
@@ -17,6 +25,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
+
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -60,10 +69,13 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
       <Spinner visible={isLoading} />
 
       <ImageBackground source={REGISTER_BACKGROUND} style={styles.background}>
-        <View style={styles.footer}>
+        <View style={styles.container}>
           <Text style={styles.title}>Add Your Details Below To Sign Up</Text>
 
-          <KeyboardAwareScrollView style={styles.inputContainer}>
+          <KeyboardAwareScrollView
+            style={styles.inputContainer}
+            showsVerticalScrollIndicator={false}
+          >
             <RegisterTextInput
               title={"Enter First Name"}
               icon={USER_CIRCLE_ICON}
@@ -115,27 +127,29 @@ const RegisterScreen: FC<IProps> = ({ navigation }) => {
               autoCorrect={false}
               secureTextEntry={true}
             />
+
+            <View style={styles.buttonContainer}>
+              <InitialScreenButton
+                title="Continue"
+                disabled={false}
+                onPress={handleRegister}
+              />
+            </View>
+
+            <View style={styles.footerLink}>
+              <RegisterLoginText
+                title={"Have an account? "}
+                link={"Login Now"}
+                onPress={() => navigation.navigate("LoginScreen")}
+                disabled={false}
+              />
+
+              <RegisterLoginText
+                title={"By signing up, you agree with our "}
+                link={"Terms & Conditions"}
+              />
+            </View>
           </KeyboardAwareScrollView>
-
-          <InitialScreenButton
-            title="Continue"
-            disabled={false}
-            onPress={handleRegister}
-          />
-
-          <View style={styles.footerLink}>
-            <RegisterLoginText
-              title={"Have an account? "}
-              link={"Login Now"}
-              onPress={() => navigation.navigate("LoginScreen")}
-              disabled={false}
-            />
-
-            <RegisterLoginText
-              title={"By signing up, you agree with our "}
-              link={"Terms & Conditions"}
-            />
-          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>

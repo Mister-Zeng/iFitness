@@ -6,8 +6,9 @@ export interface StyleSheetProps {
   body: ViewStyle;
   background: ImageStyle;
   text: TextStyle;
+  container: ViewStyle;
   inputContainer: ViewStyle;
-  footer: ViewStyle;
+  buttonContainer: ViewStyle;
   forgotPasswordBtn: ViewStyle;
   forgotPasswordBtnText: TextStyle;
 }
@@ -30,17 +31,19 @@ const createStyles: () => StyleSheetProps = () =>
       color: Colors.WHITE,
     },
     inputContainer: {
-      marginBottom: RFValue(25),
+      marginBottom: RFValue(20),
     },
-    footer: {
-      position: "absolute",
-      bottom: RFValue(74),
-      width: "100%",
+    container: {
+      marginTop: RFValue(440),
       alignItems: "center",
+      height: RFValue(600),
     },
     forgotPasswordBtn: {
       alignSelf: "flex-end",
       paddingRight: RFValue(40),
+    },
+    buttonContainer: {
+      marginTop: RFValue(20),
     },
     forgotPasswordBtnText: {
       color: Colors.WHITE,
