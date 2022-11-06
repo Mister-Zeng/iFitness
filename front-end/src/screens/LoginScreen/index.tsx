@@ -15,7 +15,7 @@ import RegisterLoginText from "../../ui/RegisterLoginText";
 import { LoginType } from "../../models";
 import Spinner from "react-native-loading-spinner-overlay";
 import useAuthSelect from "../../providers/auth";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -47,7 +47,9 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
     <View style={styles.body}>
       <ImageBackground source={LOGIN_BACKGROUND} style={styles.background}>
         <View style={styles.footer}>
-          <View style={styles.inputContainer}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={styles.inputContainer}
+          >
             <RegisterTextInput
               title={"Enter Username"}
               icon={USER_ICON}
@@ -69,7 +71,7 @@ const LoginScreen: FC<IProps> = ({ navigation }) => {
               autoCorrect={false}
               secureTextEntry={true}
             />
-          </View>
+          </KeyboardAwareScrollView>
 
           <Spinner visible={isLoading} />
 
