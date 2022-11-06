@@ -3,7 +3,7 @@
     "entryPoint": "./src/index.tsx",
     "name": "iFitness",
     "slug": "iFitness",
-    "owner":"misterzeng",
+    "owner":"ifitness",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
