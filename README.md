@@ -21,7 +21,7 @@
 ### [Click Here To View Prototype On Figma](https://www.figma.com/proto/DfM12QFmp1UaJXW7bAwraG/iFitness?node-id=1%3A2&scaling=scale-down&page-id=0%3A1)
 
 
-## Features:
+## Features
 
 Users should be able to:
 
@@ -46,7 +46,7 @@ Click on this [Link](https://youtu.be/_Dc5uGm0aaQ) to view a small demo of this 
 ### Download the Expo App from the app store and login with the following credentials
 
 - Username: ifitness
-- Password: Ifitness123 
+- Password: Ifitnessdemo123 
 
 ### iFitness App Login Credential / Register 
 
