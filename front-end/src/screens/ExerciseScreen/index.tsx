@@ -21,7 +21,7 @@ interface IProps {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
+const ExerciseScreen: FC<IProps> = ({ navigation }: IProps) => {
   const styles: StyleSheetProps = useMemo(() => createStyles(), []);
 
   const { getExercise, ExerciseInfo } = useExerciseSelect();
@@ -132,4 +132,4 @@ const ProgressScreen: FC<IProps> = ({ navigation }: IProps) => {
   );
 };
 
-export default ProgressScreen;
+export default ExerciseScreen;

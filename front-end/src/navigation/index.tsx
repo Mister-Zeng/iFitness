@@ -9,7 +9,7 @@ import {
   LoginScreen,
   HomeScreen,
   CreateDailyEntryScreen,
-  ProgressScreen,
+  ExerciseScreen,
   ProfileScreen,
   MacroScreen,
   AddExerciseScreen,
@@ -25,7 +25,7 @@ import { EditDailyEntryScreenIProps } from "../screens/EditDailyEntryScreen";
 export type MainStackParamList = {
   HomeScreen: undefined;
   CreateDailyEntryScreen: CreateDailyEntryScreenIProps;
-  ProgressScreen: undefined;
+  ExerciseScreen: undefined;
   EditProfileScreen: undefined;
   ProfileScreen: undefined;
   AddExerciseScreen: undefined;
@@ -118,13 +118,13 @@ const Navigation = () => {
       );
     };
 
-    const ProgressScreenNavigator: FC = () => {
+    const ExerciseScreennNavigator: FC = () => {
       return (
         <MainStack.Navigator
-          initialRouteName="ProgressScreen"
+          initialRouteName="ExerciseScreen"
           screenOptions={{ headerShown: false }}
         >
-          <MainStack.Screen name="ProgressScreen" component={ProgressScreen} />
+          <MainStack.Screen name="ExerciseScreen" component={ExerciseScreen} />
         </MainStack.Navigator>
       );
     };
@@ -146,8 +146,8 @@ const Navigation = () => {
           }}
         />
         <Tab.Screen
-          name="Progress"
-          component={ProgressScreenNavigator}
+          name="Exerercise"
+          component={ExerciseScreennNavigator}
           options={{
             tabBarIcon: () => <Image source={PROGRESS_ICON} />,
           }}

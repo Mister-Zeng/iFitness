@@ -8,5 +8,5 @@ export { default as HomeScreen } from "./HomeScreen";
 export { default as EditProfileScreen } from "./EditProfileScreen";
 export { default as DailyEntryScreen } from "./DailyEntryScreen";
 export { default as CreateDailyEntryScreen } from "./CreateDailyEntryScreen";
-export { default as ProgressScreen } from "./ProgressScreen";
+export { default as ExerciseScreen } from "./ExerciseScreen";
 export { default as ProfileScreen } from "./ProfileScreen";
