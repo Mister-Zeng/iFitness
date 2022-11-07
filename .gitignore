@@ -38,6 +38,7 @@ node_modules/
 dist/
 package-lock.json/
 npm-debug.*
+.env
 *.jks
 *.p8
 *.p12
@@ -46,4 +47,4 @@ npm-debug.*
 *.orig.*
 web-build/
 
-#/src/main/resources/certs/private.pem
+/src/main/resources/certs/private.pem

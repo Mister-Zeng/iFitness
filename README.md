@@ -55,24 +55,39 @@ Click on this [Link](https://youtu.be/_Dc5uGm0aaQ) to view a small demo of this 
 
 ### Installation
 
-1. Clone the repo
+1. Get a free API Key from [API Ninjas](https://api-ninjas.com/api)
+2. Clone the repo
    ```sh
    git clone https://github.com/Mister-Zeng/iFitness.git
    ```
-2. Install NPM packages
+3. On the front end, install NPM packages
    ```sh
    npm install
    ```
-3. To use your own database for MySQL: Inside of application.properties file, add your database credentials
+4. In the root directory, create a file called `.env` and add your API Key
+   ```js
+   API_KEY = 'ENTER YOUR API';
+   ```
+5. On the backend, create your public and private pem file and add that to the certs folder: 
+    ```bash
+    ├── iFitness                   
+        ├── src
+            ├── main
+                ├── resources
+                    ├── certs
+
+6. To use your own database for MySQL: Inside of application.properties file, add your database credentials
     ```sh
     spring.datasource.url=jdbc:mysql://
     spring.datasource.username = 
     spring.datasource.password = 
     ```
-4. Run the app
+7. Run the app
    ```sh
    expo start
    ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Built with
 
@@ -82,29 +97,18 @@ Click on this [Link](https://youtu.be/_Dc5uGm0aaQ) to view a small demo of this 
 - Java
 - Spring Boot
 - MySQL
-
+- 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Deployment
 
 Front end deployment is hosted on the Expo App Store. Backend deployment is hosted on Heroku.
 
-#### Warning: 
-The security of this project is configured by using asymmetric keys to encrypt JWT.
-This project is using self-signed certificate. As it is not free to use SSL certificate on Heroku, 
-the private key is pushed into this repository in order to successfully be deployed on Heroku. 
-
-*For good practice, API/private key should not be pushed to your repository. 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Author
 
 - Email - [Jason Zeng](mailto:officialjasonzeng@gmail.com?subject=[GitHub]%20iFitness%20App)
 - Website - [Jason Zeng](https://jasonz.dev/)
 - Twitter - [Misterzeng](https://www.twitter.com/misterzeng)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## License
 
