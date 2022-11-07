@@ -12,7 +12,7 @@ import { LOGIN_BACKGROUND, USER_ICON, VIEW_ICON } from "../../assets";
 import InitialScreenButton from "../../components/InitialScreenButton";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
-import { LoginType } from "../../models";
+import { LoginType } from "../../types";
 import Spinner from "react-native-loading-spinner-overlay";
 import useAuthSelect from "../../providers/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

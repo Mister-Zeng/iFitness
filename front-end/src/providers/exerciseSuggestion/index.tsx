@@ -6,14 +6,14 @@ import React, {
   Context,
   PropsWithChildren,
 } from "react";
-
+import { API_KEY } from "@env";
 import axios, { AxiosResponse } from "axios";
 
 import {
   ExerciseContextType,
   ExerciseResponseType,
   ExerciseInfoType,
-} from "../../models/exerciseSuggestion";
+} from "../../types/exerciseSuggestion";
 
 export const ExerciseContext: Context<ExerciseContextType> =
   createContext<ExerciseContextType>({
@@ -30,7 +30,7 @@ export const ExerciseProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     try {
       const config = {
         headers: {
-          "X-Api-Key": "S2JbYHPR1QlUf0JLEeHMyA==voEzy0dIBp68FtNR",
+          "X-Api-Key": API_KEY,
           "Content-Type": "application/json",
         },
         params: exerciseInfo,

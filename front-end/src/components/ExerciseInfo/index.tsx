@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react";
 import { Text, Image, View, TouchableOpacity } from "react-native";
 import { CANCEL_ICON } from "../../assets";
-import { ExerciseType } from "../../models";
+import { ExerciseType } from "../../types";
 import useDailyEntrySelect from "../../providers/dailyEntry";
 import createStyles, { StyleSheetProps } from "./styles";
 

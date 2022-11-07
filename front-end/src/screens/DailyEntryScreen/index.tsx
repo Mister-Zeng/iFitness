@@ -13,7 +13,7 @@ import DailyMacroText from "../../ui/DailyMacroText";
 import DatePickers from "../../components/DatePicker";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import AddExerciseButton from "../../components/AddButton";
-import { DailyEntryType } from "../../models";
+import { DailyEntryType } from "../../types";
 import useAuthSelect from "../../providers/auth";
 import useDailyEntrySelect from "../../providers/dailyEntry";
 import moment from "moment";

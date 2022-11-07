@@ -10,7 +10,7 @@ import {
 import createStyles, { StyleSheetProps } from "./styles";
 import { Modal, Portal, Provider } from "react-native-paper";
 import AddButton from "../AddButton";
-import { ExerciseType } from "../../models";
+import { ExerciseType } from "../../types";
 import uuid from "react-native-uuid";
 import ExerciseInfo from "../ExerciseInfo/index";
 

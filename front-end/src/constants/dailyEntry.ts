@@ -1,5 +1,5 @@
 import moment from "moment";
-import { DailyEntryType, DailyMacrosType, MacrosGoalType } from "../models";
+import { DailyEntryType, DailyMacrosType, MacrosGoalType } from "../types";
 
 const dailyMacrosConstant: DailyMacrosType = {
   id: 0,

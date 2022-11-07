@@ -6,7 +6,7 @@ import { MACRO_BACKGROUND, MACROS_ICON } from "../../assets";
 import RegisterTextInput from "../../ui/RegisterTextInput";
 import RegisterLoginText from "../../ui/RegisterLoginText";
 import InitialScreenButton from "../../components/InitialScreenButton";
-import { MacrosGoalType, RegisterType } from "../../models";
+import { MacrosGoalType, RegisterType } from "../../types";
 import { Appbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay/lib";

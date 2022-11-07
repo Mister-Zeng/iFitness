@@ -6,7 +6,7 @@ import React, {
   Context,
   PropsWithChildren,
 } from "react";
-import { DailyEntryContextType, DailyEntryType } from "../../models";
+import { DailyEntryContextType, DailyEntryType } from "../../types";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import useAuthSelect from "../auth/index";
 import { dailyEntryConstant } from "../../constants/dailyEntry";

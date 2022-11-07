@@ -15,7 +15,7 @@ import {
 import {
   ExerciseInfoType,
   ExerciseResponseType,
-} from "../../models/exerciseSuggestion";
+} from "../../types/exerciseSuggestion";
 
 interface IProps {
   navigation: NavigationProp<ParamListBase>;

@@ -9,9 +9,9 @@ import React, {
   useEffect,
 } from "react";
 import { userInfoConstants } from "../../constants/userInfo";
-import { UserType, EditUserInfoType, MacrosGoalType } from "../../models";
+import { UserType, EditUserInfoType, MacrosGoalType } from "../../types";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { RegisterType, LoginType, AuthContextType } from "../../models";
+import { RegisterType, LoginType, AuthContextType } from "../../types";
 import { Alert } from "react-native";
 
 export const AuthContext: Context<AuthContextType> =

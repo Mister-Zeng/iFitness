@@ -10,7 +10,7 @@ import { Appbar } from "react-native-paper";
 import DailyMacrosTextInput from "../../ui/DailyMacrosTextInput";
 import AddButton from "../../components/AddButton";
 import ExerciseInfo from "../../components/ExerciseInfo";
-import { DailyEntryType, ExerciseType } from "../../models";
+import { DailyEntryType, ExerciseType } from "../../types";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useDailyEntrySelect from "../../providers/dailyEntry/index";
 import AddExerciseModal from "../../components/AddExerciseModal";

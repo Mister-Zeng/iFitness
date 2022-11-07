@@ -6,7 +6,7 @@ import { Appbar } from "react-native-paper";
 import SaveButton from "../../components/SaveButton";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
-import { ExerciseType } from "../../models";
+import { ExerciseType } from "../../types";
 import useDailyEntrySelect from "../../providers/dailyEntry";
 
 interface IProps {

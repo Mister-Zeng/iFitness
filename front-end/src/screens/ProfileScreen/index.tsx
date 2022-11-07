@@ -3,10 +3,10 @@ import { Text, View, Image } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import createStyles, { StyleSheetProps } from "./styles";
 import { Appbar } from "react-native-paper";
-import { EditUserInfoType } from "../../models/auth";
+import { EditUserInfoType } from "../../types/auth";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import useAuthSelect from "../../providers/auth";
-import { MacrosGoalType } from "../../models";
+import { MacrosGoalType } from "../../types";
 import { PROFILE_PIC_ICON } from "../../assets";
 
 interface IProps {
