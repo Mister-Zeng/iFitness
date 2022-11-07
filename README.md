@@ -97,7 +97,7 @@ Click on this [Link](https://youtu.be/_Dc5uGm0aaQ) to view a small demo of this 
 - Java
 - Spring Boot
 - MySQL
-- 
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Deployment
